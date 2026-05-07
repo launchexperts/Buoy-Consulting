@@ -1,0 +1,1335 @@
+"""
+Page generator for buoyconsultancy.com.au
+
+Generates the 15 inner pages from a shared layout. Run from anywhere:
+    python _build/build.py
+
+Edit the PAGE content blocks below to update copy, then re-run to regenerate.
+"""
+import pathlib
+
+ROOT = pathlib.Path(__file__).resolve().parent.parent
+
+# ============================================================
+# CSS additions for inner pages — appended to styles.css if missing
+# ============================================================
+INNER_CSS_MARKER = "/* === INNER-PAGE STYLES ==="
+INNER_CSS = """
+/* === INNER-PAGE STYLES ============================================== */
+.page-hero {
+  padding: clamp(3.5rem, 6vw, 5.5rem) 0 clamp(2rem, 4vw, 3rem);
+}
+.page-hero .eyebrow { margin-bottom: 1.25rem; }
+.page-hero h1 {
+  font-size: clamp(2.25rem, 4.6vw, 4rem);
+  max-width: 18ch;
+  margin-bottom: 1.5rem;
+}
+.page-hero .lead {
+  font-size: var(--fs-lead);
+  color: var(--gray-700);
+  max-width: 60ch;
+  line-height: 1.6;
+}
+.page-hero.center { text-align: center; }
+.page-hero.center h1, .page-hero.center .lead { margin-inline: auto; }
+
+.section { padding-block: clamp(3rem, 5vw, 5rem); }
+.section.tight { padding-block: clamp(2rem, 3.5vw, 3rem); }
+.section h2 {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  margin-bottom: 1.5rem;
+  max-width: 22ch;
+}
+.section .lead {
+  font-size: var(--fs-lead);
+  color: var(--gray-700);
+  max-width: 60ch;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+.section p {
+  color: var(--gray-700);
+  line-height: 1.7;
+  margin-bottom: 1rem;
+  max-width: 62ch;
+}
+.section.warm-bg {
+  background: var(--orange-50);
+  border-radius: 32px;
+  margin-inline: var(--gutter);
+}
+.section.cream-bg {
+  background: var(--cream);
+}
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 4vw, 4rem);
+  align-items: start;
+}
+.two-col.aside { grid-template-columns: 1.2fr 1fr; }
+@media (max-width: 800px) {
+  .two-col, .two-col.aside { grid-template-columns: 1fr; }
+}
+
+.deliverables, .checklist {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin: 2rem 0;
+}
+.deliverables li, .checklist li {
+  position: relative;
+  padding-left: 2.25rem;
+  color: var(--gray-700);
+  line-height: 1.55;
+}
+.deliverables li::before, .checklist li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 6px;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--orange-100);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23E85D1F' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 11px;
+}
+.deliverables li strong, .checklist li strong {
+  color: var(--ink);
+  display: block;
+  margin-bottom: 0.15rem;
+  font-weight: 700;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.25rem;
+  margin-top: 2rem;
+}
+.feature-card {
+  background: var(--white);
+  border: 1px solid var(--gray-100);
+  border-radius: var(--r-card);
+  padding: 1.6rem;
+  transition: transform 250ms, border-color 200ms, box-shadow 250ms;
+}
+.feature-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--orange-300);
+  box-shadow: var(--shadow-soft);
+}
+.feature-card .num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--orange-700);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 0.65rem;
+}
+.feature-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+.feature-card p {
+  font-size: 0.93rem;
+  color: var(--gray-700);
+  line-height: 1.55;
+  margin: 0;
+}
+
+.sub-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+  margin-top: 2.5rem;
+}
+.sub-card {
+  background: var(--white);
+  border: 1px solid var(--gray-100);
+  border-radius: var(--r-card);
+  padding: 1.75rem;
+  display: flex; flex-direction: column; gap: 0.85rem;
+  transition: transform 250ms, border-color 200ms, box-shadow 250ms;
+  min-height: 200px;
+}
+.sub-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--orange-300);
+  box-shadow: var(--shadow-soft);
+}
+.sub-card .icon {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  background: var(--orange-100);
+  color: var(--orange-700);
+  display: grid; place-items: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: -0.02em;
+}
+.sub-card h3 { font-size: 1.15rem; }
+.sub-card p {
+  font-size: 0.92rem;
+  color: var(--gray-700);
+  line-height: 1.55;
+  flex: 1;
+  margin: 0;
+}
+.sub-card .more {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-size: 0.9rem; color: var(--orange-700); font-weight: 500;
+}
+.sub-card:hover .more { gap: 0.6rem; }
+
+.same-day-banner {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 1rem;
+  background: var(--orange-100);
+  color: var(--orange-700);
+  border-radius: var(--r-pill);
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+}
+.same-day-banner .pulse {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--orange-500);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.outcomes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin: 2rem 0;
+}
+.outcomes .o {
+  padding: 1.25rem;
+  background: var(--orange-50);
+  border-radius: var(--r-card);
+  border-left: 3px solid var(--orange-500);
+}
+.outcomes .o .num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.85rem;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+.outcomes .o .lbl {
+  font-size: 0.85rem;
+  color: var(--gray-700);
+  line-height: 1.4;
+}
+
+.inline-cta {
+  background: linear-gradient(135deg, var(--ink-900) 0%, var(--ink-800) 100%);
+  color: var(--white);
+  border-radius: 28px;
+  padding: clamp(2.5rem, 5vw, 4rem);
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 2rem;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+.inline-cta::before {
+  content: "";
+  position: absolute;
+  width: 320px; height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--orange-500) 0%, transparent 70%);
+  opacity: 0.3;
+  top: -100px; right: -80px;
+}
+.inline-cta h2 { color: var(--white); margin-bottom: 0.75rem; }
+.inline-cta p {
+  color: rgba(255,255,255,0.75);
+  margin-bottom: 0;
+}
+.inline-cta .cta-actions {
+  display: flex; gap: 0.75rem; flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.inline-cta .btn-primary {
+  background: var(--orange-500); color: var(--white);
+  padding: 1.05rem 1.75rem; font-weight: 600;
+}
+.inline-cta .btn-primary:hover { background: var(--orange-700); }
+.inline-cta .btn-ghost {
+  background: transparent; color: var(--white);
+  border: 1px solid rgba(255,255,255,0.25);
+}
+.inline-cta .btn-ghost:hover { border-color: var(--white); background: rgba(255,255,255,0.08); }
+@media (max-width: 800px) {
+  .inline-cta { grid-template-columns: 1fr; padding: 2.5rem; }
+  .inline-cta .cta-actions { justify-content: flex-start; }
+}
+
+/* Active nav state */
+.nav-links > li > a.active { color: var(--orange-700); }
+.nav-links > li.has-dropdown.active > a { color: var(--orange-700); }
+
+/* Contact form */
+.contact-form {
+  display: flex; flex-direction: column; gap: 1.25rem;
+  background: var(--white);
+  border: 1px solid var(--gray-100);
+  border-radius: var(--r-card);
+  padding: clamp(1.75rem, 3vw, 2.5rem);
+  margin-top: 2rem;
+}
+.contact-form .field { display: flex; flex-direction: column; gap: 0.4rem; }
+.contact-form label {
+  font-size: 0.78rem; font-weight: 700;
+  color: var(--ink); letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.contact-form input, .contact-form textarea, .contact-form select {
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--r-tight);
+  font: inherit; color: var(--ink); background: var(--cream);
+  transition: border-color 200ms, background 200ms;
+}
+.contact-form input:focus, .contact-form textarea:focus, .contact-form select:focus {
+  outline: none; border-color: var(--orange-500); background: var(--white);
+}
+.contact-form textarea { min-height: 120px; resize: vertical; }
+.contact-form button {
+  background: var(--orange-500); color: var(--white);
+  padding: 1rem 1.75rem;
+  border-radius: var(--r-pill);
+  font-weight: 600; font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 200ms, transform 200ms;
+  align-self: flex-start;
+}
+.contact-form button:hover { background: var(--orange-700); transform: translateY(-1px); }
+
+.contact-aside {
+  display: flex; flex-direction: column; gap: 1.5rem;
+}
+.contact-aside h3 { font-size: 1.1rem; }
+.contact-aside .channel {
+  display: flex; flex-direction: column; gap: 0.25rem;
+}
+.contact-aside .channel a {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--ink);
+}
+.contact-aside .channel a:hover { color: var(--orange-700); }
+.contact-aside .channel span {
+  font-size: 0.85rem; color: var(--gray-500);
+}
+"""
+
+
+# ============================================================
+# Header / Footer / Layout
+# ============================================================
+def header(active: str = ""):
+    """active is the page key used to mark active nav state."""
+    def cls(key):
+        return ' class="active"' if active == key else ''
+    def li_cls(key):
+        return ' active' if active == key else ''
+    return f"""  <header class="site-header">
+    <div class="wrap nav">
+      <a href="index.html" class="brand" aria-label="Buoy Consulting home">
+        <span class="brand-logo" role="img" aria-label="Buoy Consulting logo"></span>
+        <span class="brand-text">
+          <span class="brand-name">Buoy</span>
+          <span class="brand-tag">Consulting</span>
+        </span>
+      </a>
+
+      <nav aria-label="Primary">
+        <ul class="nav-links">
+          <li><a href="about.html"{cls('about')}>About</a></li>
+          <li class="has-dropdown{li_cls('services')}">
+            <a href="services.html"{cls('services')}>Services</a>
+            <div class="dropdown" role="menu">
+              <div class="dropdown-card">
+                <div class="dropdown-grid">
+                  <div class="dropdown-col">
+                    <h6>Core Services</h6>
+                    <ul>
+                      <li><a href="implementation.html">
+                        <span>
+                          Implementation
+                          <span class="item-desc">Rollouts &amp; migrations</span>
+                        </span>
+                        <span class="item-arr">→</span>
+                      </a></li>
+                      <li><a href="process-improvement.html">
+                        <span>
+                          Process Improvement
+                          <span class="item-desc">Audit, refine, rebuild</span>
+                        </span>
+                        <span class="item-arr">→</span>
+                      </a></li>
+                      <li><a href="training.html">
+                        <span>
+                          Training
+                          <span class="item-desc">Hands-on Jobpac sessions</span>
+                        </span>
+                        <span class="item-arr">→</span>
+                      </a></li>
+                      <li><a href="civil-construction.html">
+                        <span>
+                          Civil &amp; Construction
+                          <span class="item-desc">Industry specialisation</span>
+                        </span>
+                        <span class="item-arr">→</span>
+                      </a></li>
+                    </ul>
+                  </div>
+                  <div class="dropdown-col">
+                    <h6>Support Services</h6>
+                    <ul>
+                      <li><a href="support-bookkeeping.html"><span>Bookkeeping</span><span class="item-arr">→</span></a></li>
+                      <li><a href="support-accounts-payable.html"><span>Accounts Payable</span><span class="item-arr">→</span></a></li>
+                      <li><a href="support-accounts-receivable.html"><span>Accounts Receivable</span><span class="item-arr">→</span></a></li>
+                      <li><a href="support-payroll.html"><span>Payroll</span><span class="item-arr">→</span></a></li>
+                      <li><a href="support-profit-loss.html"><span>Profit &amp; Loss</span><span class="item-arr">→</span></a></li>
+                      <li><a href="support-temp-relief.html"><span>Temp Relief</span><span class="item-arr">→</span></a></li>
+                      <li><a href="support-business-forecasting.html"><span>Business Forecasting</span><span class="item-arr">→</span></a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li><a href="index.html#team">Team</a></li>
+          <li><a href="index.html#process">Process</a></li>
+          <li><a href="contact.html"{cls('contact')}>Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="contact.html" class="btn btn-primary nav-cta">Book a consultation</a>
+      </div>
+    </div>
+  </header>"""
+
+FOOTER = """  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="brand" aria-label="Buoy Consulting home">
+            <span class="brand-logo" role="img" aria-label="Buoy Consulting logo"></span>
+            <span class="brand-text">
+              <span class="brand-name">Buoy</span>
+              <span class="brand-tag">Consulting</span>
+            </span>
+          </a>
+          <p>Specialist Jobpac consulting for construction and civil businesses across Australia and New Zealand.</p>
+          <div class="contact">
+            <a href="mailto:info@buoyconsultancy.com.au">info@buoyconsultancy.com.au</a>
+            <a href="tel:+61292345678">+61 2 9234 5678</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h5>Services</h5>
+          <ul>
+            <li><a href="implementation.html">Implementation</a></li>
+            <li><a href="process-improvement.html">Process Improvement</a></li>
+            <li><a href="training.html">Training</a></li>
+            <li><a href="civil-construction.html">Civil &amp; Construction</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>Support</h5>
+          <ul>
+            <li><a href="support-bookkeeping.html">Bookkeeping</a></li>
+            <li><a href="support-accounts-payable.html">Accounts Payable</a></li>
+            <li><a href="support-accounts-receivable.html">Accounts Receivable</a></li>
+            <li><a href="support-payroll.html">Payroll</a></li>
+            <li><a href="support-profit-loss.html">Profit &amp; Loss</a></li>
+            <li><a href="support-temp-relief.html">Temp Relief</a></li>
+            <li><a href="support-business-forecasting.html">Business Forecasting</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>Company</h5>
+          <ul>
+            <li><a href="about.html">About</a></li>
+            <li><a href="index.html#team">Team</a></li>
+            <li><a href="index.html#process">Our process</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>© 2026 Buoy Consulting Pty Ltd. All rights reserved.</div>
+        <div class="legal">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>"""
+
+REVEAL_SCRIPT = """  <script>
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+      document.querySelectorAll('.reveal').forEach((el, i) => {
+        el.style.transitionDelay = `${Math.min(i * 60, 300)}ms`;
+        io.observe(el);
+      });
+    } else {
+      document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+    }
+  </script>"""
+
+
+def cta_block(headline: str, sub: str = "Tell us where you're stuck. The first call is free, no slide deck."):
+    return f"""        <div class="inline-cta reveal">
+          <div class="cta-text">
+            <h2>{headline}</h2>
+            <p>{sub}</p>
+          </div>
+          <div class="cta-actions">
+            <a href="contact.html" class="btn btn-primary">Book a consultation <span class="arr">→</span></a>
+            <a href="services.html" class="btn btn-ghost">All services</a>
+          </div>
+        </div>"""
+
+
+def page_hero(eyebrow: str, h1: str, lead: str, banner: str = "", center: bool = False):
+    cls = "page-hero center" if center else "page-hero"
+    banner_html = f'<div class="same-day-banner reveal"><span class="pulse"></span>{banner}</div>' if banner else ''
+    return f"""    <section class="{cls}">
+      <div class="wrap">
+        <div class="reveal">
+          {banner_html}
+          <span class="eyebrow">{eyebrow}</span>
+          <h1>{h1}</h1>
+          <p class="lead">{lead}</p>
+        </div>
+      </div>
+    </section>"""
+
+
+def make_layout(title: str, description: str, active: str, body: str) -> str:
+    return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title} — Buoy Consulting</title>
+  <meta name="description" content="{description}" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet" />
+  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,700,500,400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+{header(active)}
+
+  <main>
+{body}
+  </main>
+
+{FOOTER}
+
+{REVEAL_SCRIPT}
+</body>
+</html>
+"""
+
+
+# ============================================================
+# Page bodies
+# ============================================================
+PAGES = {}
+
+# -------- About --------
+PAGES["about.html"] = dict(
+    title="About",
+    description="Buoy Consulting — Australia and New Zealand's specialist Jobpac consultancy for construction and civil businesses. Founded 2010. Senior consultants only.",
+    active="about",
+    body=page_hero(
+        "About Buoy",
+        "Specialist Jobpac consultants &mdash; built by people who've actually run construction businesses.",
+        "Buoy Consulting was founded in 2010 by senior finance and construction operators who'd spent decades inside the industry. Sixteen years on, we're still the only consultancy in Australia and New Zealand focused exclusively on Jobpac for construction and civil businesses.",
+    ) + """
+    <section class="section">
+      <div class="wrap">
+        <div class="two-col aside reveal">
+          <div>
+            <h2>Why we exist.</h2>
+            <p>Most Jobpac consultancies are reseller-aligned generalists who'll touch any ERP. We're the opposite. Every consultant on our team has spent at least fifteen years inside a construction or civil business doing the work &mdash; running month-end, signing off subbie claims, dealing with a CFO who needs the forecast in the morning.</p>
+            <p>That's not a bio line. It's the reason our advice lands instead of bouncing off. When you tell us your retentions are out by $80k against your subbies' books, we don't ask you to explain what a retention is.</p>
+          </div>
+          <div>
+            <div class="outcomes">
+              <div class="o"><span class="num">2010</span><span class="lbl">Founded by senior construction-finance operators</span></div>
+              <div class="o"><span class="num">16</span><span class="lbl">years specialising in Jobpac</span></div>
+              <div class="o"><span class="num">6</span><span class="lbl">senior consultants on the bench</span></div>
+              <div class="o"><span class="num">100+</span><span class="lbl">years combined construction experience</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section warm-bg">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow">How we're different</span>
+          <h2>What you actually get when you hire Buoy.</h2>
+        </div>
+        <div class="feature-grid">
+          <div class="feature-card reveal">
+            <div class="num">01 / Same-day support</div>
+            <h3>Answered the same day, every day.</h3>
+            <p>Not a 48-hour SLA. Not "next business day." Most tickets are answered within hours by a senior who can actually solve them. When month-end is tomorrow, that's the difference that matters.</p>
+          </div>
+          <div class="feature-card reveal">
+            <div class="num">02 / No juniors</div>
+            <h3>The senior who pitched does the work.</h3>
+            <p>Most consultancies sell you the partner and deliver you a graduate. We don't have graduates. The person who scoped your engagement is the person sitting at the keyboard.</p>
+          </div>
+          <div class="feature-card reveal">
+            <div class="num">03 / Vendor-independent</div>
+            <h3>We don't sell licences.</h3>
+            <p>We don't earn commission from your Jobpac subscription. We earn fees from making your existing investment deliver. That changes whose side we're on.</p>
+          </div>
+          <div class="feature-card reveal">
+            <div class="num">04 / Construction-native</div>
+            <h3>Civil, commercial, and building.</h3>
+            <p>We've worked across Tier-2 builders, civil contractors, fit-out specialists, and family-owned regional businesses. We know what stage claims, retentions, and plant cost recovery look like in Jobpac because we've configured them ourselves.</p>
+          </div>
+          <div class="feature-card reveal">
+            <div class="num">05 / Fixed scope, no surprises</div>
+            <h3>Priced before we start.</h3>
+            <p>Every engagement starts with a fixed-scope proposal. You see the price, the timeline, and the deliverables before you sign anything. We don't run the meter.</p>
+          </div>
+          <div class="feature-card reveal">
+            <div class="num">06 / Embedded knowledge</div>
+            <h3>Your team owns it when we leave.</h3>
+            <p>Documentation, training, and a real handover. We're consultants &mdash; not a permanent dependency. The goal is for your team to run Jobpac without us.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">""" + cta_block(
+        "Want to know if we're the right fit?",
+        "A 30-minute call, no slide deck, no pressure. We'll tell you whether we can help &mdash; and if we can't, who would.",
+    ) + """
+      </div>
+    </section>""",
+)
+
+# -------- Services (overview) --------
+PAGES["services.html"] = dict(
+    title="Services",
+    description="Specialist Jobpac services for construction and civil businesses: implementation, process improvement, training, support, and industry specialisation across AU and NZ.",
+    active="services",
+    body=page_hero(
+        "What we do",
+        "Specialist Jobpac services, end&#8209;to&#8209;end.",
+        "From greenfield rollouts to ongoing finance support &mdash; whether you need a one-off project or a long-term partner, Buoy covers the full Jobpac lifecycle for construction and civil businesses across Australia and New Zealand.",
+        center=True,
+    ) + """
+    <section class="section">
+      <div class="wrap">
+        <div class="sub-grid">
+          <a href="implementation.html" class="sub-card reveal" style="text-decoration:none;color:inherit;">
+            <div class="icon">IM</div>
+            <h3>Implementation</h3>
+            <p>Greenfield rollouts, ERP migrations, and module-by-module deployments. Configured the way construction actually runs.</p>
+            <span class="more">Learn more <span class="arr">→</span></span>
+          </a>
+          <a href="process-improvement.html" class="sub-card reveal" style="text-decoration:none;color:inherit;">
+            <div class="icon">PI</div>
+            <h3>Process Improvement</h3>
+            <p>Already running Jobpac but not getting the value you paid for? We audit, find the gaps, and rebuild the workflows around how your team really works.</p>
+            <span class="more">Learn more <span class="arr">→</span></span>
+          </a>
+          <a href="support.html" class="sub-card reveal" style="text-decoration:none;color:inherit;background:linear-gradient(135deg, var(--ink-900), var(--ink-800));color:var(--white);border-color:transparent;">
+            <div class="icon" style="background:rgba(232,93,31,0.18);color:var(--orange-300);">SD</div>
+            <h3 style="color:var(--white);">Support</h3>
+            <p style="color:rgba(255,255,255,0.8);"><strong style="color:var(--orange-300);">Same-day support, every day.</strong> Bookkeeping, AP/AR, payroll, P&amp;L, temp relief, and forecasting &mdash; on call or fully embedded.</p>
+            <span class="more" style="color:var(--orange-300);">Explore Support <span class="arr">→</span></span>
+          </a>
+          <a href="training.html" class="sub-card reveal" style="text-decoration:none;color:inherit;">
+            <div class="icon">TR</div>
+            <h3>Training</h3>
+            <p>Hands-on Jobpac training tailored to your modules, your team's experience level, and your real project workflows.</p>
+            <span class="more">Learn more <span class="arr">→</span></span>
+          </a>
+          <a href="civil-construction.html" class="sub-card reveal" style="text-decoration:none;color:inherit;">
+            <div class="icon">CC</div>
+            <h3>Civil &amp; Construction</h3>
+            <p>Specialist focus on the unique mechanics of civil and commercial construction &mdash; subbie claims, retentions, plant costing, and stage billing.</p>
+            <span class="more">Learn more <span class="arr">→</span></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">""" + cta_block(
+        "Not sure where to start?",
+        "Send us your situation in two sentences. We'll point you at the right service &mdash; or tell you straight if it isn't us.",
+    ) + """
+      </div>
+    </section>""",
+)
+
+# -------- Implementation --------
+PAGES["implementation.html"] = dict(
+    title="Implementation",
+    description="Jobpac implementation, migration, and module deployment for construction and civil businesses. Fixed-scope, senior-led, configured the way construction actually runs.",
+    active="services",
+    body=page_hero(
+        "Implementation",
+        "Stand up Jobpac the right way the first time.",
+        "Most failed Jobpac rollouts aren't software problems. They're scope, configuration, and change problems &mdash; the bits the vendor can't fix because they don't know your business. We plan, configure, and stand up Jobpac the way it should run for construction and civil businesses.",
+    ) + """
+    <section class="section">
+      <div class="wrap">
+        <div class="two-col reveal">
+          <div>
+            <h2>What an implementation looks like with us.</h2>
+            <p>Every implementation starts with the same question: what does success look like 90 days after go-live? We design backwards from that &mdash; not forwards from a vendor template.</p>
+            <p>The work is done by a senior consultant who's stood up Jobpac in construction businesses ten or twenty times before. No graduates. No generic ERP-isation. The result is a system configured for your project structure, your billing cycle, your subbie claim process &mdash; not someone else's.</p>
+          </div>
+          <div>
+            <ul class="deliverables">
+              <li><strong>Greenfield rollouts</strong>From an empty system to a fully-configured live environment in 8&ndash;14 weeks.</li>
+              <li><strong>ERP migrations</strong>Coming off MYOB, Xero, Reckon, or a legacy purpose-built system &mdash; we plan the transition without losing project data integrity.</li>
+              <li><strong>Module-by-module deployments</strong>Already running parts of Jobpac and adding more? We'll roll out additional modules in your live system without disrupting day-to-day.</li>
+              <li><strong>Data migration &amp; validation</strong>Project history, supplier records, contract values, retentions held &mdash; mapped, migrated, reconciled.</li>
+              <li><strong>Post go-live stabilisation</strong>The first month-end after go-live is where most projects die. We're there for that one. And the next one.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section warm-bg">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow">Our approach</span>
+          <h2>Five-phase delivery, fixed scope.</h2>
+        </div>
+        <div class="feature-grid">
+          <div class="feature-card reveal">
+            <div class="num">Phase 01</div>
+            <h3>Discovery</h3>
+            <p>We sit with your finance lead, project managers, and ops team. We map your current state &mdash; not a generic ERP-vendor questionnaire.</p>
+          </div>
+          <div class="feature-card reveal">
+            <div class="num">Phase 02</div>
+            <h3>Design</h3>
+            <p>Project structure, chart of accounts, cost code library, claim workflows, approval chains. All documented before we touch the system.</p>
+          </div>
+          <div class="feature-card reveal">
+            <div class="num">Phase 03</div>
+            <h3>Build</h3>
+            <p>Configuration, integrations, data migration. Your team sees a working sandbox at week six, not week twelve.</p>
+          </div>
+          <div class="feature-card reveal">
+            <div class="num">Phase 04</div>
+            <h3>Train &amp; cutover</h3>
+            <p>Role-based training for the people who'll actually use it. Then a planned cutover &mdash; not a "fingers crossed" weekend.</p>
+          </div>
+          <div class="feature-card reveal">
+            <div class="num">Phase 05</div>
+            <h3>Stabilise</h3>
+            <p>We're embedded for the first month-end and the first project claim cycle. By the time we leave, your team owns it.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">""" + cta_block(
+        "Planning a Jobpac rollout or migration?",
+        "Get a fixed-scope proposal within a week. Senior consultant on the call, no junior intermediary.",
+    ) + """
+      </div>
+    </section>""",
+)
+
+# -------- Process Improvement --------
+PAGES["process-improvement.html"] = dict(
+    title="Process Improvement",
+    description="Jobpac process audit, workflow rebuild, and configuration improvement for construction businesses already using Jobpac. Get the value you paid for.",
+    active="services",
+    body=page_hero(
+        "Process Improvement",
+        "You bought the software. We make sure you actually get value from it.",
+        "Most Jobpac users we meet have the system &mdash; they just aren't getting what they were sold. Modules sit unused. Reports take a week to produce. Workarounds in spreadsheets do work the system was meant to do. We audit how Jobpac is actually being used, find the gaps, and rebuild the workflows around how your team really works.",
+    ) + """
+    <section class="section">
+      <div class="wrap">
+        <div class="two-col reveal">
+          <div>
+            <h2>Where we usually find the leaks.</h2>
+            <p>After sixteen years inside Jobpac across hundreds of construction businesses, the gaps cluster in predictable places. The audit tells us which ones are yours.</p>
+            <ul class="checklist">
+              <li><strong>Underused modules</strong>You're paying for plant, subbie, and forecasting modules that aren't switched on.</li>
+              <li><strong>Manual workarounds</strong>Critical workflows in Excel because the Jobpac process wasn't configured properly the first time.</li>
+              <li><strong>Reporting gaps</strong>Project P&amp;L takes days to compile. Forecast vs actual is a hand-built spreadsheet.</li>
+              <li><strong>Approval chaos</strong>Claims and POs going around the system instead of through it. Audit trail is patchy.</li>
+              <li><strong>Stale configuration</strong>Cost code library or chart of accounts hasn't been touched in five years and no longer matches how you bid work.</li>
+              <li><strong>Training debt</strong>People hired post-implementation never got proper training and have invented their own way of doing things.</li>
+            </ul>
+          </div>
+          <div>
+            <h2>How an audit runs.</h2>
+            <p>A senior consultant spends two to three days inside your business. We sit with the people doing the work, not just the executives. We watch a real claim cycle, a real month-end, a real project setup.</p>
+            <p>You get a written audit at the end &mdash; ranked findings, remediation effort, expected payback. Then you decide what to fix. We can do the fixing or hand it to your team with the playbook.</p>
+            <div class="outcomes">
+              <div class="o"><span class="num">2&ndash;3</span><span class="lbl">days on-site for the audit</span></div>
+              <div class="o"><span class="num">12&ndash;20</span><span class="lbl">findings ranked by payback</span></div>
+              <div class="o"><span class="num">Fixed</span><span class="lbl">scope, fixed price, no surprises</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">""" + cta_block(
+        "Suspect Jobpac isn't pulling its weight?",
+        "Most of the value an audit unlocks is paid back in the first quarter. Tell us where it hurts.",
+    ) + """
+      </div>
+    </section>""",
+)
+
+# -------- Support (parent) --------
+PAGES["support.html"] = dict(
+    title="Support",
+    description="Same-day Jobpac support, plus ongoing finance and accounting cover for construction businesses: bookkeeping, AP/AR, payroll, P&L, temp relief, and forecasting.",
+    active="services",
+    body=page_hero(
+        "Support",
+        "Your finance team's safety net &mdash; answered the same day, every day.",
+        "Buoy's support service is what construction finance teams reach for when the wheels need to keep turning. Day-to-day Jobpac help, real human bookkeeping and accounting cover, and temp relief when someone's sick or away. On-call or fully embedded &mdash; the cost of an in-house resource without the cost of a permanent hire.",
+        banner="Same-day support, every day &mdash; usually answered within hours.",
+    ) + """
+    <section class="section">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow">Inside Support</span>
+          <h2>Seven specialist disciplines, one team.</h2>
+          <p class="lead">Pick the bits you need. Most clients start with one or two and expand as they see the value.</p>
+        </div>
+        <div class="sub-grid">
+          <a href="support-bookkeeping.html" class="sub-card reveal" style="text-decoration:none;color:inherit;">
+            <div class="icon">BK</div>
+            <h3>Bookkeeping</h3>
+            <p>Day-to-day Jobpac bookkeeping, monthly close, reconciliations, and BAS-ready books.</p>
+            <span class="more">Learn more <span class="arr">→</span></span>
+          </a>
+          <a href="support-accounts-payable.html" class="sub-card reveal" style="text-decoration:none;color:inherit;">
+            <div class="icon">AP</div>
+            <h3>Accounts Payable</h3>
+            <p>Subbie claims, RCTI generation, vendor management, and clean payment runs in Jobpac.</p>
+            <span class="more">Learn more <span class="arr">→</span></span>
+          </a>
+          <a href="support-accounts-receivable.html" class="sub-card reveal" style="text-decoration:none;color:inherit;">
+            <div class="icon">AR</div>
+            <h3>Accounts Receivable</h3>
+            <p>Progress claims, customer invoicing, retention tracking, and collection of overdue accounts.</p>
+            <span class="more">Learn more <span class="arr">→</span></span>
+          </a>
+          <a href="support-payroll.html" class="sub-card reveal" style="text-decoration:none;color:inherit;">
+            <div class="icon">PR</div>
+            <h3>Payroll</h3>
+            <p>Award- and EBA-compliant payroll, super, STP reporting, and timesheet integration.</p>
+            <span class="more">Learn more <span class="arr">→</span></span>
+          </a>
+          <a href="support-profit-loss.html" class="sub-card reveal" style="text-decoration:none;color:inherit;">
+            <div class="icon">P&amp;L</div>
+            <h3>Profit &amp; Loss</h3>
+            <p>Project- and entity-level P&amp;L, monthly management reporting, and forecast-vs-actual analysis.</p>
+            <span class="more">Learn more <span class="arr">→</span></span>
+          </a>
+          <a href="support-temp-relief.html" class="sub-card reveal" style="text-decoration:none;color:inherit;">
+            <div class="icon">TR</div>
+            <h3>Temp Relief</h3>
+            <p>Short-term cover for sick leave, parental leave, holidays, or peak-period workload.</p>
+            <span class="more">Learn more <span class="arr">→</span></span>
+          </a>
+          <a href="support-business-forecasting.html" class="sub-card reveal" style="text-decoration:none;color:inherit;">
+            <div class="icon">FC</div>
+            <h3>Business Forecasting</h3>
+            <p>Integrated revenue, cash, and project pipeline forecasts &mdash; built and maintained in Jobpac.</p>
+            <span class="more">Learn more <span class="arr">→</span></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section warm-bg">
+      <div class="wrap">
+        <div class="two-col aside reveal">
+          <div>
+            <h2>How same-day support actually works.</h2>
+            <p>You email or call. A senior consultant who knows your setup picks it up &mdash; not a triage queue, not an offshore ticket centre. Most queries are resolved the same day, often within a couple of hours.</p>
+            <p>If we need to log into Jobpac to fix something, we already have the credentials and the project map &mdash; we're not re-discovering your environment every time. That's why we're fast.</p>
+          </div>
+          <div>
+            <div class="outcomes">
+              <div class="o"><span class="num">Same day</span><span class="lbl">response, every business day</span></div>
+              <div class="o"><span class="num">&lt; 4hrs</span><span class="lbl">average resolution time</span></div>
+              <div class="o"><span class="num">No queue</span><span class="lbl">a senior picks up directly</span></div>
+              <div class="o"><span class="num">AU &amp; NZ</span><span class="lbl">business hours coverage</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">""" + cta_block(
+        "Need a finance hand &mdash; today?",
+        "Tell us what's going sideways. If we can help, we'll start same week. If we can't, we'll say.",
+    ) + """
+      </div>
+    </section>""",
+)
+
+# -------- Training --------
+PAGES["training.html"] = dict(
+    title="Training",
+    description="Hands-on Jobpac training for construction and civil teams, tailored to your modules, your team's experience level, and your real project workflows.",
+    active="services",
+    body=page_hero(
+        "Training",
+        "Hands&#8209;on Jobpac training tailored to your team.",
+        "Generic Jobpac training videos are easy to find. Training tailored to your modules, your project structure, and your team's actual experience level isn't. We deliver training that's grounded in your real Jobpac environment &mdash; not a clean demo system that looks nothing like yours.",
+    ) + """
+    <section class="section">
+      <div class="wrap">
+        <div class="two-col reveal">
+          <div>
+            <h2>Built for your team, not the textbook.</h2>
+            <p>Every training engagement starts with a 30-minute call to understand who's in the room. New starters who've never seen Jobpac? Long-timers picking up new modules? PMs who only need to read reports?</p>
+            <p>We design the syllabus from there. Sessions run on a sandbox of your real Jobpac environment, with your project structure and cost codes &mdash; so what people learn is what they'll actually do on Monday.</p>
+          </div>
+          <div>
+            <h2>Formats we run.</h2>
+            <ul class="deliverables">
+              <li><strong>On-site workshops</strong>Half-day or full-day sessions at your office, with a senior consultant in the room.</li>
+              <li><strong>Remote sessions</strong>Live, interactive, screen-shared. Recorded so the team can rewatch.</li>
+              <li><strong>Role-specific tracks</strong>Project managers, accounts payable, payroll, finance leadership &mdash; each gets training calibrated to what they touch.</li>
+              <li><strong>New-starter packs</strong>A fixed onboarding programme so the next hire doesn't take three months to come up to speed.</li>
+              <li><strong>Recorded library</strong>We'll record the sessions and hand you a private library your team can reference long after we leave.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section warm-bg">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow">Module coverage</span>
+          <h2>What we train on.</h2>
+        </div>
+        <div class="feature-grid">
+          <div class="feature-card reveal"><div class="num">Core</div><h3>Project setup &amp; structure</h3><p>Job creation, cost code mapping, budget loading, contract values, variations.</p></div>
+          <div class="feature-card reveal"><div class="num">Finance</div><h3>AP / AR / GL</h3><p>Subbie claims, vendor invoices, customer billing, period close, GL reconciliation.</p></div>
+          <div class="feature-card reveal"><div class="num">Payroll</div><h3>Payroll &amp; timesheets</h3><p>Weekly and monthly cycles, award rates, EBA configuration, STP, super, leave.</p></div>
+          <div class="feature-card reveal"><div class="num">Reporting</div><h3>Reports &amp; dashboards</h3><p>Project P&amp;L, forecast-vs-actual, cashflow, custom reports, exporting and pivoting.</p></div>
+          <div class="feature-card reveal"><div class="num">Plant</div><h3>Plant &amp; equipment</h3><p>Plant ledger, internal hire rates, plant cost recovery to projects.</p></div>
+          <div class="feature-card reveal"><div class="num">Forecast</div><h3>Forecasting &amp; cashflow</h3><p>Building and maintaining live project and entity forecasts inside Jobpac.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">""" + cta_block(
+        "Got a team that needs to level up on Jobpac?",
+        "Send us the headcount and the modules &mdash; we'll come back with a tailored syllabus and price.",
+    ) + """
+      </div>
+    </section>""",
+)
+
+# -------- Civil & Construction --------
+PAGES["civil-construction.html"] = dict(
+    title="Civil & Construction",
+    description="Specialist Jobpac focus on civil and commercial construction: subbie claims, retentions, progress billing, plant costing, and stage claims.",
+    active="services",
+    body=page_hero(
+        "Civil &amp; Construction",
+        "Specialist focus on the unique mechanics of civil and commercial construction.",
+        "Jobpac was built for construction and we built our consultancy for the same audience. We know subbie claims, retentions, plant costing, stage billing, and JV multi-entity reporting from inside the businesses that run them &mdash; not from a vendor's marketing deck.",
+    ) + """
+    <section class="section">
+      <div class="wrap">
+        <div class="two-col reveal">
+          <div>
+            <h2>Where industry knowledge changes the answer.</h2>
+            <p>Most ERP consultants will configure what you ask for. We'll tell you what you should be asking for, because we know the operational realities the configuration has to survive.</p>
+            <p>That shows up in retention treatment, progress claim formats, head-contract vs subcontract billing logic, plant cost-recovery models, and how a JV reports back to its parents. The differences are small in isolation. They compound across a year of project closeouts.</p>
+          </div>
+          <div>
+            <ul class="deliverables">
+              <li><strong>Subbie claim processing</strong>RCTI generation, retention release tracking, statutory declarations, payment claim/payment schedule timing under the Security of Payment Acts.</li>
+              <li><strong>Retentions, ledger to ledger</strong>Tracked correctly on both sides &mdash; what you owe subbies and what's withheld from you by the head contractor.</li>
+              <li><strong>Progress billing</strong>Stage claims, schedule of values, milestone billing, and reconciliation against the head contract.</li>
+              <li><strong>Plant &amp; equipment costing</strong>Internal hire rates, plant ledger maintenance, cost recovery to projects, idle-time tracking.</li>
+              <li><strong>Multi-entity / JV structures</strong>Inter-entity charges, JV reporting back to parent entities, consolidated and standalone P&amp;L.</li>
+              <li><strong>Variations &amp; contract value tracking</strong>Approved variations vs pending vs disputed &mdash; visible at the project line, not buried in spreadsheets.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section warm-bg">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow">Who we work with</span>
+          <h2>The businesses we know best.</h2>
+          <p class="lead">Most of our clients fit one of these profiles. If yours doesn't, the conversation might still be worth having.</p>
+        </div>
+        <div class="feature-grid">
+          <div class="feature-card reveal"><div class="num">Tier 2</div><h3>Tier-2 commercial builders</h3><p>$50m&ndash;$500m turnover, multiple concurrent projects, growing pains around forecast accuracy.</p></div>
+          <div class="feature-card reveal"><div class="num">Civil</div><h3>Civil contractors</h3><p>Roads, bridges, utilities, earthworks. Heavy plant, day-rate hire, stage-based billing.</p></div>
+          <div class="feature-card reveal"><div class="num">Fit-out</div><h3>Fit-out &amp; refurb specialists</h3><p>Fast turn-over jobs, high subbie density, tight margin discipline.</p></div>
+          <div class="feature-card reveal"><div class="num">Family</div><h3>Family-owned regional builders</h3><p>Decades of operating know-how, leaner finance teams, modernising off legacy systems.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">""" + cta_block(
+        "Want a Jobpac partner who actually knows civil and commercial?",
+        "Most consultancies will service any ERP and any sector. We do one ERP, in one industry, and we've done it for sixteen years.",
+    ) + """
+      </div>
+    </section>""",
+)
+
+# -------- Contact --------
+PAGES["contact.html"] = dict(
+    title="Contact",
+    description="Get in touch with Buoy Consulting. Same-day responses on weekdays. Specialist Jobpac help for construction and civil businesses across Australia and New Zealand.",
+    active="contact",
+    body=page_hero(
+        "Get in touch",
+        "Tell us what's stuck. We'll come back the same day.",
+        "Use the form, send an email, or pick up the phone &mdash; whichever you prefer. A senior consultant reads everything that comes in. We respond on the same business day, usually within a couple of hours.",
+        banner="Same-day responses on AU/NZ business days.",
+    ) + """
+    <section class="section">
+      <div class="wrap">
+        <div class="two-col aside">
+          <form class="contact-form reveal" onsubmit="event.preventDefault(); alert('Form is illustrative — wire to your form handler before launch.');">
+            <div class="field">
+              <label for="cf-name">Name</label>
+              <input id="cf-name" name="name" type="text" required placeholder="Your name" />
+            </div>
+            <div class="field">
+              <label for="cf-email">Email</label>
+              <input id="cf-email" name="email" type="email" required placeholder="you@business.com.au" />
+            </div>
+            <div class="field">
+              <label for="cf-company">Business</label>
+              <input id="cf-company" name="company" type="text" placeholder="Your company" />
+            </div>
+            <div class="field">
+              <label for="cf-topic">What can we help with?</label>
+              <select id="cf-topic" name="topic">
+                <option>Implementation or migration</option>
+                <option>Process improvement audit</option>
+                <option>Same-day support / ongoing cover</option>
+                <option>Training</option>
+                <option>Civil &amp; construction specialist help</option>
+                <option>Something else</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="cf-msg">Tell us a bit more</label>
+              <textarea id="cf-msg" name="message" placeholder="Two or three sentences is plenty. We'll come back with the right person to speak to."></textarea>
+            </div>
+            <button type="submit">Send enquiry <span class="arr">→</span></button>
+          </form>
+
+          <aside class="contact-aside reveal">
+            <div>
+              <h3>Or skip the form.</h3>
+              <p style="color:var(--gray-700); margin-top: 0.5rem;">Whichever channel you use, you'll talk to a senior consultant &mdash; not a routing desk.</p>
+            </div>
+            <div class="channel">
+              <a href="mailto:info@buoyconsultancy.com.au">info@buoyconsultancy.com.au</a>
+              <span>Direct to the team. Same-day response on business days.</span>
+            </div>
+            <div class="channel">
+              <a href="tel:+61292345678">+61 2 9234 5678</a>
+              <span>Sydney HQ. Mon&ndash;Fri, 8am to 6pm AEST.</span>
+            </div>
+            <div class="channel">
+              <a href="tel:+6498883333">+64 9 888 3333</a>
+              <span>NZ direct line. Mon&ndash;Fri, 9am to 5:30pm NZST.</span>
+            </div>
+            <div>
+              <h3 style="margin-top: 1rem;">What happens next.</h3>
+              <ul class="checklist" style="margin-top: 1rem;">
+                <li>You'll get a reply the same business day.</li>
+                <li>If we're a fit, we'll book a 30-minute call &mdash; no slide deck, no obligation.</li>
+                <li>If we aren't, we'll point you at someone who is.</li>
+              </ul>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>""",
+)
+
+# -------- Support sub-pages --------
+def support_subpage(slug, title, code, h1, lead, blurb, deliverables, focus_h, focus_items):
+    body = page_hero(
+        f"Support &mdash; {title}",
+        h1,
+        lead,
+        banner="Same-day support, every day",
+    ) + f"""
+    <section class="section">
+      <div class="wrap">
+        <div class="two-col reveal">
+          <div>
+            <h2>What we cover.</h2>
+            <p>{blurb}</p>
+            <ul class="deliverables">
+              {''.join(f'<li><strong>{d[0]}</strong>{d[1]}</li>' for d in deliverables)}
+            </ul>
+          </div>
+          <div>
+            <h2>{focus_h}</h2>
+            <ul class="checklist" style="margin-top: 1.25rem;">
+              {''.join(f'<li>{f}</li>' for f in focus_items)}
+            </ul>
+            <div class="outcomes" style="margin-top: 2rem;">
+              <div class="o"><span class="num">Senior</span><span class="lbl">consultant on every job, no juniors</span></div>
+              <div class="o"><span class="num">Same day</span><span class="lbl">turnaround on most requests</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">""" + cta_block(
+        f"Need {title.lower()} cover &mdash; this week?",
+        "On-call, ad-hoc, or fully embedded. Tell us the shape and we'll come back same day.",
+    ) + """
+      </div>
+    </section>"""
+    return dict(title=f"{title} Support", description=f"Specialist Jobpac {title.lower()} support for construction and civil businesses. Same-day response. Senior consultants only.", active="services", body=body)
+
+PAGES["support-bookkeeping.html"] = support_subpage(
+    "support-bookkeeping", "Bookkeeping", "BK",
+    "Day&#8209;to&#8209;day Jobpac bookkeeping that doesn't fall behind.",
+    "Bookkeeping inside Jobpac for construction and civil businesses &mdash; daily transaction processing, monthly close, BAS-ready books, and a clean GL handed to your accountant.",
+    "We run your day-to-day Jobpac bookkeeping the way an in-house bookkeeper would &mdash; just without the cost or the resourcing risk. The work is done by senior bookkeepers who've spent years inside Jobpac, so your books reconcile, your GL is clean, and your accountant has nothing to chase at year-end.",
+    [
+        ("Daily transaction processing", "AP, AR, GL, bank feeds &mdash; processed daily so nothing piles up."),
+        ("Bank &amp; credit card reconciliation", "All accounts reconciled to the GL, weekly or daily depending on volume."),
+        ("Monthly close", "Period-end procedures, accruals, prepayments, and a closed-period sign-off."),
+        ("BAS, IAS &amp; PAYG preparation", "Books readied to a standard your accountant can lodge from directly."),
+        ("Year-end pack", "Trial balance, P&amp;L, balance sheet, schedules &mdash; handed to your accountant in a package they can use."),
+    ],
+    "What's not in scope.",
+    [
+        "We're bookkeepers, not your tax accountant. We don't lodge BAS or do tax returns &mdash; we hand the package to whoever does.",
+        "Decisions about your accounting policy stay with you. We follow the policy and flag things that look off.",
+        "We're not a triage queue &mdash; if a question is outside bookkeeping, we'll route it to the right Buoy specialist same day.",
+    ],
+)
+
+PAGES["support-accounts-payable.html"] = support_subpage(
+    "support-accounts-payable", "Accounts Payable", "AP",
+    "Subbie claims, vendor invoices, and clean payment runs.",
+    "Specialist Jobpac AP support: subbie claim processing, RCTI generation, vendor management, statutory compliance, and disciplined weekly payment runs &mdash; all inside the system you already pay for.",
+    "Construction AP isn't normal AP. Retentions, RCTIs, statutory declarations, payment claim timeframes &mdash; the rules are different and the audit trail matters. Our AP team has spent careers processing claims for civil and commercial businesses, so the work goes through Jobpac the way it should &mdash; not around it.",
+    [
+        ("Subbie claim processing", "Claims received, validated against contract and prior progress, retention applied, posted to projects."),
+        ("RCTI generation &amp; distribution", "Recipient-created tax invoices generated, distributed, and tracked &mdash; not stored in someone's email."),
+        ("Statutory declarations", "Stat decs collected, attached to claim records, and held to the audit standard."),
+        ("Vendor master maintenance", "ABN checks, banking, insurance currency, contractor licences &mdash; up-to-date and on file."),
+        ("Weekly payment runs", "Run, approved, exported to your bank file format &mdash; on the same day, every week."),
+        ("Subbie ledger reconciliation", "Your ledger reconciled to subbie statements monthly so disputes don't compound."),
+    ],
+    "How we plug into your team.",
+    [
+        "Drop-in: we cover when your AP person is sick, on leave, or behind.",
+        "Embedded: a defined number of hours per week as your standing AP capacity.",
+        "Project-based: cleaning up a backlog, then handing the running back to your team.",
+    ],
+)
+
+PAGES["support-accounts-receivable.html"] = support_subpage(
+    "support-accounts-receivable", "Accounts Receivable", "AR",
+    "Progress claims out, retentions tracked, money in.",
+    "Jobpac AR support for construction businesses: progress billing, customer invoicing, retention tracking, and disciplined collections of overdue accounts.",
+    "Cashflow lives or dies on AR. Progress claims need to go out on the dot, retentions need to be tracked on both sides of the head contract, and overdue invoices need someone actually working them. Our team does the work in Jobpac so you have a single source of truth, not a spreadsheet running in parallel.",
+    [
+        ("Progress claim preparation", "Claims built against contract schedule of values, variations included, ready for issue on schedule."),
+        ("Customer invoicing", "Standalone invoices, milestone bills, materials-on-site &mdash; raised against the right project line."),
+        ("Retention tracking", "What's been withheld, when it's due to be released, and who needs reminding."),
+        ("Aged debtors discipline", "Weekly aged debtor review, customer follow-ups documented, escalation path defined."),
+        ("Disputes &amp; deductions", "Logged, tracked, and resolved &mdash; not allowed to age in a folder."),
+    ],
+    "Where AR usually breaks.",
+    [
+        "Progress claims go out late because the schedule of values is in someone's head, not the system.",
+        "Retentions held by head contractors aren't tracked, so release dates pass unnoticed.",
+        "Aged debtors get worse for three months until someone gets desperate and does a cleanup.",
+        "Disputes sit in email instead of being formally logged in the customer record.",
+    ],
+)
+
+PAGES["support-payroll.html"] = support_subpage(
+    "support-payroll", "Payroll", "PR",
+    "Construction payroll done right &mdash; awards, EBAs, and STP.",
+    "Specialist Jobpac payroll support for construction and civil businesses: award- and EBA-compliant pays, super, STP, leave, and timesheet integration.",
+    "Construction payroll is unforgiving. Get the EBA wrong and you're underpaying. Get the timesheet allocation wrong and your project costs are wrong too. We run construction payroll inside Jobpac with the rates, allowances, and on-costs configured the way your award or EBA actually requires &mdash; with the audit trail to back it up.",
+    [
+        ("Weekly &amp; fortnightly cycles", "Run end-to-end on schedule, with sign-off and bank file ready for upload."),
+        ("Award &amp; EBA compliance", "Pay rates, penalty rates, allowances, RDOs &mdash; configured correctly and reviewed when the award/EBA is updated."),
+        ("Superannuation", "Contributions calculated, batched, and remitted on time."),
+        ("Single Touch Payroll (STP)", "Each pay reported to the ATO under STP Phase 2 with the correct categorisations."),
+        ("Leave administration", "Annual, personal, long-service, RDO accruals and balances reconciled monthly."),
+        ("Timesheet integration", "Timesheets imported from your collection method, allocated to the right projects and cost codes."),
+    ],
+    "Why construction payroll trips most generalist providers.",
+    [
+        "EBAs vary by employer and by site &mdash; one rate sheet doesn't cover everyone.",
+        "Allowances (site, travel, fares, meal) need to flow through to project cost, not just to the pay slip.",
+        "Working time directives, RDOs, and rolling rosters complicate accruals.",
+        "Subbie/labour-hire mixed workforces need clear separation in the GL and the project ledger.",
+    ],
+)
+
+PAGES["support-profit-loss.html"] = support_subpage(
+    "support-profit-loss", "Profit & Loss", "P&L",
+    "Project P&amp;L you can trust, on the same day every month.",
+    "Project- and entity-level Profit &amp; Loss reporting in Jobpac, monthly management packs, and forecast-vs-actual analysis built so leadership can act on the numbers.",
+    "If your P&amp;L takes a week to compile after month-end, by the time you have it the variance is two weeks old. We build P&amp;L reporting inside Jobpac so it's available the morning after close, structured by project and entity, with forecast-vs-actual variance ranked by exception.",
+    [
+        ("Project P&amp;L", "Per-project view: contract value, certified-to-date, costs to date, forecast cost-to-complete, and projected margin."),
+        ("Entity P&amp;L", "Standalone and consolidated views for groups with multiple entities or joint ventures."),
+        ("Monthly management pack", "Headlines, project schedule, exceptions, and commentary &mdash; ready for the leadership meeting."),
+        ("Forecast-vs-actual", "Live variance reporting against the forecast, ranked so attention goes where it pays back."),
+        ("Cashflow", "Linked cashflow forecast that updates as forecast and actuals shift."),
+    ],
+    "Why P&amp;L lateness compounds.",
+    [
+        "By the time the P&amp;L lands, the issues it shows are weeks old.",
+        "Project managers can't course-correct on data they haven't seen yet.",
+        "Forecast accuracy degrades because actuals never close back into the forecast cycle.",
+        "Boards make decisions on stale numbers &mdash; or worse, on gut.",
+    ],
+)
+
+PAGES["support-temp-relief.html"] = support_subpage(
+    "support-temp-relief", "Temp Relief", "TR",
+    "Short&#8209;term cover when you need it &mdash; without the agency markup.",
+    "Specialist Jobpac temp relief: cover for sick leave, parental leave, holidays, or peak-period workload &mdash; senior bookkeepers and accountants who can land in your seat without three weeks of onboarding.",
+    "When your finance person is suddenly out for two weeks &mdash; or six months &mdash; you don't have time to recruit, train, and ramp a temp. We slot a senior consultant who already knows Jobpac into the seat, with day-one productivity instead of week-three. The cost is roughly what an agency temp costs, and the output is a magnitude better.",
+    [
+        ("Sick leave / unplanned absence", "Same-week cover. We can be in by Monday morning if you call Friday afternoon."),
+        ("Parental &amp; long-service leave", "Defined cover for a known period, with handover protocols both directions."),
+        ("Holidays / annual leave", "Pre-booked cover for known absences &mdash; no scrambling."),
+        ("Peak-period workload", "Year-end, EOFY, big project closeouts &mdash; extra hands without permanent overhead."),
+        ("Hand-back kit", "Documented work-in-progress so your returning team-member isn't lost on day one."),
+    ],
+    "How we keep day-one productive.",
+    [
+        "We've already worked inside Jobpac for sixteen years &mdash; no orientation needed.",
+        "We map your project structure and chart of accounts before we start, not while we're starting.",
+        "Senior people only &mdash; no &quot;here's a graduate, good luck&quot;.",
+        "We hand the seat back cleanly with a written handover, not a brain-dump email.",
+    ],
+)
+
+PAGES["support-business-forecasting.html"] = support_subpage(
+    "support-business-forecasting", "Business Forecasting", "FC",
+    "Live business forecasts &mdash; built inside Jobpac, not next to it.",
+    "Integrated revenue, project, and cashflow forecasting for construction and civil businesses &mdash; built and maintained in Jobpac so the forecast actually reflects the live business.",
+    "Most construction businesses we meet have a forecast in Excel that someone built two years ago and patches each month. It's drifted from reality and nobody fully trusts it. We build the forecast inside Jobpac so it lives in the system that holds the truth &mdash; project costs, contract values, timesheets, and cashflow all feeding the same model.",
+    [
+        ("Project pipeline forecast", "Approved, probable, and possible jobs &mdash; with weighting and cashflow impact mapped to dates."),
+        ("Project P&amp;L forecast", "Forecast cost-to-complete and forecast margin per project, updated as actuals close."),
+        ("Entity-level revenue &amp; margin forecast", "Rolling 12 / 24 / 36-month view by entity and consolidated."),
+        ("Cashflow forecast", "Linked to the project pipeline and AR/AP timing &mdash; not a static spreadsheet."),
+        ("Forecast-vs-actual loop", "Each month-end, actuals close back into the forecast model so accuracy improves over time."),
+    ],
+    "Where most construction forecasts go wrong.",
+    [
+        "Built once in Excel, then never trued back to actuals &mdash; so accuracy drifts.",
+        "Project pipeline lives in a CRM that doesn't talk to the cost system.",
+        "Cashflow is a separate model that's been &quot;temporarily&quot; running for three years.",
+        "Forecast vs actual variance is computed by hand, late, and not ranked.",
+    ],
+)
+
+
+# ============================================================
+# Run
+# ============================================================
+def ensure_inner_css():
+    css_path = ROOT / "styles.css"
+    css = css_path.read_text(encoding="utf-8")
+    if INNER_CSS_MARKER in css:
+        # Replace existing block — find from marker to EOF and replace
+        idx = css.find(INNER_CSS_MARKER)
+        css = css[:idx].rstrip() + "\n" + INNER_CSS.lstrip("\n")
+    else:
+        css = css.rstrip() + "\n\n" + INNER_CSS.lstrip("\n")
+    css_path.write_text(css, encoding="utf-8")
+    print(f"styles.css: {len(css):,} bytes")
+
+def write_pages():
+    for filename, page in PAGES.items():
+        html = make_layout(page["title"], page["description"], page["active"], page["body"])
+        (ROOT / filename).write_text(html, encoding="utf-8")
+        print(f"  wrote {filename} ({len(html):,} bytes)")
+
+if __name__ == "__main__":
+    ensure_inner_css()
+    write_pages()
+    print(f"\nDone. {len(PAGES)} pages.")
