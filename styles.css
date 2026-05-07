@@ -157,7 +157,6 @@
       background-repeat: no-repeat;
       background-position: center;
       flex-shrink: 0;
-      filter: drop-shadow(0 2px 6px rgba(232, 93, 31, 0.18));
     }
     .brand-text {
       display: flex;
@@ -1153,7 +1152,6 @@
       }
       .reveal.in { opacity: 1; transform: translateY(0); }
     }
-
 /* === INNER-PAGE STYLES ============================================== */
 .page-hero {
   padding: clamp(3.5rem, 6vw, 5.5rem) 0 clamp(2rem, 4vw, 3rem);
@@ -1422,6 +1420,163 @@
 /* Active nav state */
 .nav-links > li > a.active { color: var(--orange-700); }
 .nav-links > li.has-dropdown.active > a { color: var(--orange-700); }
+
+/* === Team detail grid (team.html) === */
+.team-detail {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+}
+.team-detail .person {
+  background: var(--white);
+  border: 1px solid var(--gray-100);
+  border-radius: var(--r-card);
+  padding: 1.75rem;
+  display: flex; flex-direction: column; gap: 0.85rem;
+  transition: transform 250ms, border-color 200ms, box-shadow 250ms;
+}
+.team-detail .person:hover {
+  transform: translateY(-4px);
+  border-color: var(--orange-300);
+  box-shadow: var(--shadow-soft);
+}
+.team-detail .person .photo {
+  width: 86px;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--orange-300), var(--orange-500));
+}
+.team-detail .person .photo img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.team-detail .person h3 {
+  font-size: 1.15rem; margin: 0;
+  letter-spacing: -0.01em;
+}
+.team-detail .person .role {
+  font-size: 0.85rem;
+  color: var(--orange-700);
+  font-weight: 500;
+  margin: 0;
+}
+.team-detail .person .bio {
+  font-size: 0.92rem;
+  color: var(--gray-700);
+  line-height: 1.55;
+  margin: 0;
+  flex: 1;
+}
+.team-detail .person .tags {
+  display: flex; gap: 0.4rem; flex-wrap: wrap;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--gray-100);
+}
+.team-detail .person .tags span {
+  font-size: 0.72rem;
+  color: var(--gray-500);
+  background: var(--orange-50);
+  border: 1px solid var(--orange-100);
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--r-pill);
+  letter-spacing: 0.02em;
+}
+
+/* === FAQ accordion (process.html) === */
+.faq {
+  display: flex; flex-direction: column;
+  gap: 0.75rem;
+  max-width: 760px;
+  margin-top: 2rem;
+}
+.faq details {
+  background: var(--white);
+  border: 1px solid var(--gray-100);
+  border-radius: var(--r-tight);
+  padding: 1.1rem 1.4rem;
+  transition: border-color 200ms;
+}
+.faq details[open] { border-color: var(--orange-300); }
+.faq summary {
+  font-weight: 700;
+  font-family: var(--font-display);
+  cursor: pointer;
+  color: var(--ink);
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after {
+  content: "+";
+  font-size: 1.5rem;
+  color: var(--orange-500);
+  font-weight: 700;
+  line-height: 1;
+  transition: transform 200ms;
+}
+.faq details[open] summary::after { content: "−"; }
+.faq details p {
+  margin-top: 0.85rem;
+  color: var(--gray-700);
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+
+/* === Process timeline (process.html) === */
+.process-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-top: 2.5rem;
+}
+.process-timeline .phase {
+  background: var(--white);
+  border: 1px solid var(--gray-100);
+  border-radius: var(--r-card);
+  padding: 1.75rem 2rem;
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 1.5rem;
+  transition: border-color 200ms, transform 250ms;
+}
+.process-timeline .phase:hover {
+  border-color: var(--orange-300);
+  transform: translateX(4px);
+}
+.process-timeline .phase .num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 2.5rem;
+  color: var(--orange-500);
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+.process-timeline .phase h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.4rem;
+}
+.process-timeline .phase .duration {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--orange-700);
+  font-weight: 700;
+  margin-bottom: 0.85rem;
+}
+.process-timeline .phase p {
+  color: var(--gray-700);
+  line-height: 1.65;
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+}
+@media (max-width: 600px) {
+  .process-timeline .phase { grid-template-columns: 1fr; gap: 0.5rem; padding: 1.5rem; }
+  .process-timeline .phase .num { font-size: 2rem; }
+}
 
 /* Contact form */
 .contact-form {

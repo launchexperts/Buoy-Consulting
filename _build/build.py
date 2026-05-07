@@ -10,6 +10,10 @@ import pathlib
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 
+# Bump this whenever styles.css changes — appended as ?v=N to <link> hrefs
+# so browsers don't serve a stale stylesheet.
+CSS_VERSION = "3"
+
 # ============================================================
 # CSS additions for inner pages — appended to styles.css if missing
 # ============================================================
@@ -284,6 +288,163 @@ INNER_CSS = """
 .nav-links > li > a.active { color: var(--orange-700); }
 .nav-links > li.has-dropdown.active > a { color: var(--orange-700); }
 
+/* === Team detail grid (team.html) === */
+.team-detail {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+}
+.team-detail .person {
+  background: var(--white);
+  border: 1px solid var(--gray-100);
+  border-radius: var(--r-card);
+  padding: 1.75rem;
+  display: flex; flex-direction: column; gap: 0.85rem;
+  transition: transform 250ms, border-color 200ms, box-shadow 250ms;
+}
+.team-detail .person:hover {
+  transform: translateY(-4px);
+  border-color: var(--orange-300);
+  box-shadow: var(--shadow-soft);
+}
+.team-detail .person .photo {
+  width: 86px;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--orange-300), var(--orange-500));
+}
+.team-detail .person .photo img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.team-detail .person h3 {
+  font-size: 1.15rem; margin: 0;
+  letter-spacing: -0.01em;
+}
+.team-detail .person .role {
+  font-size: 0.85rem;
+  color: var(--orange-700);
+  font-weight: 500;
+  margin: 0;
+}
+.team-detail .person .bio {
+  font-size: 0.92rem;
+  color: var(--gray-700);
+  line-height: 1.55;
+  margin: 0;
+  flex: 1;
+}
+.team-detail .person .tags {
+  display: flex; gap: 0.4rem; flex-wrap: wrap;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--gray-100);
+}
+.team-detail .person .tags span {
+  font-size: 0.72rem;
+  color: var(--gray-500);
+  background: var(--orange-50);
+  border: 1px solid var(--orange-100);
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--r-pill);
+  letter-spacing: 0.02em;
+}
+
+/* === FAQ accordion (process.html) === */
+.faq {
+  display: flex; flex-direction: column;
+  gap: 0.75rem;
+  max-width: 760px;
+  margin-top: 2rem;
+}
+.faq details {
+  background: var(--white);
+  border: 1px solid var(--gray-100);
+  border-radius: var(--r-tight);
+  padding: 1.1rem 1.4rem;
+  transition: border-color 200ms;
+}
+.faq details[open] { border-color: var(--orange-300); }
+.faq summary {
+  font-weight: 700;
+  font-family: var(--font-display);
+  cursor: pointer;
+  color: var(--ink);
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after {
+  content: "+";
+  font-size: 1.5rem;
+  color: var(--orange-500);
+  font-weight: 700;
+  line-height: 1;
+  transition: transform 200ms;
+}
+.faq details[open] summary::after { content: "−"; }
+.faq details p {
+  margin-top: 0.85rem;
+  color: var(--gray-700);
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+
+/* === Process timeline (process.html) === */
+.process-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-top: 2.5rem;
+}
+.process-timeline .phase {
+  background: var(--white);
+  border: 1px solid var(--gray-100);
+  border-radius: var(--r-card);
+  padding: 1.75rem 2rem;
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 1.5rem;
+  transition: border-color 200ms, transform 250ms;
+}
+.process-timeline .phase:hover {
+  border-color: var(--orange-300);
+  transform: translateX(4px);
+}
+.process-timeline .phase .num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 2.5rem;
+  color: var(--orange-500);
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+.process-timeline .phase h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.4rem;
+}
+.process-timeline .phase .duration {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--orange-700);
+  font-weight: 700;
+  margin-bottom: 0.85rem;
+}
+.process-timeline .phase p {
+  color: var(--gray-700);
+  line-height: 1.65;
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+}
+@media (max-width: 600px) {
+  .process-timeline .phase { grid-template-columns: 1fr; gap: 0.5rem; padding: 1.5rem; }
+  .process-timeline .phase .num { font-size: 2rem; }
+}
+
 /* Contact form */
 .contact-form {
   display: flex; flex-direction: column; gap: 1.25rem;
@@ -417,8 +578,8 @@ def header(active: str = ""):
               </div>
             </div>
           </li>
-          <li><a href="index.html#team">Team</a></li>
-          <li><a href="index.html#process">Process</a></li>
+          <li><a href="team.html"{cls('team')}>Team</a></li>
+          <li><a href="process.html"{cls('process')}>Process</a></li>
           <li><a href="contact.html"{cls('contact')}>Contact</a></li>
         </ul>
       </nav>
@@ -474,8 +635,8 @@ FOOTER = """  <footer class="site-footer">
           <h5>Company</h5>
           <ul>
             <li><a href="about.html">About</a></li>
-            <li><a href="index.html#team">Team</a></li>
-            <li><a href="index.html#process">Our process</a></li>
+            <li><a href="team.html">Team</a></li>
+            <li><a href="process.html">Our process</a></li>
             <li><a href="contact.html">Contact</a></li>
           </ul>
         </div>
@@ -550,7 +711,7 @@ def make_layout(title: str, description: str, active: str, body: str) -> str:
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet" />
   <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,700,500,400&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v={CSS_VERSION}" />
 </head>
 <body>
 
@@ -1305,6 +1466,192 @@ PAGES["support-business-forecasting.html"] = support_subpage(
         "Cashflow is a separate model that's been &quot;temporarily&quot; running for three years.",
         "Forecast vs actual variance is computed by hand, late, and not ranked.",
     ],
+)
+
+
+# -------- Team --------
+PAGES["team.html"] = dict(
+    title="Team",
+    description="Meet the senior consultants at Buoy Consulting. Six specialists with over 100 years combined construction and Jobpac experience across Australia and New Zealand.",
+    active="team",
+    body=page_hero(
+        "Our team",
+        "Six senior consultants. One hundred years of construction.",
+        "Buoy is a deliberately small consultancy. Every engagement is led by someone with at least fifteen years of construction or civil finance experience &mdash; not someone reading the manual back to you. Meet the people you'll actually work with.",
+    ) + """
+    <section class="section">
+      <div class="wrap">
+        <div class="team-detail">
+          <div class="person reveal">
+            <div class="photo"><img src="donna-duff.jpg" alt="Donna Duff" loading="lazy" /></div>
+            <h3>Donna Duff</h3>
+            <p class="role">Founding Director</p>
+            <p class="bio">Founded Buoy in 2010 after fifteen years in construction finance leadership at Tier-2 builders across Sydney. Donna leads strategy and is the senior consultant on most flagship engagements. CPA, BCom (UNSW).</p>
+            <div class="tags"><span>Strategy</span><span>Implementation</span><span>P&amp;L</span></div>
+          </div>
+          <div class="person reveal">
+            <div class="photo"><img src="https://randomuser.me/api/portraits/men/68.jpg" alt="Michael R." loading="lazy" /></div>
+            <h3>Michael R.</h3>
+            <p class="role">Senior Consultant</p>
+            <p class="bio">Twenty years across Jobpac implementations and audits, with deep experience in civil contractors and joint-venture structures. Michael owns most of our process improvement work and runs the most complex multi-entity rollouts.</p>
+            <div class="tags"><span>Civil</span><span>JV / multi-entity</span><span>Process</span></div>
+          </div>
+          <div class="person reveal">
+            <div class="photo"><img src="https://randomuser.me/api/portraits/women/26.jpg" alt="Sarah P." loading="lazy" /></div>
+            <h3>Sarah P.</h3>
+            <p class="role">Implementation Lead</p>
+            <p class="bio">Fifteen years inside Tier-2 commercial builders running AP, AR, and project finance. Sarah leads our implementation practice and has stood up Jobpac end-to-end at over forty businesses. Based in Melbourne.</p>
+            <div class="tags"><span>Implementation</span><span>Migrations</span><span>Tier-2</span></div>
+          </div>
+          <div class="person reveal">
+            <div class="photo"><img src="https://randomuser.me/api/portraits/men/52.jpg" alt="James T." loading="lazy" /></div>
+            <h3>James T.</h3>
+            <p class="role">Process &amp; Workflow</p>
+            <p class="bio">Eighteen years in construction finance with a particular focus on plant cost recovery, retentions, and reporting workflows. James runs our process improvement audits and rebuilds. Based in Brisbane.</p>
+            <div class="tags"><span>Plant</span><span>Reporting</span><span>Audits</span></div>
+          </div>
+          <div class="person reveal">
+            <div class="photo"><img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Amelia K." loading="lazy" /></div>
+            <h3>Amelia K.</h3>
+            <p class="role">Bookkeeping &amp; AP Lead</p>
+            <p class="bio">Senior bookkeeper with seventeen years inside Jobpac. Amelia leads our embedded support team &mdash; bookkeeping, AP, AR, P&amp;L &mdash; and is most clients' day-to-day point of contact when they're on a support arrangement.</p>
+            <div class="tags"><span>Bookkeeping</span><span>AP / AR</span><span>Support</span></div>
+          </div>
+          <div class="person reveal">
+            <div class="photo"><img src="https://randomuser.me/api/portraits/men/15.jpg" alt="Robert M." loading="lazy" /></div>
+            <h3>Robert M.</h3>
+            <p class="role">Training Lead</p>
+            <p class="bio">Sixteen years across construction finance, ten of those building training programmes. Robert designs our role-based Jobpac training and delivers it on-site across AU and NZ. Cert IV in Training &amp; Assessment.</p>
+            <div class="tags"><span>Training</span><span>On-site delivery</span><span>NZ</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section warm-bg">
+      <div class="wrap">
+        <div class="two-col aside reveal">
+          <div>
+            <h2>Why we stay deliberately small.</h2>
+            <p>Most consultancies grow by adding juniors and reselling them at senior rates. We grow by adding seniors and selling them at senior rates &mdash; or not adding anyone at all. Six is enough to cover any engagement we'd take on, and small enough that you'll always know exactly who's doing the work.</p>
+            <p>Every consultant on the team has at least fifteen years of construction or civil finance experience. We don't hire generalists and put them through a four-week Jobpac course. The bar to join Buoy is the bar that makes you valuable to a client on day one.</p>
+          </div>
+          <div>
+            <div class="outcomes">
+              <div class="o"><span class="num">15+</span><span class="lbl">years experience minimum on every engagement</span></div>
+              <div class="o"><span class="num">0</span><span class="lbl">graduates or junior consultants</span></div>
+              <div class="o"><span class="num">100%</span><span class="lbl">construction-industry background</span></div>
+              <div class="o"><span class="num">AU &amp; NZ</span><span class="lbl">on-site coverage from Sydney, Melbourne, Brisbane &amp; Auckland</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">""" + cta_block(
+        "Want to talk to a specific consultant?",
+        "Tell us what you're working on and we'll match you to the right person on the team. The first call is free.",
+    ) + """
+      </div>
+    </section>""",
+)
+
+# -------- Process --------
+PAGES["process.html"] = dict(
+    title="Process",
+    description="How Buoy Consulting engagements run: discovery, fixed-scope proposal, senior-led execution, and embedded handover. No bait-and-switch, no surprise invoices.",
+    active="process",
+    body=page_hero(
+        "How we engage",
+        "Four steps. No surprises. No bait&#8209;and&#8209;switch.",
+        "Every Buoy engagement runs the same way &mdash; whether it's a six-week implementation, a three-month process improvement, or a long-running same-day support arrangement. Fixed scope, senior consultant, full transparency. Here's what that looks like end-to-end.",
+    ) + """
+    <section class="section">
+      <div class="wrap">
+        <div class="process-timeline">
+          <div class="phase reveal">
+            <div class="num">01</div>
+            <div>
+              <div class="duration">Discovery &middot; 30&ndash;60 minutes &middot; no cost</div>
+              <h3>We listen first.</h3>
+              <p>A no-cost call. We listen, ask questions, take notes. We learn your current Jobpac setup, what's hurting most, and what's already worked. You're talking to the senior consultant who'd actually do the work &mdash; not a sales person reading off a script.</p>
+              <p>You walk away with a clear sense of whether we're a fit. If we're not, we'll say so &mdash; and where possible, point you at someone who is.</p>
+            </div>
+          </div>
+          <div class="phase reveal">
+            <div class="num">02</div>
+            <div>
+              <div class="duration">Scope &middot; 3&ndash;7 business days</div>
+              <h3>You get a fixed-scope proposal.</h3>
+              <p>Within a week, you receive a written proposal: deliverables, timeline, price, and the named senior consultant who'll lead the engagement. No "T&amp;E to be confirmed". No "phase 2 to be quoted later". The price is the price.</p>
+              <p>You review, push back on scope, ask questions. We adjust. Sign-off on scope before any work starts &mdash; so there's no ambiguity about what's in or out.</p>
+            </div>
+          </div>
+          <div class="phase reveal">
+            <div class="num">03</div>
+            <div>
+              <div class="duration">Execute &middot; duration varies by scope</div>
+              <h3>Senior consultant on the keys.</h3>
+              <p>The person on the proposal does the work. Not a junior. Not a partner who hands it down. Weekly written status, risks called out the week they emerge &mdash; not the week before go-live.</p>
+              <p>If anything material changes mid-engagement &mdash; new requirement, scope creep, surprise data issue &mdash; we agree it explicitly with you in writing before doing it. No surprise invoices.</p>
+            </div>
+          </div>
+          <div class="phase reveal">
+            <div class="num">04</div>
+            <div>
+              <div class="duration">Embed &middot; final 1&ndash;2 weeks of every engagement</div>
+              <h3>Your team owns it when we leave.</h3>
+              <p>Documentation: workflow guides, configuration notes, training material &mdash; written so your team can run it long after we're gone. Hands-on training with the people who'll use the system day-to-day, in your real environment.</p>
+              <p>A structured handover so nothing slips. Optional ongoing same-day support after handover &mdash; most clients want a thread to pull on for the first 90 days, but you're never locked in.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section warm-bg">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow">Common questions</span>
+          <h2>What people usually ask before signing.</h2>
+        </div>
+        <div class="faq reveal">
+          <details>
+            <summary>What if scope changes mid-engagement?</summary>
+            <p>We pause and agree the change in writing before doing it. You'll see the impact on price and timeline before you commit. If we don't agree on the change, we deliver against the original scope and the new requirement becomes a separate engagement.</p>
+          </details>
+          <details>
+            <summary>Do you charge for discovery?</summary>
+            <p>No. The first call is free, and the written proposal that follows is also free. We only charge once you've signed off on a scope.</p>
+          </details>
+          <details>
+            <summary>How fast can you start?</summary>
+            <p>For most support engagements, same week. For larger implementations or process improvements, the typical lead time is two to four weeks because we plan around current commitments. If something is genuinely urgent, tell us and we'll work out what's possible.</p>
+          </details>
+          <details>
+            <summary>Do you work in person or remotely?</summary>
+            <p>Both. We're based in Sydney, Melbourne, Brisbane, and Auckland, and we travel anywhere in AU/NZ for on-site work. A typical implementation has a mix of on-site and remote days; ongoing support is mostly remote with site visits when something needs hands-on.</p>
+          </details>
+          <details>
+            <summary>What size of business is Buoy a fit for?</summary>
+            <p>Most clients are between $20m and $500m turnover &mdash; mid-market construction and civil businesses with one finance function. Smaller and we're usually overkill. Larger and there's typically an internal team that needs different kinds of help. Either way, the discovery call will tell us.</p>
+          </details>
+          <details>
+            <summary>Can we hire you on retainer?</summary>
+            <p>Yes &mdash; that's what our same-day support service is. A defined number of hours per week or month, used flexibly across the team. Most clients start with a project, then move to a support retainer afterwards.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">""" + cta_block(
+        "Ready to start with a discovery call?",
+        "30 minutes, no slide deck, no obligation. Senior consultant on the line, not a sales person.",
+    ) + """
+      </div>
+    </section>""",
 )
 
 
