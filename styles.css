@@ -500,6 +500,118 @@
        Section base
        ============================================================ */
     section.sec { padding-block: clamp(4rem, 7vw, 7rem); }
+
+    /* ============================================================
+       Section variant: dark navy with orange radial glow
+       (Used on home Why-Buoy section for dramatic contrast)
+       ============================================================ */
+    section.sec.sec-dark {
+      background: linear-gradient(135deg, var(--ink-900) 0%, var(--ink-800) 65%, var(--ink-700) 100%);
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+    section.sec.sec-dark::before {
+      content: "";
+      position: absolute;
+      width: 720px; height: 720px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(232, 93, 31, 0.30) 0%, transparent 65%);
+      top: -260px; right: -200px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    section.sec.sec-dark::after {
+      content: "";
+      position: absolute;
+      width: 480px; height: 480px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(251, 169, 130, 0.16) 0%, transparent 60%);
+      bottom: -180px; left: -120px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    section.sec.sec-dark > .wrap { position: relative; z-index: 1; }
+
+    section.sec.sec-dark h1,
+    section.sec.sec-dark h2,
+    section.sec.sec-dark h3,
+    section.sec.sec-dark h4 { color: var(--white); }
+    section.sec.sec-dark p { color: rgba(255, 255, 255, 0.78); }
+    section.sec.sec-dark .eyebrow { color: var(--orange-300); }
+    section.sec.sec-dark .eyebrow::before { background: var(--orange-400); }
+
+    /* Why-list overrides inside sec-dark */
+    section.sec.sec-dark .why-list strong { color: var(--white); }
+    section.sec.sec-dark .why-list p { color: rgba(255, 255, 255, 0.72); }
+    section.sec.sec-dark .why-list .check {
+      background: rgba(232, 93, 31, 0.18);
+      color: var(--orange-300);
+    }
+
+    /* Buttons inside sec-dark — invert the dark button to be light on dark */
+    section.sec.sec-dark .btn-dark {
+      background: var(--orange-500);
+      color: var(--white);
+    }
+    section.sec.sec-dark .btn-dark:hover { background: var(--orange-700); }
+
+    /* On-site badge inside sec-dark — invert to white-on-dark */
+    section.sec.sec-dark .why-portrait .badge {
+      background: var(--white);
+      color: var(--ink-900);
+    }
+    section.sec.sec-dark .why-portrait .badge .pulse { background: var(--orange-500); }
+
+    /* The decorative shape-bg behind portrait — soften so it doesn't fight the dark bg */
+    section.sec.sec-dark .why-portrait .shape-bg {
+      background: var(--orange-700);
+      opacity: 0.55;
+    }
+    /* Float-portrait border switches to dark so it pops against dark page */
+    section.sec.sec-dark .float-portrait { border-color: var(--ink-800); }
+
+    /* ============================================================
+       Section variant: warm orange tint
+       (Used on home Process section for subtle warm contrast)
+       ============================================================ */
+    section.sec.sec-warm {
+      background: linear-gradient(180deg, var(--orange-50) 0%, var(--cream) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    section.sec.sec-warm::before {
+      content: "";
+      position: absolute;
+      width: 420px; height: 420px;
+      border-radius: 50%;
+      background: var(--orange-300);
+      opacity: 0.16;
+      top: 30%;
+      right: -200px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    section.sec.sec-warm::after {
+      content: "";
+      position: absolute;
+      width: 260px; height: 260px;
+      border-radius: 50%;
+      background: var(--orange-500);
+      opacity: 0.06;
+      bottom: -100px;
+      left: -80px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    section.sec.sec-warm > .wrap { position: relative; z-index: 1; }
+    /* Sharpen the step numbers on warm bg */
+    section.sec.sec-warm .step::before { color: var(--orange-700); }
+    section.sec.sec-warm .step::after {
+      background: linear-gradient(90deg, var(--orange-500), transparent);
+      opacity: 0.6;
+    }
     .sec-head {
       text-align: center;
       max-width: 720px;
