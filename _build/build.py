@@ -12,7 +12,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 
 # Bump this whenever styles.css changes — appended as ?v=N to <link> hrefs
 # so browsers don't serve a stale stylesheet.
-CSS_VERSION = "4"
+CSS_VERSION = "5"
 
 # ============================================================
 # CSS additions for inner pages — appended to styles.css if missing
@@ -605,6 +605,7 @@ def header(active: str = ""):
 
       <nav aria-label="Primary">
         <ul class="nav-links">
+          <li><a href="index.html"{cls('home')}>Home</a></li>
           <li><a href="about.html"{cls('about')}>About</a></li>
           <li class="has-dropdown{li_cls('services')}">
             <a href="services.html"{cls('services')}>Services</a>
