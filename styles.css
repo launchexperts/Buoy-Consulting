@@ -1382,9 +1382,64 @@
   bottom: -50px; right: -50px;
   z-index: -1;
 }
+
+/* Hero floating card — overlays the photo, same pattern as homepage hero */
+.page-hero.with-visual .hero-visual-card-wrap { position: relative; }
+.page-hero.with-visual .hero-float-card {
+  position: absolute;
+  bottom: -20px;
+  left: -28px;
+  background: var(--white);
+  box-shadow: var(--shadow-float);
+  border-radius: 14px;
+  padding: 0.85rem 1.05rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  z-index: 3;
+  transform: rotate(-2deg);
+  transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+  max-width: 240px;
+}
+.page-hero.with-visual .hero-visual-card-wrap:hover .hero-float-card {
+  transform: rotate(0deg) translateY(-3px);
+}
+.page-hero.with-visual .hero-float-card .hf-icon {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--orange-500);
+  color: var(--white);
+  display: grid; place-items: center;
+  flex-shrink: 0;
+}
+.page-hero.with-visual .hero-float-card .hf-meta {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+.page-hero.with-visual .hero-float-card .hf-meta b {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.page-hero.with-visual .hero-float-card .hf-meta span {
+  font-size: 0.72rem;
+  color: var(--gray-500);
+}
+
+/* Italic emphasis on page-hero H1 (matches homepage's italic Jobpac treatment) */
+.page-hero h1 em {
+  font-style: italic;
+  font-weight: 500;
+  color: var(--orange-700);
+}
+
 @media (max-width: 900px) {
   .page-hero.with-visual .hero-grid { grid-template-columns: 1fr; }
   .page-hero.with-visual .hero-visual-card { max-width: 540px; margin-inline: auto; }
+  .page-hero.with-visual .hero-float-card { left: 8px; bottom: -14px; }
 }
 
 /* Section with side photo (alternating direction) */
@@ -1957,17 +2012,18 @@
 }
 .process-timeline .phase {
   background: var(--white);
-  border: 1px solid var(--gray-100);
+  border: 1px solid var(--orange-100);
   border-radius: var(--r-card);
   padding: 1.75rem 2rem;
   display: grid;
-  grid-template-columns: 80px 1fr;
+  grid-template-columns: 64px 1fr;
   gap: 1.5rem;
-  transition: border-color 200ms, transform 250ms;
+  transition: border-color 200ms, transform 250ms, box-shadow 250ms;
 }
 .process-timeline .phase:hover {
   border-color: var(--orange-300);
   transform: translateX(4px);
+  box-shadow: 0 16px 32px -16px rgba(14, 23, 41, 0.12);
 }
 .process-timeline .phase .num {
   font-family: var(--font-display);
@@ -1976,6 +2032,23 @@
   color: var(--orange-500);
   letter-spacing: -0.04em;
   line-height: 1;
+}
+.process-timeline .phase .phase-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: var(--orange-100);
+  color: var(--orange-700);
+  display: grid;
+  place-items: center;
+  align-self: start;
+  transition: background 250ms ease, color 250ms ease,
+              transform 350ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.process-timeline .phase:hover .phase-icon {
+  background: var(--orange-500);
+  color: var(--white);
+  transform: scale(1.08) rotate(-6deg);
 }
 .process-timeline .phase h3 {
   font-size: 1.3rem;
