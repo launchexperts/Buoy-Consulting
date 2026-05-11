@@ -12,7 +12,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 
 # Bump this whenever styles.css changes — appended as ?v=N to <link> hrefs
 # so browsers don't serve a stale stylesheet.
-CSS_VERSION = "3"
+CSS_VERSION = "4"
 
 # ============================================================
 # CSS additions for inner pages — appended to styles.css if missing
@@ -37,6 +37,88 @@ INNER_CSS = """
 }
 .page-hero.center { text-align: center; }
 .page-hero.center h1, .page-hero.center .lead { margin-inline: auto; }
+
+.page-hero.with-visual .hero-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+}
+.page-hero.with-visual .hero-text { max-width: 580px; }
+.page-hero.with-visual .hero-visual-card {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: clamp(20px, 2.5vw, 32px);
+  overflow: hidden;
+  background: var(--orange-100);
+  box-shadow: var(--shadow-float);
+}
+.page-hero.with-visual .hero-visual-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.page-hero.with-visual .hero-visual-card .badge {
+  position: absolute;
+  bottom: 1.25rem;
+  left: 1.25rem;
+  background: var(--ink-900);
+  color: var(--white);
+  padding: 0.55rem 1rem;
+  border-radius: var(--r-pill);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  box-shadow: var(--shadow-soft);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.page-hero.with-visual .hero-visual-card .badge .pulse {
+  display: inline-block;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--orange-500);
+  animation: pulse 2s ease-in-out infinite;
+}
+.page-hero.with-visual .hero-visual-card .blob-accent {
+  position: absolute;
+  width: 140px; height: 140px;
+  border-radius: 50%;
+  background: var(--orange-300);
+  opacity: 0.55;
+  bottom: -50px; right: -50px;
+  z-index: -1;
+}
+@media (max-width: 900px) {
+  .page-hero.with-visual .hero-grid { grid-template-columns: 1fr; }
+  .page-hero.with-visual .hero-visual-card { max-width: 540px; margin-inline: auto; }
+}
+
+/* Section with side photo (alternating direction) */
+.section-photo-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+.section-photo-split.reverse { direction: rtl; }
+.section-photo-split.reverse > * { direction: ltr; }
+.section-photo-split .photo {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: clamp(20px, 2vw, 28px);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+}
+.section-photo-split .photo img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+@media (max-width: 800px) {
+  .section-photo-split, .section-photo-split.reverse { grid-template-columns: 1fr; direction: ltr; }
+}
 
 .section { padding-block: clamp(3rem, 5vw, 5rem); }
 .section.tight { padding-block: clamp(2rem, 3.5vw, 3rem); }
@@ -578,8 +660,6 @@ def header(active: str = ""):
               </div>
             </div>
           </li>
-          <li><a href="team.html"{cls('team')}>Team</a></li>
-          <li><a href="process.html"{cls('process')}>Process</a></li>
           <li><a href="contact.html"{cls('contact')}>Contact</a></li>
         </ul>
       </nav>
@@ -635,8 +715,7 @@ FOOTER = """  <footer class="site-footer">
           <h5>Company</h5>
           <ul>
             <li><a href="about.html">About</a></li>
-            <li><a href="team.html">Team</a></li>
-            <li><a href="process.html">Our process</a></li>
+            <li><a href="about.html#team">Team</a></li>
             <li><a href="contact.html">Contact</a></li>
           </ul>
         </div>
@@ -697,6 +776,116 @@ def page_hero(eyebrow: str, h1: str, lead: str, banner: str = "", center: bool =
     </section>"""
 
 
+def hero_with_visual(eyebrow: str, h1: str, lead: str, image_src: str, image_alt: str, badge: str = "", banner: str = ""):
+    banner_html = f'<div class="same-day-banner reveal"><span class="pulse"></span>{banner}</div>' if banner else ''
+    badge_html = f'<span class="badge"><span class="pulse"></span>{badge}</span>' if badge else ''
+    return f"""    <section class="page-hero with-visual">
+      <div class="wrap">
+        <div class="hero-grid">
+          <div class="hero-text reveal">
+            {banner_html}
+            <span class="eyebrow">{eyebrow}</span>
+            <h1>{h1}</h1>
+            <p class="lead">{lead}</p>
+          </div>
+          <div class="hero-visual-card reveal" aria-hidden="true">
+            <div class="blob-accent"></div>
+            <img src="{image_src}" alt="{image_alt}" loading="lazy" />
+            {badge_html}
+          </div>
+        </div>
+      </div>
+    </section>"""
+
+
+def process_section():
+    """Buoy engagement process — identical content across all service pages."""
+    return """    <section class="section warm-bg">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow">How we engage</span>
+          <h2>Four steps. No surprises. No bait&#8209;and&#8209;switch.</h2>
+          <p class="lead">Every Buoy engagement runs the same way &mdash; fixed scope, senior consultant, full transparency end&#8209;to&#8209;end.</p>
+        </div>
+        <div class="process-timeline">
+          <div class="phase reveal">
+            <div class="num">01</div>
+            <div>
+              <div class="duration">Discovery &middot; 30&ndash;60 minutes &middot; no cost</div>
+              <h3>We listen first.</h3>
+              <p>A no-cost call. We learn your current Jobpac setup, what's hurting most, and what's already worked. You're talking to the senior consultant who'd actually do the work &mdash; not a sales person reading off a script.</p>
+            </div>
+          </div>
+          <div class="phase reveal">
+            <div class="num">02</div>
+            <div>
+              <div class="duration">Scope &middot; 3&ndash;7 business days</div>
+              <h3>You get a fixed-scope proposal.</h3>
+              <p>Deliverables, timeline, price, and the named senior consultant who'll lead the engagement &mdash; in writing, within a week. No "T&amp;E to be confirmed." The price is the price.</p>
+            </div>
+          </div>
+          <div class="phase reveal">
+            <div class="num">03</div>
+            <div>
+              <div class="duration">Execute &middot; duration varies by scope</div>
+              <h3>Senior consultant on the keys.</h3>
+              <p>The person on the proposal does the work. Not a junior. Not a partner who hands it down. Weekly written status, risks called out the week they emerge &mdash; not the week before go-live.</p>
+            </div>
+          </div>
+          <div class="phase reveal">
+            <div class="num">04</div>
+            <div>
+              <div class="duration">Embed &middot; final 1&ndash;2 weeks of every engagement</div>
+              <h3>Your team owns it when we leave.</h3>
+              <p>Documentation, hands-on training, and a structured handover &mdash; written so your team can run it long after we're gone. Optional ongoing same-day support after handover, but you're never locked in.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>"""
+
+
+def faq_section(questions: list, eyebrow: str = "Common questions", heading: str = "What people usually ask."):
+    """questions is a list of (question, answer) tuples."""
+    items = "\n          ".join(
+        f"""<details>
+            <summary>{q}</summary>
+            <p>{a}</p>
+          </details>"""
+        for q, a in questions
+    )
+    return f"""    <section class="section">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow">{eyebrow}</span>
+          <h2>{heading}</h2>
+        </div>
+        <div class="faq reveal">
+          {items}
+        </div>
+      </div>
+    </section>"""
+
+
+def stats_section(eyebrow: str, heading: str, items: list):
+    """items is a list of (num, lbl) tuples for the outcomes block."""
+    outcomes = "\n          ".join(
+        f'<div class="o"><span class="num">{n}</span><span class="lbl">{l}</span></div>'
+        for n, l in items
+    )
+    return f"""    <section class="section">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow">{eyebrow}</span>
+          <h2>{heading}</h2>
+        </div>
+        <div class="outcomes reveal" style="margin-top: 2rem;">
+          {outcomes}
+        </div>
+      </div>
+    </section>"""
+
+
 def make_layout(title: str, description: str, active: str, body: str) -> str:
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -734,15 +923,18 @@ def make_layout(title: str, description: str, active: str, body: str) -> str:
 # ============================================================
 PAGES = {}
 
-# -------- About --------
+# -------- About (merged with team) --------
 PAGES["about.html"] = dict(
     title="About",
-    description="Buoy Consulting — Australia and New Zealand's specialist Jobpac consultancy for construction and civil businesses. Founded 2010. Senior consultants only.",
+    description="Buoy Consulting — Australia and New Zealand's specialist Jobpac consultancy for construction and civil businesses. Founded 2010. Six senior consultants, 100+ years combined experience.",
     active="about",
-    body=page_hero(
+    body=hero_with_visual(
         "About Buoy",
         "Specialist Jobpac consultants &mdash; built by people who've actually run construction businesses.",
         "Buoy Consulting was founded in 2010 by senior finance and construction operators who'd spent decades inside the industry. Sixteen years on, we're still the only consultancy in Australia and New Zealand focused exclusively on Jobpac for construction and civil businesses.",
+        image_src="office-team.jpg",
+        image_alt="Buoy consultants at work in a construction finance office",
+        badge="Independent &middot; Senior-led",
     ) + """
     <section class="section">
       <div class="wrap">
@@ -750,7 +942,8 @@ PAGES["about.html"] = dict(
           <div>
             <h2>Why we exist.</h2>
             <p>Most Jobpac consultancies are reseller-aligned generalists who'll touch any ERP. We're the opposite. Every consultant on our team has spent at least fifteen years inside a construction or civil business doing the work &mdash; running month-end, signing off subbie claims, dealing with a CFO who needs the forecast in the morning.</p>
-            <p>That's not a bio line. It's the reason our advice lands instead of bouncing off. When you tell us your retentions are out by $80k against your subbies' books, we don't ask you to explain what a retention is.</p>
+            <p>That's not a bio line. It's the reason our advice lands instead of bouncing off. When you tell us your retentions are out by $80k against your subbies' books, we don't ask you to explain what a retention is. We've reconciled the same balance in our own ledgers, and we know exactly where to look first.</p>
+            <p>Sixteen years in, we've watched the industry move through three software cycles, two recessions, a once-in-a-century supply chain shock, and the slow shift from spreadsheet-driven finance to integrated project ERPs. Every one of those shifts has played out in our clients' books. That's the perspective you're hiring.</p>
           </div>
           <div>
             <div class="outcomes">
@@ -769,6 +962,7 @@ PAGES["about.html"] = dict(
         <div class="reveal">
           <span class="eyebrow">How we're different</span>
           <h2>What you actually get when you hire Buoy.</h2>
+          <p class="lead">A small consultancy is only worth hiring if "small" means something. Here's what it means in practice for our clients.</p>
         </div>
         <div class="feature-grid">
           <div class="feature-card reveal">
@@ -794,12 +988,87 @@ PAGES["about.html"] = dict(
           <div class="feature-card reveal">
             <div class="num">05 / Fixed scope, no surprises</div>
             <h3>Priced before we start.</h3>
-            <p>Every engagement starts with a fixed-scope proposal. You see the price, the timeline, and the deliverables before you sign anything. We don't run the meter.</p>
+            <p>Every engagement starts with a fixed-scope proposal. You see the price, the timeline, and the deliverables before you sign anything. We don't run the meter, and we don't surface "phase 2" scope after you've signed.</p>
           </div>
           <div class="feature-card reveal">
             <div class="num">06 / Embedded knowledge</div>
             <h3>Your team owns it when we leave.</h3>
-            <p>Documentation, training, and a real handover. We're consultants &mdash; not a permanent dependency. The goal is for your team to run Jobpac without us.</p>
+            <p>Documentation, training, and a real handover. We're consultants &mdash; not a permanent dependency. The goal is for your team to run Jobpac without us, with confidence, by the time we walk out the door.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="team">
+      <div class="wrap">
+        <div class="reveal" style="text-align: center; max-width: 720px; margin: 0 auto 1rem;">
+          <span class="eyebrow">Our team</span>
+          <h2>Six senior consultants. One hundred years of construction.</h2>
+          <p class="lead" style="margin: 1rem auto 0;">Every engagement is led by someone with at least fifteen years of construction or civil finance experience &mdash; not someone reading the manual back to you. Meet the people you'll actually work with.</p>
+        </div>
+        <div class="team-detail">
+          <div class="person reveal">
+            <div class="photo"><img src="donna-duff.jpg" alt="Donna Duff" loading="lazy" /></div>
+            <h3>Donna Duff</h3>
+            <p class="role">Founding Director</p>
+            <p class="bio">Founded Buoy in 2010 after fifteen years in construction finance leadership at Tier-2 builders across Sydney. Donna leads strategy and is the senior consultant on most flagship engagements. CPA, BCom (UNSW).</p>
+            <div class="tags"><span>Strategy</span><span>Implementation</span><span>P&amp;L</span></div>
+          </div>
+          <div class="person reveal">
+            <div class="photo"><img src="https://randomuser.me/api/portraits/men/68.jpg" alt="Michael R." loading="lazy" /></div>
+            <h3>Michael R.</h3>
+            <p class="role">Senior Consultant</p>
+            <p class="bio">Twenty years across Jobpac implementations and audits, with deep experience in civil contractors and joint-venture structures. Michael owns most of our process improvement work and runs the most complex multi-entity rollouts.</p>
+            <div class="tags"><span>Civil</span><span>JV / multi-entity</span><span>Process</span></div>
+          </div>
+          <div class="person reveal">
+            <div class="photo"><img src="https://randomuser.me/api/portraits/women/26.jpg" alt="Sarah P." loading="lazy" /></div>
+            <h3>Sarah P.</h3>
+            <p class="role">Implementation Lead</p>
+            <p class="bio">Fifteen years inside Tier-2 commercial builders running AP, AR, and project finance. Sarah leads our implementation practice and has stood up Jobpac end-to-end at over forty businesses. Based in Melbourne.</p>
+            <div class="tags"><span>Implementation</span><span>Migrations</span><span>Tier-2</span></div>
+          </div>
+          <div class="person reveal">
+            <div class="photo"><img src="https://randomuser.me/api/portraits/men/52.jpg" alt="James T." loading="lazy" /></div>
+            <h3>James T.</h3>
+            <p class="role">Process &amp; Workflow</p>
+            <p class="bio">Eighteen years in construction finance with a particular focus on plant cost recovery, retentions, and reporting workflows. James runs our process improvement audits and rebuilds. Based in Brisbane.</p>
+            <div class="tags"><span>Plant</span><span>Reporting</span><span>Audits</span></div>
+          </div>
+          <div class="person reveal">
+            <div class="photo"><img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Amelia K." loading="lazy" /></div>
+            <h3>Amelia K.</h3>
+            <p class="role">Bookkeeping &amp; AP Lead</p>
+            <p class="bio">Senior bookkeeper with seventeen years inside Jobpac. Amelia leads our embedded support team &mdash; bookkeeping, AP, AR, P&amp;L &mdash; and is most clients' day-to-day point of contact when they're on a support arrangement.</p>
+            <div class="tags"><span>Bookkeeping</span><span>AP / AR</span><span>Support</span></div>
+          </div>
+          <div class="person reveal">
+            <div class="photo"><img src="https://randomuser.me/api/portraits/men/15.jpg" alt="Robert M." loading="lazy" /></div>
+            <h3>Robert M.</h3>
+            <p class="role">Training Lead</p>
+            <p class="bio">Sixteen years across construction finance, ten of those building training programmes. Robert designs our role-based Jobpac training and delivers it on-site across AU and NZ. Cert IV in Training &amp; Assessment.</p>
+            <div class="tags"><span>Training</span><span>On-site delivery</span><span>NZ</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="two-col aside reveal">
+          <div>
+            <h2>Why we stay deliberately small.</h2>
+            <p>Most consultancies grow by adding juniors and reselling them at senior rates. We grow by adding seniors and selling them at senior rates &mdash; or not adding anyone at all. Six is enough to cover any engagement we'd take on, and small enough that you'll always know exactly who's doing the work.</p>
+            <p>Every consultant on the team has at least fifteen years of construction or civil finance experience. We don't hire generalists and put them through a four-week Jobpac course. The bar to join Buoy is the bar that makes you valuable to a client on day one.</p>
+            <p>It also keeps us honest. With a six-person team there's no place to hide an underperformer behind a partner's name on a proposal. Every consultant has to be able to walk into any client engagement and add value &mdash; because eventually they will.</p>
+          </div>
+          <div>
+            <div class="outcomes">
+              <div class="o"><span class="num">15+</span><span class="lbl">years experience minimum on every engagement</span></div>
+              <div class="o"><span class="num">0</span><span class="lbl">graduates or junior consultants</span></div>
+              <div class="o"><span class="num">100%</span><span class="lbl">construction-industry background</span></div>
+              <div class="o"><span class="num">AU &amp; NZ</span><span class="lbl">on-site coverage from Sydney, Melbourne, Brisbane &amp; Auckland</span></div>
+            </div>
           </div>
         </div>
       </div>
@@ -876,10 +1145,13 @@ PAGES["implementation.html"] = dict(
     title="Implementation",
     description="Jobpac implementation, migration, and module deployment for construction and civil businesses. Fixed-scope, senior-led, configured the way construction actually runs.",
     active="services",
-    body=page_hero(
+    body=hero_with_visual(
         "Implementation",
         "Stand up Jobpac the right way the first time.",
         "Most failed Jobpac rollouts aren't software problems. They're scope, configuration, and change problems &mdash; the bits the vendor can't fix because they don't know your business. We plan, configure, and stand up Jobpac the way it should run for construction and civil businesses.",
+        image_src="consultant-on-site.jpg",
+        image_alt="Construction supervisor reviewing project data on an iPad on site",
+        badge="On site &middot; Sydney",
     ) + """
     <section class="section">
       <div class="wrap">
@@ -902,41 +1174,70 @@ PAGES["implementation.html"] = dict(
       </div>
     </section>
 
-    <section class="section warm-bg">
+    <section class="section">
       <div class="wrap">
         <div class="reveal">
-          <span class="eyebrow">Our approach</span>
+          <span class="eyebrow">Implementation phases</span>
           <h2>Five-phase delivery, fixed scope.</h2>
+          <p class="lead">Every implementation moves through the same five phases. We design backwards from go-live, not forwards from a vendor template.</p>
         </div>
         <div class="feature-grid">
           <div class="feature-card reveal">
             <div class="num">Phase 01</div>
             <h3>Discovery</h3>
-            <p>We sit with your finance lead, project managers, and ops team. We map your current state &mdash; not a generic ERP-vendor questionnaire.</p>
+            <p>We sit with your finance lead, project managers, and ops team. We map your current state &mdash; not a generic ERP-vendor questionnaire. By the end of week one, we know what success looks like on day one after go-live.</p>
           </div>
           <div class="feature-card reveal">
             <div class="num">Phase 02</div>
             <h3>Design</h3>
-            <p>Project structure, chart of accounts, cost code library, claim workflows, approval chains. All documented before we touch the system.</p>
+            <p>Project structure, chart of accounts, cost code library, claim workflows, approval chains, integration points. All documented in writing before we touch the system. You sign off on the design before any build starts.</p>
           </div>
           <div class="feature-card reveal">
             <div class="num">Phase 03</div>
             <h3>Build</h3>
-            <p>Configuration, integrations, data migration. Your team sees a working sandbox at week six, not week twelve.</p>
+            <p>Configuration, integrations, data migration. Your team sees a working sandbox at week six, not week twelve. You can poke at it and break it without consequence &mdash; we'd rather find the issues there than in production.</p>
           </div>
           <div class="feature-card reveal">
             <div class="num">Phase 04</div>
             <h3>Train &amp; cutover</h3>
-            <p>Role-based training for the people who'll actually use it. Then a planned cutover &mdash; not a "fingers crossed" weekend.</p>
+            <p>Role-based training for the people who'll actually use it &mdash; PMs, AP/AR, payroll, finance leadership. Then a planned cutover with a documented rollback path. Not a "fingers crossed" weekend.</p>
           </div>
           <div class="feature-card reveal">
             <div class="num">Phase 05</div>
             <h3>Stabilise</h3>
-            <p>We're embedded for the first month-end and the first project claim cycle. By the time we leave, your team owns it.</p>
+            <p>We're embedded for the first month-end and the first project claim cycle. By the time we step back, your team owns it &mdash; with the documentation and the muscle memory to keep it running.</p>
           </div>
         </div>
       </div>
     </section>
+
+""" + process_section() + """
+
+""" + stats_section(
+        "By the numbers",
+        "Implementation, the way we run it.",
+        [
+            ("8&ndash;14 wks", "typical timeline from kick-off to go-live"),
+            ("40+", "Jobpac implementations delivered across AU/NZ"),
+            ("100%", "senior consultants &mdash; no juniors or graduates"),
+            ("Fixed", "scope and price, signed off before build starts"),
+        ],
+    ) + """
+
+""" + faq_section([
+        ("How long does a typical Jobpac implementation take?",
+         "For a single-entity construction business with standard modules, eight to ten weeks from kick-off to go-live is typical. Multi-entity rollouts, complex integrations, or businesses migrating data from an older system usually run twelve to fourteen weeks. We give you the timeline in the proposal &mdash; not a &ldquo;roughly three months&rdquo; handwave."),
+        ("What if we're already running another ERP &mdash; can you migrate us?",
+         "Yes. We've migrated clients off MYOB, Xero, Reckon, Cheops, and various legacy systems built in-house. The work is in mapping project structure and historical data so nothing critical gets lost. We do that as a defined work-stream inside the implementation, not as a hand-wave."),
+        ("Do you handle the data migration ourselves, or do we?",
+         "We lead the data migration but we don't do it in a black box. Your team validates the migrated data at every stage &mdash; opening balances, project budgets, retentions held, AR/AP open items. Nothing goes live until you've signed off."),
+        ("What happens after go-live?",
+         "We're embedded for the first month-end and the first full project claim cycle after go-live &mdash; that's where most implementations die. After that, you can hand back to your team entirely, or move to a same-day support arrangement. Most clients do a 60- or 90-day support runway, then step back."),
+        ("Can we phase this in module by module?",
+         "Yes. If you want to go live on core financials first and add payroll, plant, and forecasting later, that's a fine sequence. We'll plan the phasing so each module's go-live is stable before the next one starts. Phase 2 doesn't get quoted in vague terms &mdash; we treat it as its own fixed-scope engagement."),
+        ("Who actually does the work &mdash; a senior or a graduate?",
+         "A senior consultant. Always. The person you meet in discovery is the person doing the build, configuration, and training. We don't have graduates on the bench &mdash; partly because we're not big enough, but mostly because we don't want to."),
+    ]) + """
 
     <section class="section">
       <div class="wrap">""" + cta_block(
@@ -952,10 +1253,13 @@ PAGES["process-improvement.html"] = dict(
     title="Process Improvement",
     description="Jobpac process audit, workflow rebuild, and configuration improvement for construction businesses already using Jobpac. Get the value you paid for.",
     active="services",
-    body=page_hero(
+    body=hero_with_visual(
         "Process Improvement",
         "You bought the software. We make sure you actually get value from it.",
         "Most Jobpac users we meet have the system &mdash; they just aren't getting what they were sold. Modules sit unused. Reports take a week to produce. Workarounds in spreadsheets do work the system was meant to do. We audit how Jobpac is actually being used, find the gaps, and rebuild the workflows around how your team really works.",
+        image_src="process-audit.jpg",
+        image_alt="Senior consultant reviewing project finance data with a client",
+        badge="Audit in progress",
     ) + """
     <section class="section">
       <div class="wrap">
@@ -986,6 +1290,34 @@ PAGES["process-improvement.html"] = dict(
       </div>
     </section>
 
+""" + process_section() + """
+
+""" + stats_section(
+        "By the numbers",
+        "What an audit actually delivers.",
+        [
+            ("2&ndash;3 days", "typical on-site audit duration"),
+            ("12&ndash;20", "ranked findings per audit, with effort and payback estimates"),
+            ("Q1", "typical payback period on the first wave of fixes"),
+            ("Fixed", "audit fee &mdash; no T&amp;E surprises"),
+        ],
+    ) + """
+
+""" + faq_section([
+        ("How does the audit actually work?",
+         "A senior consultant spends two to three days inside your business &mdash; not in a meeting room reading slide decks, but sitting with the people doing the work. We watch a real claim cycle, a real month-end, a real project setup. At the end you get a written audit with twelve to twenty findings, each ranked by effort to fix and expected payback."),
+        ("Do you fix the issues yourselves, or just identify them?",
+         "Either. The audit is the same price whether you take the findings and execute them in-house, or hand the remediation back to us. We're equally happy doing the remediation work or coaching your team through it. Most clients fix the highest-payback items with us and tackle the rest themselves."),
+        ("What does an audit typically cost?",
+         "Audits are fixed-price, based on the size and complexity of your Jobpac setup. For a single-entity business, expect a five-figure fee for the audit itself. Larger groups or multi-entity setups scale from there. We give you the number in writing before we start."),
+        ("We think we already know what's broken &mdash; is the audit still worth it?",
+         "Usually yes. After sixteen years of doing this, the patterns are predictable &mdash; but the specific findings inside your business almost always include things the people running the system every day no longer see. We've never finished an audit without surfacing material issues the client didn't know about."),
+        ("Will this disrupt our finance team's day-to-day?",
+         "Minimally. The audit runs alongside normal operations. We need to watch the work happening &mdash; not interrupt it. People feel observed for a day or two, but the audit doesn't stop anyone from doing their job."),
+        ("Is this only for businesses already running Jobpac?",
+         "Yes. Process improvement assumes you have the system installed and being used. If you're considering Jobpac but not yet on it, you want the implementation conversation instead."),
+    ]) + """
+
     <section class="section">
       <div class="wrap">""" + cta_block(
         "Suspect Jobpac isn't pulling its weight?",
@@ -1000,11 +1332,14 @@ PAGES["support.html"] = dict(
     title="Support",
     description="Same-day Jobpac support, plus ongoing finance and accounting cover for construction businesses: bookkeeping, AP/AR, payroll, P&L, temp relief, and forecasting.",
     active="services",
-    body=page_hero(
+    body=hero_with_visual(
         "Support",
         "Your finance team's safety net &mdash; answered the same day, every day.",
         "Buoy's support service is what construction finance teams reach for when the wheels need to keep turning. Day-to-day Jobpac help, real human bookkeeping and accounting cover, and temp relief when someone's sick or away. On-call or fully embedded &mdash; the cost of an in-house resource without the cost of a permanent hire.",
-        banner="Same-day support, every day &mdash; usually answered within hours.",
+        image_src="office-team.jpg",
+        image_alt="Buoy support consultants working at desk with project dashboards",
+        banner="Same-day support &mdash; usually answered within hours.",
+        badge="Live &middot; Mon&ndash;Fri AU/NZ",
     ) + """
     <section class="section">
       <div class="wrap">
@@ -1060,13 +1395,14 @@ PAGES["support.html"] = dict(
       </div>
     </section>
 
-    <section class="section warm-bg">
+    <section class="section">
       <div class="wrap">
         <div class="two-col aside reveal">
           <div>
             <h2>How same-day support actually works.</h2>
             <p>You email or call. A senior consultant who knows your setup picks it up &mdash; not a triage queue, not an offshore ticket centre. Most queries are resolved the same day, often within a couple of hours.</p>
             <p>If we need to log into Jobpac to fix something, we already have the credentials and the project map &mdash; we're not re-discovering your environment every time. That's why we're fast.</p>
+            <p>And because the same senior consultant works your account month after month, the context compounds. By month three, we know which of your projects always run hot, which subbies are reliably late with claims, and what your CFO actually looks at in the monthly pack.</p>
           </div>
           <div>
             <div class="outcomes">
@@ -1079,6 +1415,23 @@ PAGES["support.html"] = dict(
         </div>
       </div>
     </section>
+
+""" + process_section() + """
+
+""" + faq_section([
+        ("How fast is 'same-day support' really?",
+         "Most tickets are answered within two to three hours of you sending them, often faster. The same business day at the absolute latest. No triage queue &mdash; the senior consultant who knows your setup picks it up directly. The only exception is genuinely complex work that needs a few days of focused effort, in which case we tell you up front."),
+        ("Is there a minimum commitment?",
+         "No. You can use Buoy support ad-hoc (pay for what you use), on a project basis (a defined chunk of work), or on a retainer (set hours per month). Most clients start ad-hoc, then move to a retainer once they realise they're reaching for us every week anyway."),
+        ("Do you work weekends or after hours?",
+         "Standard support runs AU/NZ business hours. For known go-live weekends, EOFY closes, or other planned out-of-hours work, we'll cover by arrangement &mdash; agreed in advance, scoped explicitly. We don't do midnight pager duty."),
+        ("Can you cover for someone on long-term leave?",
+         "Yes &mdash; this is one of the most common reasons clients reach for us. Parental leave, long-service leave, an unexpected resignation: we can put a senior into the seat by the start of next week. Day one productivity, not week three."),
+        ("Do you replace our in-house finance team?",
+         "No, and we don't try to. Our goal is to make your in-house team faster, more accurate, and less reliant on heroics &mdash; not to displace them. When we leave, you should be better at running Jobpac than when we arrived."),
+        ("How quickly can a new support arrangement start?",
+         "For most clients, same week. Discovery call Tuesday, scope agreed Thursday, working in your system Monday. If you're in genuine &ldquo;wheels about to fall off&rdquo; territory, tell us &mdash; we'll work out what's possible faster."),
+    ]) + """
 
     <section class="section">
       <div class="wrap">""" + cta_block(
@@ -1094,10 +1447,13 @@ PAGES["training.html"] = dict(
     title="Training",
     description="Hands-on Jobpac training for construction and civil teams, tailored to your modules, your team's experience level, and your real project workflows.",
     active="services",
-    body=page_hero(
+    body=hero_with_visual(
         "Training",
         "Hands&#8209;on Jobpac training tailored to your team.",
         "Generic Jobpac training videos are easy to find. Training tailored to your modules, your project structure, and your team's actual experience level isn't. We deliver training that's grounded in your real Jobpac environment &mdash; not a clean demo system that looks nothing like yours.",
+        image_src="training-session.jpg",
+        image_alt="Buoy trainer delivering a Jobpac workshop to a construction finance team",
+        badge="Workshop &middot; In session",
     ) + """
     <section class="section">
       <div class="wrap">
@@ -1121,22 +1477,51 @@ PAGES["training.html"] = dict(
       </div>
     </section>
 
-    <section class="section warm-bg">
+    <section class="section">
       <div class="wrap">
         <div class="reveal">
           <span class="eyebrow">Module coverage</span>
           <h2>What we train on.</h2>
+          <p class="lead">Every Jobpac module, calibrated to the modules you've actually licensed and the roles in your team that use them.</p>
         </div>
         <div class="feature-grid">
-          <div class="feature-card reveal"><div class="num">Core</div><h3>Project setup &amp; structure</h3><p>Job creation, cost code mapping, budget loading, contract values, variations.</p></div>
-          <div class="feature-card reveal"><div class="num">Finance</div><h3>AP / AR / GL</h3><p>Subbie claims, vendor invoices, customer billing, period close, GL reconciliation.</p></div>
-          <div class="feature-card reveal"><div class="num">Payroll</div><h3>Payroll &amp; timesheets</h3><p>Weekly and monthly cycles, award rates, EBA configuration, STP, super, leave.</p></div>
-          <div class="feature-card reveal"><div class="num">Reporting</div><h3>Reports &amp; dashboards</h3><p>Project P&amp;L, forecast-vs-actual, cashflow, custom reports, exporting and pivoting.</p></div>
-          <div class="feature-card reveal"><div class="num">Plant</div><h3>Plant &amp; equipment</h3><p>Plant ledger, internal hire rates, plant cost recovery to projects.</p></div>
-          <div class="feature-card reveal"><div class="num">Forecast</div><h3>Forecasting &amp; cashflow</h3><p>Building and maintaining live project and entity forecasts inside Jobpac.</p></div>
+          <div class="feature-card reveal"><div class="num">Core</div><h3>Project setup &amp; structure</h3><p>Job creation, cost code mapping, budget loading, contract values, variations, retentions. The foundation everything else builds on.</p></div>
+          <div class="feature-card reveal"><div class="num">Finance</div><h3>AP / AR / GL</h3><p>Subbie claims, vendor invoices, customer billing, period close, GL reconciliation, monthly close discipline.</p></div>
+          <div class="feature-card reveal"><div class="num">Payroll</div><h3>Payroll &amp; timesheets</h3><p>Weekly and monthly cycles, award rates, EBA configuration, STP Phase 2, super, leave administration, timesheet integration.</p></div>
+          <div class="feature-card reveal"><div class="num">Reporting</div><h3>Reports &amp; dashboards</h3><p>Project P&amp;L, forecast-vs-actual, cashflow, custom reports, exporting and pivoting for management packs.</p></div>
+          <div class="feature-card reveal"><div class="num">Plant</div><h3>Plant &amp; equipment</h3><p>Plant ledger, internal hire rates, plant cost recovery to projects, idle-time tracking, replacement planning.</p></div>
+          <div class="feature-card reveal"><div class="num">Forecast</div><h3>Forecasting &amp; cashflow</h3><p>Building and maintaining live project and entity forecasts inside Jobpac &mdash; not in a parallel spreadsheet that goes stale.</p></div>
         </div>
       </div>
     </section>
+
+""" + process_section() + """
+
+""" + stats_section(
+        "By the numbers",
+        "Training that earns its keep.",
+        [
+            ("Role-based", "tracks for PMs, AP/AR, payroll, finance leadership"),
+            ("Sandbox", "of your live Jobpac environment, not a demo system"),
+            ("On-site or", "remote &mdash; your choice, including hybrid"),
+            ("Recorded", "library handed over, plus written reference guides"),
+        ],
+    ) + """
+
+""" + faq_section([
+        ("How do you tailor training to our specific team?",
+         "Every training engagement starts with a 30-minute scoping call to understand who's in the room: experience level, modules they actually touch, and what they're struggling with today. The syllabus is designed from there. Sessions run on a sandbox of your real Jobpac &mdash; same project structure, same cost codes, same workflows."),
+        ("Do you deliver on-site or remote?",
+         "Both. On-site workshops work best for hands-on modules and team-wide training days. Remote sessions are good for refreshers, smaller groups, or distributed teams. Many clients do a hybrid: kick-off and major modules on-site, follow-ups remote."),
+        ("Can you train new starters joining our business?",
+         "Yes &mdash; we have a fixed onboarding programme for new finance hires that runs three to five sessions over their first month. By the end of it, they should be able to do their job in Jobpac without senior hand-holding. Much faster than the usual &ldquo;watch and learn&rdquo; approach."),
+        ("What if my team is at very different experience levels?",
+         "We split the training. A long-standing payroll officer doesn't need to sit through &ldquo;this is how you log in&rdquo;; a new starter doesn't need an advanced reporting session in their first week. We design tracks by role and level, run in parallel or sequence."),
+        ("Do you record the sessions?",
+         "Yes, by default. We hand over a private library of recordings your team can reference long after we leave. Most clients also ask for written reference guides covering the specific workflows in their setup &mdash; we include those too."),
+        ("Can we train on a sandbox, or does it have to be our live Jobpac?",
+         "We default to a sandbox copy of your live system. People are more willing to experiment when they can't break production. For some advanced sessions where the sandbox can't realistically replicate the workflow (heavy reporting, integration testing), we'll work in production with read-only or test-account access."),
+    ]) + """
 
     <section class="section">
       <div class="wrap">""" + cta_block(
@@ -1152,10 +1537,13 @@ PAGES["civil-construction.html"] = dict(
     title="Civil & Construction",
     description="Specialist Jobpac focus on civil and commercial construction: subbie claims, retentions, progress billing, plant costing, and stage claims.",
     active="services",
-    body=page_hero(
+    body=hero_with_visual(
         "Civil &amp; Construction",
         "Specialist focus on the unique mechanics of civil and commercial construction.",
         "Jobpac was built for construction and we built our consultancy for the same audience. We know subbie claims, retentions, plant costing, stage billing, and JV multi-entity reporting from inside the businesses that run them &mdash; not from a vendor's marketing deck.",
+        image_src="civil-works.jpg",
+        image_alt="Civil construction site managers reviewing plans on a tablet during infrastructure works",
+        badge="On site &middot; Civil",
     ) + """
     <section class="section">
       <div class="wrap">
@@ -1179,7 +1567,7 @@ PAGES["civil-construction.html"] = dict(
       </div>
     </section>
 
-    <section class="section warm-bg">
+    <section class="section">
       <div class="wrap">
         <div class="reveal">
           <span class="eyebrow">Who we work with</span>
@@ -1187,13 +1575,43 @@ PAGES["civil-construction.html"] = dict(
           <p class="lead">Most of our clients fit one of these profiles. If yours doesn't, the conversation might still be worth having.</p>
         </div>
         <div class="feature-grid">
-          <div class="feature-card reveal"><div class="num">Tier 2</div><h3>Tier-2 commercial builders</h3><p>$50m&ndash;$500m turnover, multiple concurrent projects, growing pains around forecast accuracy.</p></div>
-          <div class="feature-card reveal"><div class="num">Civil</div><h3>Civil contractors</h3><p>Roads, bridges, utilities, earthworks. Heavy plant, day-rate hire, stage-based billing.</p></div>
-          <div class="feature-card reveal"><div class="num">Fit-out</div><h3>Fit-out &amp; refurb specialists</h3><p>Fast turn-over jobs, high subbie density, tight margin discipline.</p></div>
-          <div class="feature-card reveal"><div class="num">Family</div><h3>Family-owned regional builders</h3><p>Decades of operating know-how, leaner finance teams, modernising off legacy systems.</p></div>
+          <div class="feature-card reveal"><div class="num">Tier 2</div><h3>Tier-2 commercial builders</h3><p>$50m&ndash;$500m turnover, multiple concurrent projects, growing pains around forecast accuracy and project-level margin visibility.</p></div>
+          <div class="feature-card reveal"><div class="num">Civil</div><h3>Civil contractors</h3><p>Roads, bridges, utilities, earthworks. Heavy plant, day-rate hire, stage-based billing, complex retention release timing.</p></div>
+          <div class="feature-card reveal"><div class="num">Fit-out</div><h3>Fit-out &amp; refurb specialists</h3><p>Fast turn-over jobs, high subbie density, tight margin discipline, lots of variations and partial claims to track.</p></div>
+          <div class="feature-card reveal"><div class="num">Family</div><h3>Family-owned regional builders</h3><p>Decades of operating know-how, leaner finance teams, modernising off legacy systems or spreadsheet-driven processes.</p></div>
+          <div class="feature-card reveal"><div class="num">JV</div><h3>Joint ventures &amp; alliances</h3><p>Multi-entity reporting back to parent companies, inter-entity charges, consolidated and standalone P&amp;L for each partner.</p></div>
+          <div class="feature-card reveal"><div class="num">Group</div><h3>Multi-entity construction groups</h3><p>Holding company structures with operating subsidiaries, intercompany trading, consolidated reporting, separate ABNs.</p></div>
         </div>
       </div>
     </section>
+
+""" + process_section() + """
+
+""" + stats_section(
+        "By the numbers",
+        "Why specialism matters.",
+        [
+            ("16", "years specialising in construction &amp; civil &mdash; only"),
+            ("$20m&ndash;$500m", "typical client turnover range"),
+            ("AU &amp; NZ", "on-site from Sydney, Melbourne, Brisbane, Auckland"),
+            ("100+", "combined years of construction-industry experience"),
+        ],
+    ) + """
+
+""" + faq_section([
+        ("Do you only work with civil contractors, or commercial builders too?",
+         "Both. The mechanics overlap heavily &mdash; subbie claims, retentions, progress billing, project-level P&amp;L, plant costing are common across civil and commercial. The specifics differ (more plant in civil, more variations in fit-out) but the consultant skill is the same."),
+        ("What size of business do you typically work with?",
+         "Most clients are between $20m and $500m turnover &mdash; mid-market construction businesses with one finance function. Smaller and we're usually overkill. Larger and there's typically an internal team that needs different kinds of help. Either way, the discovery call tells us quickly."),
+        ("Do you handle JV / multi-entity reporting?",
+         "Yes &mdash; it's one of our specialty areas. Joint ventures, parent-subsidiary reporting, inter-entity charges, consolidated and standalone P&amp;L. Most ERP consultancies hand-wave this; we've configured it dozens of times and know where the edge cases live."),
+        ("Are you familiar with Security of Payment Act timing for claims?",
+         "Yes. Payment claim service dates, payment schedule response windows, statutory declarations, the lot. We configure Jobpac so the system supports the legal requirements rather than fighting them &mdash; including the differences between NSW, Vic, Qld, WA, and NZ regimes."),
+        ("Do you work with regional businesses outside the capital cities?",
+         "Yes. We're based in Sydney, Melbourne, Brisbane, and Auckland, and we travel anywhere in AU/NZ for on-site work. Regional family-owned builders are some of our favourite clients &mdash; deeply experienced operators modernising legacy finance functions."),
+        ("Can you help with plant cost recovery and internal hire rates?",
+         "Yes. Plant ledger setup, internal hire rate cards, recovery to projects, idle-time tracking, replacement-cost analysis. It's one of the most under-used parts of Jobpac at most civil contractors we audit &mdash; the configuration is usually the bottleneck, not the software."),
+    ]) + """
 
     <section class="section">
       <div class="wrap">""" + cta_block(
@@ -1469,192 +1887,6 @@ PAGES["support-business-forecasting.html"] = support_subpage(
 )
 
 
-# -------- Team --------
-PAGES["team.html"] = dict(
-    title="Team",
-    description="Meet the senior consultants at Buoy Consulting. Six specialists with over 100 years combined construction and Jobpac experience across Australia and New Zealand.",
-    active="team",
-    body=page_hero(
-        "Our team",
-        "Six senior consultants. One hundred years of construction.",
-        "Buoy is a deliberately small consultancy. Every engagement is led by someone with at least fifteen years of construction or civil finance experience &mdash; not someone reading the manual back to you. Meet the people you'll actually work with.",
-    ) + """
-    <section class="section">
-      <div class="wrap">
-        <div class="team-detail">
-          <div class="person reveal">
-            <div class="photo"><img src="donna-duff.jpg" alt="Donna Duff" loading="lazy" /></div>
-            <h3>Donna Duff</h3>
-            <p class="role">Founding Director</p>
-            <p class="bio">Founded Buoy in 2010 after fifteen years in construction finance leadership at Tier-2 builders across Sydney. Donna leads strategy and is the senior consultant on most flagship engagements. CPA, BCom (UNSW).</p>
-            <div class="tags"><span>Strategy</span><span>Implementation</span><span>P&amp;L</span></div>
-          </div>
-          <div class="person reveal">
-            <div class="photo"><img src="https://randomuser.me/api/portraits/men/68.jpg" alt="Michael R." loading="lazy" /></div>
-            <h3>Michael R.</h3>
-            <p class="role">Senior Consultant</p>
-            <p class="bio">Twenty years across Jobpac implementations and audits, with deep experience in civil contractors and joint-venture structures. Michael owns most of our process improvement work and runs the most complex multi-entity rollouts.</p>
-            <div class="tags"><span>Civil</span><span>JV / multi-entity</span><span>Process</span></div>
-          </div>
-          <div class="person reveal">
-            <div class="photo"><img src="https://randomuser.me/api/portraits/women/26.jpg" alt="Sarah P." loading="lazy" /></div>
-            <h3>Sarah P.</h3>
-            <p class="role">Implementation Lead</p>
-            <p class="bio">Fifteen years inside Tier-2 commercial builders running AP, AR, and project finance. Sarah leads our implementation practice and has stood up Jobpac end-to-end at over forty businesses. Based in Melbourne.</p>
-            <div class="tags"><span>Implementation</span><span>Migrations</span><span>Tier-2</span></div>
-          </div>
-          <div class="person reveal">
-            <div class="photo"><img src="https://randomuser.me/api/portraits/men/52.jpg" alt="James T." loading="lazy" /></div>
-            <h3>James T.</h3>
-            <p class="role">Process &amp; Workflow</p>
-            <p class="bio">Eighteen years in construction finance with a particular focus on plant cost recovery, retentions, and reporting workflows. James runs our process improvement audits and rebuilds. Based in Brisbane.</p>
-            <div class="tags"><span>Plant</span><span>Reporting</span><span>Audits</span></div>
-          </div>
-          <div class="person reveal">
-            <div class="photo"><img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Amelia K." loading="lazy" /></div>
-            <h3>Amelia K.</h3>
-            <p class="role">Bookkeeping &amp; AP Lead</p>
-            <p class="bio">Senior bookkeeper with seventeen years inside Jobpac. Amelia leads our embedded support team &mdash; bookkeeping, AP, AR, P&amp;L &mdash; and is most clients' day-to-day point of contact when they're on a support arrangement.</p>
-            <div class="tags"><span>Bookkeeping</span><span>AP / AR</span><span>Support</span></div>
-          </div>
-          <div class="person reveal">
-            <div class="photo"><img src="https://randomuser.me/api/portraits/men/15.jpg" alt="Robert M." loading="lazy" /></div>
-            <h3>Robert M.</h3>
-            <p class="role">Training Lead</p>
-            <p class="bio">Sixteen years across construction finance, ten of those building training programmes. Robert designs our role-based Jobpac training and delivers it on-site across AU and NZ. Cert IV in Training &amp; Assessment.</p>
-            <div class="tags"><span>Training</span><span>On-site delivery</span><span>NZ</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section warm-bg">
-      <div class="wrap">
-        <div class="two-col aside reveal">
-          <div>
-            <h2>Why we stay deliberately small.</h2>
-            <p>Most consultancies grow by adding juniors and reselling them at senior rates. We grow by adding seniors and selling them at senior rates &mdash; or not adding anyone at all. Six is enough to cover any engagement we'd take on, and small enough that you'll always know exactly who's doing the work.</p>
-            <p>Every consultant on the team has at least fifteen years of construction or civil finance experience. We don't hire generalists and put them through a four-week Jobpac course. The bar to join Buoy is the bar that makes you valuable to a client on day one.</p>
-          </div>
-          <div>
-            <div class="outcomes">
-              <div class="o"><span class="num">15+</span><span class="lbl">years experience minimum on every engagement</span></div>
-              <div class="o"><span class="num">0</span><span class="lbl">graduates or junior consultants</span></div>
-              <div class="o"><span class="num">100%</span><span class="lbl">construction-industry background</span></div>
-              <div class="o"><span class="num">AU &amp; NZ</span><span class="lbl">on-site coverage from Sydney, Melbourne, Brisbane &amp; Auckland</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="wrap">""" + cta_block(
-        "Want to talk to a specific consultant?",
-        "Tell us what you're working on and we'll match you to the right person on the team. The first call is free.",
-    ) + """
-      </div>
-    </section>""",
-)
-
-# -------- Process --------
-PAGES["process.html"] = dict(
-    title="Process",
-    description="How Buoy Consulting engagements run: discovery, fixed-scope proposal, senior-led execution, and embedded handover. No bait-and-switch, no surprise invoices.",
-    active="process",
-    body=page_hero(
-        "How we engage",
-        "Four steps. No surprises. No bait&#8209;and&#8209;switch.",
-        "Every Buoy engagement runs the same way &mdash; whether it's a six-week implementation, a three-month process improvement, or a long-running same-day support arrangement. Fixed scope, senior consultant, full transparency. Here's what that looks like end-to-end.",
-    ) + """
-    <section class="section">
-      <div class="wrap">
-        <div class="process-timeline">
-          <div class="phase reveal">
-            <div class="num">01</div>
-            <div>
-              <div class="duration">Discovery &middot; 30&ndash;60 minutes &middot; no cost</div>
-              <h3>We listen first.</h3>
-              <p>A no-cost call. We listen, ask questions, take notes. We learn your current Jobpac setup, what's hurting most, and what's already worked. You're talking to the senior consultant who'd actually do the work &mdash; not a sales person reading off a script.</p>
-              <p>You walk away with a clear sense of whether we're a fit. If we're not, we'll say so &mdash; and where possible, point you at someone who is.</p>
-            </div>
-          </div>
-          <div class="phase reveal">
-            <div class="num">02</div>
-            <div>
-              <div class="duration">Scope &middot; 3&ndash;7 business days</div>
-              <h3>You get a fixed-scope proposal.</h3>
-              <p>Within a week, you receive a written proposal: deliverables, timeline, price, and the named senior consultant who'll lead the engagement. No "T&amp;E to be confirmed". No "phase 2 to be quoted later". The price is the price.</p>
-              <p>You review, push back on scope, ask questions. We adjust. Sign-off on scope before any work starts &mdash; so there's no ambiguity about what's in or out.</p>
-            </div>
-          </div>
-          <div class="phase reveal">
-            <div class="num">03</div>
-            <div>
-              <div class="duration">Execute &middot; duration varies by scope</div>
-              <h3>Senior consultant on the keys.</h3>
-              <p>The person on the proposal does the work. Not a junior. Not a partner who hands it down. Weekly written status, risks called out the week they emerge &mdash; not the week before go-live.</p>
-              <p>If anything material changes mid-engagement &mdash; new requirement, scope creep, surprise data issue &mdash; we agree it explicitly with you in writing before doing it. No surprise invoices.</p>
-            </div>
-          </div>
-          <div class="phase reveal">
-            <div class="num">04</div>
-            <div>
-              <div class="duration">Embed &middot; final 1&ndash;2 weeks of every engagement</div>
-              <h3>Your team owns it when we leave.</h3>
-              <p>Documentation: workflow guides, configuration notes, training material &mdash; written so your team can run it long after we're gone. Hands-on training with the people who'll use the system day-to-day, in your real environment.</p>
-              <p>A structured handover so nothing slips. Optional ongoing same-day support after handover &mdash; most clients want a thread to pull on for the first 90 days, but you're never locked in.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section warm-bg">
-      <div class="wrap">
-        <div class="reveal">
-          <span class="eyebrow">Common questions</span>
-          <h2>What people usually ask before signing.</h2>
-        </div>
-        <div class="faq reveal">
-          <details>
-            <summary>What if scope changes mid-engagement?</summary>
-            <p>We pause and agree the change in writing before doing it. You'll see the impact on price and timeline before you commit. If we don't agree on the change, we deliver against the original scope and the new requirement becomes a separate engagement.</p>
-          </details>
-          <details>
-            <summary>Do you charge for discovery?</summary>
-            <p>No. The first call is free, and the written proposal that follows is also free. We only charge once you've signed off on a scope.</p>
-          </details>
-          <details>
-            <summary>How fast can you start?</summary>
-            <p>For most support engagements, same week. For larger implementations or process improvements, the typical lead time is two to four weeks because we plan around current commitments. If something is genuinely urgent, tell us and we'll work out what's possible.</p>
-          </details>
-          <details>
-            <summary>Do you work in person or remotely?</summary>
-            <p>Both. We're based in Sydney, Melbourne, Brisbane, and Auckland, and we travel anywhere in AU/NZ for on-site work. A typical implementation has a mix of on-site and remote days; ongoing support is mostly remote with site visits when something needs hands-on.</p>
-          </details>
-          <details>
-            <summary>What size of business is Buoy a fit for?</summary>
-            <p>Most clients are between $20m and $500m turnover &mdash; mid-market construction and civil businesses with one finance function. Smaller and we're usually overkill. Larger and there's typically an internal team that needs different kinds of help. Either way, the discovery call will tell us.</p>
-          </details>
-          <details>
-            <summary>Can we hire you on retainer?</summary>
-            <p>Yes &mdash; that's what our same-day support service is. A defined number of hours per week or month, used flexibly across the team. Most clients start with a project, then move to a support retainer afterwards.</p>
-          </details>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="wrap">""" + cta_block(
-        "Ready to start with a discovery call?",
-        "30 minutes, no slide deck, no obligation. Senior consultant on the line, not a sales person.",
-    ) + """
-      </div>
-    </section>""",
-)
-
-
 # ============================================================
 # Run
 # ============================================================
@@ -1676,7 +1908,17 @@ def write_pages():
         (ROOT / filename).write_text(html, encoding="utf-8")
         print(f"  wrote {filename} ({len(html):,} bytes)")
 
+def cleanup_orphans():
+    """Remove pages that used to exist but no longer do (post-consolidation)."""
+    orphans = ["team.html", "process.html"]
+    for o in orphans:
+        path = ROOT / o
+        if path.exists():
+            path.unlink()
+            print(f"  removed orphan {o}")
+
 if __name__ == "__main__":
     ensure_inner_css()
     write_pages()
+    cleanup_orphans()
     print(f"\nDone. {len(PAGES)} pages.")
