@@ -1383,86 +1383,9 @@
   bottom: -50px; right: -50px;
   z-index: -1;
 }
-
-/* Atmospheric hero — subtle vertical gradient (faint peach top, cream bottom)
-   plus a soft peach blob top-right. No bottom-left blob; it was clipping
-   awkwardly. The gradient itself differentiates the hero from a flat-cream
-   section that follows it. */
-.page-hero.with-visual {
-  position: relative;
-  overflow: hidden;
-  background: linear-gradient(180deg, var(--orange-100) 0%, var(--orange-50) 45%, var(--cream) 100%);
-}
-.page-hero.with-visual::before {
-  content: "";
-  position: absolute;
-  width: 640px; height: 640px;
-  border-radius: 50%;
-  background: var(--orange-300);
-  opacity: 0.18;
-  top: -260px; right: -200px;
-  pointer-events: none;
-  z-index: 0;
-}
-.page-hero.with-visual > .wrap { position: relative; z-index: 1; }
-
-/* Hero floating card — overlays the photo, same pattern as homepage hero */
-.page-hero.with-visual .hero-visual-card-wrap { position: relative; }
-.page-hero.with-visual .hero-float-card {
-  position: absolute;
-  bottom: -20px;
-  left: -28px;
-  background: var(--white);
-  box-shadow: var(--shadow-float);
-  border-radius: 14px;
-  padding: 0.85rem 1.05rem;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  z-index: 3;
-  transform: rotate(-2deg);
-  transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
-  max-width: 240px;
-}
-.page-hero.with-visual .hero-visual-card-wrap:hover .hero-float-card {
-  transform: rotate(0deg) translateY(-3px);
-}
-.page-hero.with-visual .hero-float-card .hf-icon {
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  background: var(--orange-500);
-  color: var(--white);
-  display: grid; place-items: center;
-  flex-shrink: 0;
-}
-.page-hero.with-visual .hero-float-card .hf-meta {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.2;
-}
-.page-hero.with-visual .hero-float-card .hf-meta b {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1rem;
-  letter-spacing: -0.01em;
-  color: var(--ink);
-}
-.page-hero.with-visual .hero-float-card .hf-meta span {
-  font-size: 0.72rem;
-  color: var(--gray-500);
-}
-
-/* Italic emphasis on page-hero H1 (matches homepage's italic Jobpac treatment) */
-.page-hero h1 em {
-  font-style: italic;
-  font-weight: 700;
-  color: var(--orange-500);
-}
-
 @media (max-width: 900px) {
   .page-hero.with-visual .hero-grid { grid-template-columns: 1fr; }
   .page-hero.with-visual .hero-visual-card { max-width: 540px; margin-inline: auto; }
-  .page-hero.with-visual .hero-float-card { left: 8px; bottom: -14px; }
 }
 
 /* Section with side photo (alternating direction) */
@@ -2033,19 +1956,182 @@
   gap: 1.25rem;
   margin-top: 2.5rem;
 }
-
-/* Compact 2x2 grid variant — opt-in via .compact modifier.
-   Use when vertical stack feels too tall for the page. */
-.process-timeline.compact {
+.process-timeline .phase {
+  background: var(--white);
+  border: 1px solid var(--gray-100);
+  border-radius: var(--r-card);
+  padding: 1.75rem 2rem;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.25rem;
+  grid-template-columns: 80px 1fr;
+  gap: 1.5rem;
+  transition: border-color 200ms, transform 250ms;
+}
+.process-timeline .phase:hover {
+  border-color: var(--orange-300);
+  transform: translateX(4px);
+}
+.process-timeline .phase .num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 2.5rem;
+  color: var(--orange-500);
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+.process-timeline .phase h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.4rem;
+}
+.process-timeline .phase .duration {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--orange-700);
+  font-weight: 700;
+  margin-bottom: 0.85rem;
+}
+.process-timeline .phase p {
+  color: var(--gray-700);
+  line-height: 1.65;
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+}
+@media (max-width: 600px) {
+  .process-timeline .phase { grid-template-columns: 1fr; gap: 0.5rem; padding: 1.5rem; }
+  .process-timeline .phase .num { font-size: 2rem; }
+}
+
+/* Contact form */
+.contact-form {
+  display: flex; flex-direction: column; gap: 1.25rem;
+  background: var(--white);
+  border: 1px solid var(--gray-100);
+  border-radius: var(--r-card);
+  padding: clamp(1.75rem, 3vw, 2.5rem);
+  margin-top: 2rem;
+}
+.contact-form .field { display: flex; flex-direction: column; gap: 0.4rem; }
+.contact-form label {
+  font-size: 0.78rem; font-weight: 700;
+  color: var(--ink); letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.contact-form input, .contact-form textarea, .contact-form select {
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--r-tight);
+  font: inherit; color: var(--ink); background: var(--cream);
+  transition: border-color 200ms, background 200ms;
+}
+.contact-form input:focus, .contact-form textarea:focus, .contact-form select:focus {
+  outline: none; border-color: var(--orange-500); background: var(--white);
+}
+.contact-form textarea { min-height: 120px; resize: vertical; }
+.contact-form button {
+  background: var(--orange-500); color: var(--white);
+  padding: 1rem 1.75rem;
+  border-radius: var(--r-pill);
+  font-weight: 600; font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 200ms, transform 200ms;
+  align-self: flex-start;
+}
+.contact-form button:hover { background: var(--orange-700); transform: translateY(-1px); }
+
+.contact-aside {
+  display: flex; flex-direction: column; gap: 1.5rem;
+}
+.contact-aside h3 { font-size: 1.1rem; }
+.contact-aside .channel {
+  display: flex; flex-direction: column; gap: 0.25rem;
+}
+.contact-aside .channel a {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--ink);
+}
+.contact-aside .channel a:hover { color: var(--orange-700); }
+.contact-aside .channel span {
+  font-size: 0.85rem; color: var(--gray-500);
+}
+
+/* === Hero (page-hero with-visual) — atmospheric peach gradient === */
+.page-hero.with-visual {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--orange-100) 0%, var(--orange-50) 45%, var(--cream) 100%);
+}
+.page-hero.with-visual::before {
+  content: "";
+  position: absolute;
+  width: 640px; height: 640px;
+  border-radius: 50%;
+  background: var(--orange-300);
+  opacity: 0.18;
+  top: -260px; right: -200px;
+  pointer-events: none;
+  z-index: 0;
+}
+.page-hero.with-visual > .wrap { position: relative; z-index: 1; }
+
+/* Italic emphasis on page-hero H1 (matches homepage's italic Jobpac treatment) */
+.page-hero h1 em {
+  font-style: italic;
+  font-weight: 700;
+  color: var(--orange-500);
+}
+
+/* Hero floating card overlay */
+.page-hero.with-visual .hero-visual-card-wrap { position: relative; }
+.page-hero.with-visual .hero-float-card {
+  position: absolute;
+  bottom: -20px;
+  left: -28px;
+  background: var(--white);
+  box-shadow: var(--shadow-float);
+  border-radius: 14px;
+  padding: 0.85rem 1.05rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  z-index: 3;
+  transform: rotate(-2deg);
+  transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+  max-width: 240px;
+}
+.page-hero.with-visual .hero-visual-card-wrap:hover .hero-float-card {
+  transform: rotate(0deg) translateY(-3px);
+}
+.page-hero.with-visual .hero-float-card .hf-icon {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--orange-500);
+  color: var(--white);
+  display: grid; place-items: center;
+  flex-shrink: 0;
+}
+.page-hero.with-visual .hero-float-card .hf-meta {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+.page-hero.with-visual .hero-float-card .hf-meta b {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.page-hero.with-visual .hero-float-card .hf-meta span {
+  font-size: 0.72rem;
+  color: var(--gray-500);
 }
 @media (max-width: 900px) {
-  .process-timeline.compact { grid-template-columns: 1fr; }
+  .page-hero.with-visual .hero-float-card { left: 8px; bottom: -14px; }
 }
 
-/* Centered inner-page section head (mirrors .sec-head from homepage) */
+/* === Centered inner-page section head === */
 .section-head {
   text-align: center;
   max-width: 720px;
@@ -2060,20 +2146,10 @@
   max-width: none;
   margin-inline: auto;
 }
-/* When section-head is inside a dark section, lead text needs to invert */
 .section.dark .section-head .lead,
 .section.dark-feature .section-head .lead { color: rgba(255,255,255,0.78); }
 
-/* Extra breathing room between back-to-back dark sections (e.g. dark-feature
-   directly followed by a .section.dark testimonial). */
-.section.dark-feature + .section.dark,
-.section.dark + .section.dark-feature {
-  margin-top: clamp(2rem, 4vw, 3.5rem);
-}
-
-/* Dramatic dark-feature section — mirrors the homepage Support featured card:
-   navy gradient + orange radial overlay + decorative orange blobs.
-   Designed to hold feature-grid cards which become translucent on this bg. */
+/* === Dramatic dark-feature section (homepage Support featured card style) === */
 .section.dark-feature {
   background:
     radial-gradient(circle at 92% 8%, rgba(232, 93, 31, 0.32) 0%, transparent 50%),
@@ -2113,8 +2189,6 @@
 .section.dark-feature p { color: rgba(255,255,255,0.78); }
 .section.dark-feature .eyebrow { color: var(--orange-300); }
 .section.dark-feature .eyebrow::before { background: var(--orange-400); }
-
-/* Glassy translucent feature cards on dark-feature backgrounds */
 .section.dark-feature .feature-card {
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.10);
@@ -2131,39 +2205,7 @@
 .section.dark-feature .feature-card p { color: rgba(255,255,255,0.7); }
 .section.dark-feature .feature-card .num { color: var(--orange-300); }
 
-/* Atmospheric cream-section blobs — opt-in via .has-atmosphere */
-.section.has-atmosphere {
-  position: relative;
-  overflow: hidden;
-}
-.section.has-atmosphere::before {
-  content: "";
-  position: absolute;
-  width: 320px; height: 320px;
-  border-radius: 50%;
-  background: var(--orange-100);
-  opacity: 0.55;
-  top: -120px; left: -100px;
-  pointer-events: none;
-  z-index: 0;
-}
-.section.has-atmosphere::after {
-  content: "";
-  position: absolute;
-  width: 200px; height: 200px;
-  border-radius: 50%;
-  background: var(--orange-300);
-  opacity: 0.18;
-  bottom: 8%; right: -80px;
-  pointer-events: none;
-  z-index: 0;
-}
-.section.has-atmosphere > .wrap { position: relative; z-index: 1; }
-
-/* Stat ticker spacing — give it room from the testimonial above and section below */
-.stat-ticker { margin-block: clamp(2rem, 4vw, 3.5rem); }
-
-/* 5-phase grid + 6th "live status" mockup card to fill out a balanced 3x2 */
+/* 5-phase grid + 6th outcome card */
 .section.dark-feature .feature-grid.five-up {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -2176,8 +2218,7 @@
   .section.dark-feature .feature-grid.five-up { grid-template-columns: 1fr; }
 }
 
-/* Live-status outcome card that sits as the 6th tile, breaking the
-   text-card rhythm with a visual moment */
+/* Phase outcome — live status mockup card */
 .section.dark-feature .phase-outcome {
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -2208,10 +2249,7 @@
 }
 .section.dark-feature .phase-outcome > * { position: relative; z-index: 1; }
 .section.dark-feature .phase-outcome .po-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
+  display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;
 }
 .section.dark-feature .phase-outcome .po-live {
   display: inline-flex;
@@ -2231,24 +2269,15 @@
   animation: pulse 2s ease-in-out infinite;
   box-shadow: 0 0 0 4px rgba(232, 93, 31, 0.16);
 }
-.section.dark-feature .phase-outcome .po-dots {
-  display: flex;
-  gap: 4px;
-}
+.section.dark-feature .phase-outcome .po-dots { display: flex; gap: 4px; }
 .section.dark-feature .phase-outcome .po-dots span {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.2);
+  width: 6px; height: 6px; border-radius: 50%; background: rgba(255, 255, 255, 0.2);
 }
 .section.dark-feature .phase-outcome .po-title {
-  font-size: 0.78rem;
-  color: rgba(255, 255, 255, 0.65);
-  letter-spacing: 0.02em;
+  font-size: 0.78rem; color: rgba(255, 255, 255, 0.65); letter-spacing: 0.02em;
 }
 .section.dark-feature .phase-outcome .po-stat {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
+  display: flex; flex-direction: column; gap: 0.15rem;
 }
 .section.dark-feature .phase-outcome .po-num {
   font-family: var(--font-display);
@@ -2259,54 +2288,158 @@
   color: var(--white);
 }
 .section.dark-feature .phase-outcome .po-num .po-unit {
-  font-size: 0.42em;
-  color: rgba(255, 255, 255, 0.55);
-  margin-left: 0.25em;
-  font-weight: 500;
-  letter-spacing: 0;
+  font-size: 0.42em; color: rgba(255, 255, 255, 0.55);
+  margin-left: 0.25em; font-weight: 500; letter-spacing: 0;
 }
 .section.dark-feature .phase-outcome .po-sublabel {
-  font-size: 0.78rem;
-  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.78rem; color: rgba(255, 255, 255, 0.6);
 }
 .section.dark-feature .phase-outcome .po-spark {
-  width: 100%;
-  height: 50px;
-  color: var(--orange-400);
-  margin-top: auto;
-}
-.section.dark-feature .phase-outcome .po-spark .spark-fill {
-  fill: url(#spark-grad);
+  width: 100%; height: 50px; color: var(--orange-400); margin-top: auto;
 }
 .section.dark-feature .phase-outcome .po-checks {
-  display: flex;
-  flex-direction: column;
-  gap: 0.45rem;
-  padding-top: 0.85rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.10);
+  display: flex; flex-direction: column; gap: 0.45rem;
+  padding-top: 0.85rem; border-top: 1px solid rgba(255, 255, 255, 0.10);
 }
 .section.dark-feature .phase-outcome .po-checks span {
-  display: flex;
-  align-items: center;
-  gap: 0.55rem;
-  font-size: 0.78rem;
-  color: rgba(255, 255, 255, 0.78);
+  display: flex; align-items: center; gap: 0.55rem;
+  font-size: 0.78rem; color: rgba(255, 255, 255, 0.78);
 }
 .section.dark-feature .phase-outcome .po-checks span::before {
-  content: "";
-  display: inline-block;
-  width: 14px; height: 14px;
-  border-radius: 50%;
+  content: ""; display: inline-block;
+  width: 14px; height: 14px; border-radius: 50%;
   background: rgba(232, 93, 31, 0.25);
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FBA982' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 9px;
+  background-repeat: no-repeat; background-position: center; background-size: 9px;
   flex-shrink: 0;
 }
 
-/* Stronger outcomes cards: white + shadow + thicker orange rule, so they stand
-   out against cream OR warm backgrounds */
+/* === Spacing rule between back-to-back dark sections === */
+.section.dark-feature + .section.dark,
+.section.dark + .section.dark-feature {
+  margin-top: clamp(2rem, 4vw, 3.5rem);
+}
+
+/* === Warm-bg-rich (used on How we engage) — full-width gradient + blobs === */
+.section.warm-bg-rich {
+  background: linear-gradient(180deg, var(--orange-50) 0%, var(--cream) 100%);
+  margin-inline: 0;
+  border-radius: 0;
+  position: relative;
+  overflow: hidden;
+}
+.section.warm-bg-rich::before {
+  content: "";
+  position: absolute;
+  width: 420px; height: 420px;
+  border-radius: 50%;
+  background: var(--orange-300);
+  opacity: 0.18;
+  top: 25%; right: -200px;
+  pointer-events: none;
+  z-index: 0;
+}
+.section.warm-bg-rich::after {
+  content: "";
+  position: absolute;
+  width: 280px; height: 280px;
+  border-radius: 50%;
+  background: var(--orange-500);
+  opacity: 0.06;
+  bottom: -100px; left: -100px;
+  pointer-events: none;
+  z-index: 0;
+}
+.section.warm-bg-rich > .wrap { position: relative; z-index: 1; }
+
+/* === Process timeline compact 2x2 variant === */
+.process-timeline.compact {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+@media (max-width: 900px) {
+  .process-timeline.compact { grid-template-columns: 1fr; }
+}
+
+/* Override .phase background + icon for warm-bg-rich context */
+.process-timeline .phase {
+  background: var(--white);
+  border: 1px solid var(--orange-100);
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 1.5rem;
+  transition: border-color 200ms, transform 250ms, box-shadow 250ms;
+}
+.process-timeline .phase:hover {
+  border-color: var(--orange-300);
+  transform: translateX(4px);
+  box-shadow: 0 16px 32px -16px rgba(14, 23, 41, 0.12);
+}
+.process-timeline .phase .phase-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: var(--orange-100);
+  color: var(--orange-700);
+  display: grid;
+  place-items: center;
+  align-self: start;
+  transition: background 250ms ease, color 250ms ease,
+              transform 350ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.process-timeline .phase:hover .phase-icon {
+  background: var(--orange-500);
+  color: var(--white);
+  transform: scale(1.08) rotate(-6deg);
+}
+
+/* === Deliverables strip — horizontal card grid (replaces vertical list) === */
+.deliverables-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.deliverables-strip li {
+  background: var(--white);
+  border: 1px solid var(--gray-100);
+  border-radius: var(--r-card);
+  padding: 1.25rem;
+  position: relative;
+  font-size: 0.92rem;
+  color: var(--gray-700);
+  line-height: 1.5;
+  transition: border-color 200ms, transform 200ms, box-shadow 200ms;
+}
+.deliverables-strip li:hover {
+  border-color: var(--orange-300);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px -10px rgba(14, 23, 41, 0.10);
+}
+.deliverables-strip li::before {
+  content: "";
+  display: block;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: var(--orange-100);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23E85D1F' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 14px;
+  margin-bottom: 0.85rem;
+}
+.deliverables-strip li strong {
+  display: block;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.35rem;
+  font-size: 0.98rem;
+}
+
+/* === Outcomes (By the numbers) — bigger numbers + white cards === */
 .outcomes .o {
   padding: 1.75rem 1.5rem 1.75rem 1.75rem;
   background: var(--white);
@@ -2333,46 +2466,13 @@
   line-height: 1.5;
 }
 
-/* Center the FAQ accordion column when it sits under a centered section head */
+/* === FAQ centered under section-head === */
 .section .faq {
   margin-inline: auto;
   max-width: 760px;
 }
 
-/* "What we do" two-col with a photo on the right side */
-.two-col-photo {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(2rem, 4vw, 4rem);
-  align-items: center;
-  margin-bottom: clamp(2rem, 4vw, 3rem);
-}
-.two-col-photo .copy h2 { margin-bottom: 1.25rem; }
-.two-col-photo .copy p { color: var(--gray-700); line-height: 1.7; margin-bottom: 1rem; }
-.two-col-photo .photo {
-  position: relative;
-  aspect-ratio: 4 / 3;
-  border-radius: clamp(20px, 2vw, 28px);
-  overflow: hidden;
-  box-shadow: var(--shadow-soft);
-}
-.two-col-photo .photo img { width: 100%; height: 100%; object-fit: cover; }
-.two-col-photo .photo .blob-accent {
-  position: absolute;
-  width: 120px; height: 120px;
-  border-radius: 50%;
-  background: var(--orange-300);
-  opacity: 0.5;
-  bottom: -40px; right: -40px;
-  z-index: -1;
-}
-@media (max-width: 800px) {
-  .two-col-photo { grid-template-columns: 1fr; }
-}
-
-/* === Orange testimonial section (replaces the navy testimonial on
-   inner pages — breaks the dark-on-dark adjacency with the
-   implementation-phases section above) === */
+/* === Orange testimonial section === */
 .section.testimonial-orange {
   background:
     radial-gradient(circle at 92% 12%, rgba(255, 255, 255, 0.18) 0%, transparent 55%),
@@ -2422,7 +2522,6 @@
   position: relative;
   z-index: 1;
 }
-/* Organic blob shape on the photo — mirrors the homepage why-portrait */
 .testimonial-layout .testimonial-photo img {
   width: 100%;
   height: 100%;
@@ -2433,8 +2532,6 @@
   position: relative;
   z-index: 2;
 }
-/* Soft contrasting blob sitting behind the photo, slightly offset
-   for depth — same vibe as the homepage's shape-bg */
 .testimonial-layout .testimonial-photo .testimonial-blob {
   position: absolute;
   width: 80%;
@@ -2446,7 +2543,6 @@
   border-radius: 40% 60% 60% 40% / 50% 60% 40% 50%;
   z-index: 1;
 }
-
 .testimonial-layout .testimonial-quote .quote-text {
   font-family: var(--font-display);
   font-weight: 500;
@@ -2510,13 +2606,12 @@
   font-size: 0.78rem;
   color: rgba(255, 255, 255, 0.78);
 }
-
 @media (max-width: 800px) {
   .testimonial-layout { grid-template-columns: 1fr; }
   .testimonial-layout .testimonial-photo { max-width: 360px; }
 }
 
-/* === Big page-closing CTA (replacement for inline-cta on inner pages) === */
+/* === Big page-closing CTA === */
 .cta-big {
   position: relative;
   background:
@@ -2556,7 +2651,6 @@
   z-index: 0;
 }
 .cta-big > * { position: relative; z-index: 1; }
-
 .cta-big-copy { display: flex; flex-direction: column; align-items: flex-start; }
 .cta-big-eyebrow {
   display: inline-flex;
@@ -2638,8 +2732,6 @@
   transform: translateY(-2px);
   box-shadow: 0 18px 32px -10px rgba(232, 93, 31, 0.55);
 }
-
-/* Right-side aside: big stat + senior badge */
 .cta-big-aside {
   display: flex;
   flex-direction: column;
@@ -2698,209 +2790,7 @@
   background: var(--orange-500);
   animation: pulse 2s ease-in-out infinite;
 }
-
 @media (max-width: 900px) {
   .cta-big { grid-template-columns: 1fr; padding: 2.5rem; }
   .cta-big-aside { align-items: stretch; }
-}
-
-/* Horizontal deliverables strip (used when deliverables moved below the
-   two-col-photo block — visually different from the vertical list above) */
-.deliverables-strip {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.deliverables-strip li {
-  background: var(--white);
-  border: 1px solid var(--gray-100);
-  border-radius: var(--r-card);
-  padding: 1.25rem;
-  position: relative;
-  transition: border-color 200ms, transform 200ms, box-shadow 200ms;
-}
-.deliverables-strip li:hover {
-  border-color: var(--orange-300);
-  transform: translateY(-3px);
-  box-shadow: 0 12px 24px -10px rgba(14, 23, 41, 0.10);
-}
-.deliverables-strip li::before {
-  content: "";
-  display: block;
-  width: 26px; height: 26px;
-  border-radius: 50%;
-  background: var(--orange-100);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23E85D1F' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 14px;
-  margin-bottom: 0.85rem;
-}
-.deliverables-strip li strong {
-  display: block;
-  font-weight: 700;
-  color: var(--ink);
-  margin-bottom: 0.35rem;
-  font-size: 0.98rem;
-}
-.deliverables-strip li span,
-.deliverables-strip li {
-  font-size: 0.92rem;
-  color: var(--gray-700);
-  line-height: 1.5;
-}
-
-/* Richer warm-bg variant — full-width edge-to-edge, gradient + decorative blob,
-   matches the homepage's sec-warm character. Opt-in via .warm-bg-rich. */
-.section.warm-bg-rich {
-  background: linear-gradient(180deg, var(--orange-50) 0%, var(--cream) 100%);
-  margin-inline: 0;
-  border-radius: 0;
-  position: relative;
-  overflow: hidden;
-}
-.section.warm-bg-rich::before {
-  content: "";
-  position: absolute;
-  width: 420px; height: 420px;
-  border-radius: 50%;
-  background: var(--orange-300);
-  opacity: 0.18;
-  top: 25%;
-  right: -200px;
-  pointer-events: none;
-  z-index: 0;
-}
-.section.warm-bg-rich::after {
-  content: "";
-  position: absolute;
-  width: 280px; height: 280px;
-  border-radius: 50%;
-  background: var(--orange-500);
-  opacity: 0.06;
-  bottom: -100px;
-  left: -100px;
-  pointer-events: none;
-  z-index: 0;
-}
-.section.warm-bg-rich > .wrap { position: relative; z-index: 1; }
-.process-timeline .phase {
-  background: var(--white);
-  border: 1px solid var(--orange-100);
-  border-radius: var(--r-card);
-  padding: 1.75rem 2rem;
-  display: grid;
-  grid-template-columns: 64px 1fr;
-  gap: 1.5rem;
-  transition: border-color 200ms, transform 250ms, box-shadow 250ms;
-}
-.process-timeline .phase:hover {
-  border-color: var(--orange-300);
-  transform: translateX(4px);
-  box-shadow: 0 16px 32px -16px rgba(14, 23, 41, 0.12);
-}
-.process-timeline .phase .num {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 2.5rem;
-  color: var(--orange-500);
-  letter-spacing: -0.04em;
-  line-height: 1;
-}
-.process-timeline .phase .phase-icon {
-  width: 56px;
-  height: 56px;
-  border-radius: 14px;
-  background: var(--orange-100);
-  color: var(--orange-700);
-  display: grid;
-  place-items: center;
-  align-self: start;
-  transition: background 250ms ease, color 250ms ease,
-              transform 350ms cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-.process-timeline .phase:hover .phase-icon {
-  background: var(--orange-500);
-  color: var(--white);
-  transform: scale(1.08) rotate(-6deg);
-}
-.process-timeline .phase h3 {
-  font-size: 1.3rem;
-  margin-bottom: 0.4rem;
-}
-.process-timeline .phase .duration {
-  font-size: 0.78rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--orange-700);
-  font-weight: 700;
-  margin-bottom: 0.85rem;
-}
-.process-timeline .phase p {
-  color: var(--gray-700);
-  line-height: 1.65;
-  margin: 0 0 0.5rem;
-  font-size: 0.95rem;
-}
-@media (max-width: 600px) {
-  .process-timeline .phase { grid-template-columns: 1fr; gap: 0.5rem; padding: 1.5rem; }
-  .process-timeline .phase .num { font-size: 2rem; }
-}
-
-/* Contact form */
-.contact-form {
-  display: flex; flex-direction: column; gap: 1.25rem;
-  background: var(--white);
-  border: 1px solid var(--gray-100);
-  border-radius: var(--r-card);
-  padding: clamp(1.75rem, 3vw, 2.5rem);
-  margin-top: 2rem;
-}
-.contact-form .field { display: flex; flex-direction: column; gap: 0.4rem; }
-.contact-form label {
-  font-size: 0.78rem; font-weight: 700;
-  color: var(--ink); letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-.contact-form input, .contact-form textarea, .contact-form select {
-  padding: 0.85rem 1rem;
-  border: 1px solid var(--gray-300);
-  border-radius: var(--r-tight);
-  font: inherit; color: var(--ink); background: var(--cream);
-  transition: border-color 200ms, background 200ms;
-}
-.contact-form input:focus, .contact-form textarea:focus, .contact-form select:focus {
-  outline: none; border-color: var(--orange-500); background: var(--white);
-}
-.contact-form textarea { min-height: 120px; resize: vertical; }
-.contact-form button {
-  background: var(--orange-500); color: var(--white);
-  padding: 1rem 1.75rem;
-  border-radius: var(--r-pill);
-  font-weight: 600; font-size: 0.95rem;
-  cursor: pointer;
-  transition: background 200ms, transform 200ms;
-  align-self: flex-start;
-}
-.contact-form button:hover { background: var(--orange-700); transform: translateY(-1px); }
-
-.contact-aside {
-  display: flex; flex-direction: column; gap: 1.5rem;
-}
-.contact-aside h3 { font-size: 1.1rem; }
-.contact-aside .channel {
-  display: flex; flex-direction: column; gap: 0.25rem;
-}
-.contact-aside .channel a {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.15rem;
-  color: var(--ink);
-}
-.contact-aside .channel a:hover { color: var(--orange-700); }
-.contact-aside .channel span {
-  font-size: 0.85rem; color: var(--gray-500);
 }

@@ -12,7 +12,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 
 # Bump this whenever styles.css changes — appended as ?v=N to <link> hrefs
 # so browsers don't serve a stale stylesheet.
-CSS_VERSION = "6"
+CSS_VERSION = "20"
 
 # ============================================================
 # CSS additions for inner pages — appended to styles.css if missing
@@ -764,6 +764,745 @@ INNER_CSS = """
 .contact-aside .channel span {
   font-size: 0.85rem; color: var(--gray-500);
 }
+
+/* === Hero (page-hero with-visual) — atmospheric peach gradient === */
+.page-hero.with-visual {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--orange-100) 0%, var(--orange-50) 45%, var(--cream) 100%);
+}
+.page-hero.with-visual::before {
+  content: "";
+  position: absolute;
+  width: 640px; height: 640px;
+  border-radius: 50%;
+  background: var(--orange-300);
+  opacity: 0.18;
+  top: -260px; right: -200px;
+  pointer-events: none;
+  z-index: 0;
+}
+.page-hero.with-visual > .wrap { position: relative; z-index: 1; }
+
+/* Italic emphasis on page-hero H1 (matches homepage's italic Jobpac treatment) */
+.page-hero h1 em {
+  font-style: italic;
+  font-weight: 700;
+  color: var(--orange-500);
+}
+
+/* Hero floating card overlay */
+.page-hero.with-visual .hero-visual-card-wrap { position: relative; }
+.page-hero.with-visual .hero-float-card {
+  position: absolute;
+  bottom: -20px;
+  left: -28px;
+  background: var(--white);
+  box-shadow: var(--shadow-float);
+  border-radius: 14px;
+  padding: 0.85rem 1.05rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  z-index: 3;
+  transform: rotate(-2deg);
+  transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+  max-width: 240px;
+}
+.page-hero.with-visual .hero-visual-card-wrap:hover .hero-float-card {
+  transform: rotate(0deg) translateY(-3px);
+}
+.page-hero.with-visual .hero-float-card .hf-icon {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--orange-500);
+  color: var(--white);
+  display: grid; place-items: center;
+  flex-shrink: 0;
+}
+.page-hero.with-visual .hero-float-card .hf-meta {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+.page-hero.with-visual .hero-float-card .hf-meta b {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.page-hero.with-visual .hero-float-card .hf-meta span {
+  font-size: 0.72rem;
+  color: var(--gray-500);
+}
+@media (max-width: 900px) {
+  .page-hero.with-visual .hero-float-card { left: 8px; bottom: -14px; }
+}
+
+/* === Centered inner-page section head === */
+.section-head {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto clamp(2.5rem, 4vw, 3.5rem);
+}
+.section-head .eyebrow { margin-bottom: 1.25rem; }
+.section-head h2 { margin-bottom: 1rem; max-width: none; }
+.section-head .lead {
+  font-size: var(--fs-lead);
+  color: var(--gray-700);
+  line-height: 1.7;
+  max-width: none;
+  margin-inline: auto;
+}
+.section.dark .section-head .lead,
+.section.dark-feature .section-head .lead { color: rgba(255,255,255,0.78); }
+
+/* === Dramatic dark-feature section (homepage Support featured card style) === */
+.section.dark-feature {
+  background:
+    radial-gradient(circle at 92% 8%, rgba(232, 93, 31, 0.32) 0%, transparent 50%),
+    radial-gradient(circle at 8% 95%, rgba(251, 169, 130, 0.16) 0%, transparent 55%),
+    linear-gradient(135deg, var(--ink-900) 0%, var(--ink-800) 60%, var(--ink-700) 100%);
+  color: var(--white);
+  border-radius: 32px;
+  margin-inline: var(--gutter);
+  position: relative;
+  overflow: hidden;
+}
+.section.dark-feature::before {
+  content: "";
+  position: absolute;
+  width: 340px; height: 340px;
+  border-radius: 50%;
+  background: var(--orange-500);
+  opacity: 0.18;
+  top: -120px; right: -100px;
+  pointer-events: none;
+  z-index: 0;
+}
+.section.dark-feature::after {
+  content: "";
+  position: absolute;
+  width: 240px; height: 240px;
+  border-radius: 50%;
+  background: var(--orange-300);
+  opacity: 0.10;
+  bottom: -100px; left: -60px;
+  pointer-events: none;
+  z-index: 0;
+}
+.section.dark-feature > .wrap { position: relative; z-index: 1; }
+.section.dark-feature h2,
+.section.dark-feature h3 { color: var(--white); }
+.section.dark-feature p { color: rgba(255,255,255,0.78); }
+.section.dark-feature .eyebrow { color: var(--orange-300); }
+.section.dark-feature .eyebrow::before { background: var(--orange-400); }
+.section.dark-feature .feature-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.section.dark-feature .feature-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--orange-400);
+  transform: translateY(-4px);
+  box-shadow: 0 18px 36px -16px rgba(0, 0, 0, 0.5);
+}
+.section.dark-feature .feature-card h3 { color: var(--white); }
+.section.dark-feature .feature-card p { color: rgba(255,255,255,0.7); }
+.section.dark-feature .feature-card .num { color: var(--orange-300); }
+
+/* 5-phase grid + 6th outcome card */
+.section.dark-feature .feature-grid.five-up {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+@media (max-width: 900px) {
+  .section.dark-feature .feature-grid.five-up { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px) {
+  .section.dark-feature .feature-grid.five-up { grid-template-columns: 1fr; }
+}
+
+/* Phase outcome — live status mockup card */
+.section.dark-feature .phase-outcome {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--r-card);
+  padding: 1.5rem;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 350ms cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 200ms ease,
+              box-shadow 350ms ease;
+}
+.section.dark-feature .phase-outcome::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 100% 0%, rgba(232, 93, 31, 0.22) 0%, transparent 65%);
+  pointer-events: none;
+}
+.section.dark-feature .phase-outcome:hover {
+  transform: translateY(-4px);
+  border-color: var(--orange-400);
+  box-shadow: 0 18px 36px -16px rgba(0, 0, 0, 0.5);
+}
+.section.dark-feature .phase-outcome > * { position: relative; z-index: 1; }
+.section.dark-feature .phase-outcome .po-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;
+}
+.section.dark-feature .phase-outcome .po-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--orange-300);
+}
+.section.dark-feature .phase-outcome .po-live .pulse {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--orange-400);
+  animation: pulse 2s ease-in-out infinite;
+  box-shadow: 0 0 0 4px rgba(232, 93, 31, 0.16);
+}
+.section.dark-feature .phase-outcome .po-dots { display: flex; gap: 4px; }
+.section.dark-feature .phase-outcome .po-dots span {
+  width: 6px; height: 6px; border-radius: 50%; background: rgba(255, 255, 255, 0.2);
+}
+.section.dark-feature .phase-outcome .po-title {
+  font-size: 0.78rem; color: rgba(255, 255, 255, 0.65); letter-spacing: 0.02em;
+}
+.section.dark-feature .phase-outcome .po-stat {
+  display: flex; flex-direction: column; gap: 0.15rem;
+}
+.section.dark-feature .phase-outcome .po-num {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.5rem, 4vw, 3.25rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--white);
+}
+.section.dark-feature .phase-outcome .po-num .po-unit {
+  font-size: 0.42em; color: rgba(255, 255, 255, 0.55);
+  margin-left: 0.25em; font-weight: 500; letter-spacing: 0;
+}
+.section.dark-feature .phase-outcome .po-sublabel {
+  font-size: 0.78rem; color: rgba(255, 255, 255, 0.6);
+}
+.section.dark-feature .phase-outcome .po-spark {
+  width: 100%; height: 50px; color: var(--orange-400); margin-top: auto;
+}
+.section.dark-feature .phase-outcome .po-checks {
+  display: flex; flex-direction: column; gap: 0.45rem;
+  padding-top: 0.85rem; border-top: 1px solid rgba(255, 255, 255, 0.10);
+}
+.section.dark-feature .phase-outcome .po-checks span {
+  display: flex; align-items: center; gap: 0.55rem;
+  font-size: 0.78rem; color: rgba(255, 255, 255, 0.78);
+}
+.section.dark-feature .phase-outcome .po-checks span::before {
+  content: ""; display: inline-block;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: rgba(232, 93, 31, 0.25);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FBA982' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>");
+  background-repeat: no-repeat; background-position: center; background-size: 9px;
+  flex-shrink: 0;
+}
+
+/* === Spacing rule between back-to-back dark sections === */
+.section.dark-feature + .section.dark,
+.section.dark + .section.dark-feature {
+  margin-top: clamp(2rem, 4vw, 3.5rem);
+}
+
+/* === Warm-bg-rich (used on How we engage) — full-width gradient + blobs === */
+.section.warm-bg-rich {
+  background: linear-gradient(180deg, var(--orange-50) 0%, var(--cream) 100%);
+  margin-inline: 0;
+  border-radius: 0;
+  position: relative;
+  overflow: hidden;
+}
+.section.warm-bg-rich::before {
+  content: "";
+  position: absolute;
+  width: 420px; height: 420px;
+  border-radius: 50%;
+  background: var(--orange-300);
+  opacity: 0.18;
+  top: 25%; right: -200px;
+  pointer-events: none;
+  z-index: 0;
+}
+.section.warm-bg-rich::after {
+  content: "";
+  position: absolute;
+  width: 280px; height: 280px;
+  border-radius: 50%;
+  background: var(--orange-500);
+  opacity: 0.06;
+  bottom: -100px; left: -100px;
+  pointer-events: none;
+  z-index: 0;
+}
+.section.warm-bg-rich > .wrap { position: relative; z-index: 1; }
+
+/* === Process timeline compact 2x2 variant === */
+.process-timeline.compact {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+@media (max-width: 900px) {
+  .process-timeline.compact { grid-template-columns: 1fr; }
+}
+
+/* Override .phase background + icon for warm-bg-rich context */
+.process-timeline .phase {
+  background: var(--white);
+  border: 1px solid var(--orange-100);
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 1.5rem;
+  transition: border-color 200ms, transform 250ms, box-shadow 250ms;
+}
+.process-timeline .phase:hover {
+  border-color: var(--orange-300);
+  transform: translateX(4px);
+  box-shadow: 0 16px 32px -16px rgba(14, 23, 41, 0.12);
+}
+.process-timeline .phase .phase-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: var(--orange-100);
+  color: var(--orange-700);
+  display: grid;
+  place-items: center;
+  align-self: start;
+  transition: background 250ms ease, color 250ms ease,
+              transform 350ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.process-timeline .phase:hover .phase-icon {
+  background: var(--orange-500);
+  color: var(--white);
+  transform: scale(1.08) rotate(-6deg);
+}
+
+/* === Deliverables strip — horizontal card grid (replaces vertical list) === */
+.deliverables-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.deliverables-strip li {
+  background: var(--white);
+  border: 1px solid var(--gray-100);
+  border-radius: var(--r-card);
+  padding: 1.25rem;
+  position: relative;
+  font-size: 0.92rem;
+  color: var(--gray-700);
+  line-height: 1.5;
+  transition: border-color 200ms, transform 200ms, box-shadow 200ms;
+}
+.deliverables-strip li:hover {
+  border-color: var(--orange-300);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px -10px rgba(14, 23, 41, 0.10);
+}
+.deliverables-strip li::before {
+  content: "";
+  display: block;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: var(--orange-100);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23E85D1F' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 14px;
+  margin-bottom: 0.85rem;
+}
+.deliverables-strip li strong {
+  display: block;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.35rem;
+  font-size: 0.98rem;
+}
+
+/* === Outcomes (By the numbers) — bigger numbers + white cards === */
+.outcomes .o {
+  padding: 1.75rem 1.5rem 1.75rem 1.75rem;
+  background: var(--white);
+  border-radius: var(--r-card);
+  border-left: 4px solid var(--orange-500);
+  box-shadow: 0 6px 18px -10px rgba(14, 23, 41, 0.16);
+  transition: transform 250ms ease, box-shadow 250ms ease;
+}
+.outcomes .o:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 32px -16px rgba(14, 23, 41, 0.18);
+}
+.outcomes .o .num {
+  font-size: clamp(2.25rem, 3.6vw, 3.25rem) !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  display: block;
+  margin-bottom: 0.5rem !important;
+}
+.outcomes .o .lbl {
+  font-size: 0.92rem;
+  color: var(--gray-700);
+  line-height: 1.5;
+}
+
+/* === FAQ centered under section-head === */
+.section .faq {
+  margin-inline: auto;
+  max-width: 760px;
+}
+
+/* === Orange testimonial section === */
+.section.testimonial-orange {
+  background:
+    radial-gradient(circle at 92% 12%, rgba(255, 255, 255, 0.18) 0%, transparent 55%),
+    radial-gradient(circle at 6% 92%, rgba(14, 23, 41, 0.10) 0%, transparent 55%),
+    linear-gradient(135deg, var(--orange-400) 0%, var(--orange-500) 60%, var(--orange-600) 100%);
+  color: var(--white);
+  border-radius: 32px;
+  margin-inline: var(--gutter);
+  margin-block: clamp(1.5rem, 3vw, 2.5rem);
+  padding-block: clamp(1.5rem, 3vw, 2.5rem) !important;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.section.testimonial-orange::before {
+  content: "";
+  position: absolute;
+  width: 380px; height: 380px;
+  border-radius: 50%;
+  background: var(--orange-300);
+  opacity: 0.35;
+  top: -160px; right: -120px;
+  pointer-events: none;
+  z-index: 0;
+}
+.section.testimonial-orange::after {
+  content: "";
+  position: absolute;
+  width: 260px; height: 260px;
+  border-radius: 50%;
+  background: var(--ink-900);
+  opacity: 0.10;
+  bottom: -120px; left: -80px;
+  pointer-events: none;
+  z-index: 0;
+}
+.section.testimonial-orange > .wrap { position: relative; z-index: 1; }
+
+.testimonial-layout {
+  display: grid;
+  grid-template-columns: minmax(220px, 300px) 1fr;
+  gap: clamp(1.75rem, 4vw, 4rem);
+  align-items: center;
+}
+.testimonial-layout .testimonial-photo {
+  aspect-ratio: 4 / 5;
+  position: relative;
+  z-index: 1;
+}
+.testimonial-layout .testimonial-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 60% 40% 50% 60% / 55% 50% 50% 60%;
+  box-shadow: 0 22px 44px -18px rgba(14, 23, 41, 0.45);
+  position: relative;
+  z-index: 2;
+}
+.testimonial-layout .testimonial-photo .testimonial-blob {
+  position: absolute;
+  width: 80%;
+  height: 80%;
+  bottom: -6%;
+  right: -8%;
+  background: var(--ink-900);
+  opacity: 0.18;
+  border-radius: 40% 60% 60% 40% / 50% 60% 40% 50%;
+  z-index: 1;
+}
+.testimonial-layout .testimonial-quote .quote-text {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.15rem, 1.9vw, 1.55rem);
+  line-height: 1.35;
+  letter-spacing: -0.012em;
+  color: var(--white);
+  margin-bottom: 1.25rem;
+  position: relative;
+}
+.testimonial-layout .testimonial-quote .quote-text::before {
+  content: "\\201C";
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 3rem;
+  color: rgba(255, 255, 255, 0.35);
+  position: absolute;
+  top: -1.6rem;
+  left: -0.6rem;
+  line-height: 1;
+  pointer-events: none;
+}
+.testimonial-layout .testimonial-quote .quote-text em {
+  font-style: italic;
+  font-weight: 700;
+  color: var(--ink-900);
+}
+.testimonial-layout .testimonial-quote .quote-attr {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  padding: 0.55rem 1.1rem 0.55rem 0.55rem;
+  border-radius: var(--r-pill);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.testimonial-layout .testimonial-quote .quote-attr .avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--ink-900);
+  color: var(--white);
+  display: grid; place-items: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+}
+.testimonial-layout .testimonial-quote .quote-attr .who {
+  display: flex; flex-direction: column;
+  line-height: 1.25;
+  text-align: left;
+}
+.testimonial-layout .testimonial-quote .quote-attr .who strong {
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--white);
+}
+.testimonial-layout .testimonial-quote .quote-attr .who span {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.78);
+}
+@media (max-width: 800px) {
+  .testimonial-layout { grid-template-columns: 1fr; }
+  .testimonial-layout .testimonial-photo { max-width: 360px; }
+}
+
+/* === Big page-closing CTA === */
+.cta-big {
+  position: relative;
+  background:
+    radial-gradient(circle at 92% 12%, rgba(232, 93, 31, 0.42) 0%, transparent 50%),
+    radial-gradient(circle at 8% 92%, rgba(251, 169, 130, 0.22) 0%, transparent 55%),
+    linear-gradient(135deg, var(--ink-900) 0%, var(--ink-800) 60%, var(--ink-700) 100%);
+  color: var(--white);
+  border-radius: 36px;
+  padding: clamp(2.75rem, 5vw, 4.5rem) clamp(2rem, 4.5vw, 4rem);
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: clamp(2rem, 4vw, 4rem);
+  align-items: center;
+  overflow: hidden;
+  isolation: isolate;
+}
+.cta-big::before {
+  content: "";
+  position: absolute;
+  width: 460px; height: 460px;
+  border-radius: 50%;
+  background: var(--orange-500);
+  opacity: 0.16;
+  top: -180px; right: -120px;
+  pointer-events: none;
+  z-index: 0;
+}
+.cta-big::after {
+  content: "";
+  position: absolute;
+  width: 320px; height: 320px;
+  border-radius: 50%;
+  background: var(--orange-300);
+  opacity: 0.10;
+  bottom: -160px; left: -80px;
+  pointer-events: none;
+  z-index: 0;
+}
+.cta-big > * { position: relative; z-index: 1; }
+.cta-big-copy { display: flex; flex-direction: column; align-items: flex-start; }
+.cta-big-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--orange-300);
+  margin-bottom: 1.25rem;
+}
+.cta-big-eyebrow::before {
+  content: "";
+  width: 1.5rem;
+  height: 1px;
+  background: var(--orange-500);
+  display: inline-block;
+}
+.cta-big h2 {
+  color: var(--white);
+  font-size: clamp(2rem, 3.6vw, 3.25rem);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  margin-bottom: 1.1rem;
+  max-width: 18ch;
+}
+.cta-big h2 em {
+  color: var(--orange-300);
+  font-style: italic;
+  font-weight: 500;
+}
+.cta-big p {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: clamp(1rem, 1.2vw, 1.15rem);
+  line-height: 1.65;
+  max-width: 52ch;
+  margin-bottom: 1.5rem;
+}
+.cta-big-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.cta-big-features li {
+  position: relative;
+  padding-left: 1.85rem;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+.cta-big-features li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 4px;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: rgba(232, 93, 31, 0.22);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FBA982' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 11px;
+}
+.btn-big {
+  background: var(--orange-500);
+  color: var(--white);
+  padding: 1.15rem 2rem;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  box-shadow: 0 14px 28px -10px rgba(232, 93, 31, 0.45);
+}
+.btn-big:hover {
+  background: var(--orange-700);
+  transform: translateY(-2px);
+  box-shadow: 0 18px 32px -10px rgba(232, 93, 31, 0.55);
+}
+.cta-big-aside {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  align-items: flex-start;
+}
+.cta-big-stat {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 1.85rem 2rem;
+  border-radius: 24px;
+  width: 100%;
+}
+.cta-big-stat-num {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(4.5rem, 8vw, 6.5rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--orange-300);
+  display: block;
+  margin-bottom: 0.6rem;
+}
+.cta-big-stat-num .cta-big-stat-unit {
+  font-size: 0.4em;
+  color: rgba(255, 255, 255, 0.6);
+  margin-left: 0.3em;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+.cta-big-stat-lbl {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.65);
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+}
+.cta-big-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 0.55rem 1rem;
+  border-radius: var(--r-pill);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.85);
+}
+.cta-big-badge .pulse {
+  display: inline-block;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--orange-500);
+  animation: pulse 2s ease-in-out infinite;
+}
+@media (max-width: 900px) {
+  .cta-big { grid-template-columns: 1fr; padding: 2.5rem; }
+  .cta-big-aside { align-items: stretch; }
+}
 """
 
 
@@ -929,10 +1668,52 @@ REVEAL_SCRIPT = """  <script>
     } else {
       document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
     }
+
+    // Accordion: opening one FAQ closes any others in the same group
+    document.querySelectorAll('.faq').forEach(group => {
+      group.querySelectorAll(':scope > details').forEach(d => {
+        d.addEventListener('toggle', () => {
+          if (!d.open) return;
+          group.querySelectorAll(':scope > details[open]').forEach(other => {
+            if (other !== d) other.open = false;
+          });
+        });
+      });
+    });
   </script>"""
 
 
+def cta_big(eyebrow: str, headline_html: str, lead: str, features: list,
+            stat_num_html: str, stat_label: str, badge_text: str = "Senior consultant on the call"):
+    """Big page-closing CTA — two-column dark gradient box with feature list
+    on the left and a glassy stat aside on the right."""
+    features_html = "".join(f"            <li>{f}</li>\n" for f in features)
+    return f"""    <section class="section">
+      <div class="wrap">
+        <div class="cta-big reveal">
+          <div class="cta-big-copy">
+            <span class="cta-big-eyebrow">{eyebrow}</span>
+            <h2>{headline_html}</h2>
+            <p>{lead}</p>
+            <ul class="cta-big-features">
+{features_html}            </ul>
+            <a href="contact.html" class="btn btn-primary btn-big">Book a consultation <span class="arr">→</span></a>
+          </div>
+          <div class="cta-big-aside" aria-hidden="true">
+            <div class="cta-big-stat">
+              <span class="cta-big-stat-num">{stat_num_html}</span>
+              <span class="cta-big-stat-lbl">{stat_label}</span>
+            </div>
+            <div class="cta-big-badge"><span class="pulse"></span>{badge_text}</div>
+          </div>
+        </div>
+      </div>
+    </section>"""
+
+
 def cta_block(headline: str, sub: str = "Tell us where you're stuck. The first call is free, no slide deck."):
+    """Legacy small inline-cta. Kept for any page that still uses it; new pages
+    should use cta_big() instead."""
     return f"""        <div class="inline-cta reveal">
           <div class="cta-text">
             <h2>{headline}</h2>
@@ -960,9 +1741,20 @@ def page_hero(eyebrow: str, h1: str, lead: str, banner: str = "", center: bool =
     </section>"""
 
 
-def hero_with_visual(eyebrow: str, h1: str, lead: str, image_src: str, image_alt: str, badge: str = "", banner: str = ""):
+def hero_with_visual(eyebrow: str, h1: str, lead: str, image_src: str, image_alt: str,
+                     badge: str = "", banner: str = "", float_stat=None):
+    """h1 can include <em>…</em> for italic emphasis on a key word.
+    float_stat is an optional dict like {'num': '11 wks', 'lbl': 'avg go-live', 'icon': 'arrow'}.
+    """
     banner_html = f'<div class="same-day-banner reveal"><span class="pulse"></span>{banner}</div>' if banner else ''
     badge_html = f'<span class="badge"><span class="pulse"></span>{badge}</span>' if badge else ''
+    float_html = ""
+    if float_stat:
+        icon_svg = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="7 17 17 7"/><polyline points="7 7 17 7 17 17"/></svg>'
+        float_html = f"""            <div class="hero-float-card reveal">
+              <div class="hf-icon" aria-hidden="true">{icon_svg}</div>
+              <div class="hf-meta"><b>{float_stat['num']}</b><span>{float_stat['lbl']}</span></div>
+            </div>"""
     return f"""    <section class="page-hero with-visual">
       <div class="wrap">
         <div class="hero-grid">
@@ -972,10 +1764,13 @@ def hero_with_visual(eyebrow: str, h1: str, lead: str, image_src: str, image_alt
             <h1>{h1}</h1>
             <p class="lead">{lead}</p>
           </div>
-          <div class="hero-visual-card reveal" aria-hidden="true">
-            <div class="blob-accent"></div>
-            <img src="{image_src}" alt="{image_alt}" loading="lazy" />
-            {badge_html}
+          <div class="hero-visual-card-wrap">
+            <div class="hero-visual-card reveal" aria-hidden="true">
+              <div class="blob-accent"></div>
+              <img src="{image_src}" alt="{image_alt}" loading="lazy" />
+              {badge_html}
+            </div>
+{float_html}
           </div>
         </div>
       </div>
@@ -983,17 +1778,23 @@ def hero_with_visual(eyebrow: str, h1: str, lead: str, image_src: str, image_alt
 
 
 def process_section():
-    """Buoy engagement process — identical content across all service pages."""
-    return """    <section class="section has-blob blob-tr">
+    """Buoy engagement process — identical content across all service pages.
+    Uses the full-width warm-bg-rich treatment with a compact 2x2 grid of
+    icon-led phase cards (mirrors the homepage 'How we engage' section)."""
+    DISCOVERY_ICON = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>'
+    SCOPE_ICON = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>'
+    EXECUTE_ICON = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>'
+    EMBED_ICON = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>'
+    return f"""    <section class="section warm-bg-rich">
       <div class="wrap">
-        <div class="reveal">
+        <div class="section-head reveal">
           <span class="eyebrow">How we engage</span>
           <h2>Four steps. No surprises. No bait&#8209;and&#8209;switch.</h2>
           <p class="lead">Every Buoy engagement runs the same way &mdash; fixed scope, senior consultant, full transparency end&#8209;to&#8209;end.</p>
         </div>
-        <div class="process-timeline">
+        <div class="process-timeline compact">
           <div class="phase reveal">
-            <div class="num">01</div>
+            <div class="phase-icon" aria-hidden="true">{DISCOVERY_ICON}</div>
             <div>
               <div class="duration">Discovery &middot; 30&ndash;60 minutes &middot; no cost</div>
               <h3>We listen first.</h3>
@@ -1001,15 +1802,15 @@ def process_section():
             </div>
           </div>
           <div class="phase reveal">
-            <div class="num">02</div>
+            <div class="phase-icon" aria-hidden="true">{SCOPE_ICON}</div>
             <div>
               <div class="duration">Scope &middot; 3&ndash;7 business days</div>
               <h3>You get a fixed-scope proposal.</h3>
-              <p>Deliverables, timeline, price, and the named senior consultant who'll lead the engagement &mdash; in writing, within a week. No "T&amp;E to be confirmed." The price is the price.</p>
+              <p>Deliverables, timeline, price, and the named senior consultant who'll lead the engagement &mdash; in writing, within a week. No &ldquo;T&amp;E to be confirmed.&rdquo; The price is the price.</p>
             </div>
           </div>
           <div class="phase reveal">
-            <div class="num">03</div>
+            <div class="phase-icon" aria-hidden="true">{EXECUTE_ICON}</div>
             <div>
               <div class="duration">Execute &middot; duration varies by scope</div>
               <h3>Senior consultant on the keys.</h3>
@@ -1017,7 +1818,7 @@ def process_section():
             </div>
           </div>
           <div class="phase reveal">
-            <div class="num">04</div>
+            <div class="phase-icon" aria-hidden="true">{EMBED_ICON}</div>
             <div>
               <div class="duration">Embed &middot; final 1&ndash;2 weeks of every engagement</div>
               <h3>Your team owns it when we leave.</h3>
@@ -1040,7 +1841,7 @@ def faq_section(questions: list, eyebrow: str = "Common questions", heading: str
     )
     return f"""    <section class="section">
       <div class="wrap">
-        <div class="reveal">
+        <div class="section-head reveal">
           <span class="eyebrow">{eyebrow}</span>
           <h2>{heading}</h2>
         </div>
@@ -1051,17 +1852,25 @@ def faq_section(questions: list, eyebrow: str = "Common questions", heading: str
     </section>"""
 
 
-def testimonial_section(quote_html: str, attr_initials: str, attr_role: str, attr_meta: str):
-    """Dark testimonial section with quote + small attribution chip."""
-    return f"""    <section class="section dark reveal">
+def testimonial_section(quote_html: str, attr_initials: str, attr_role: str, attr_meta: str,
+                        portrait_src: str = "client-portrait.jpg", portrait_alt: str = "Client portrait"):
+    """Orange-saturated testimonial with a blob-shaped portrait on the left
+    and the quote + attribution chip on the right."""
+    return f"""    <section class="section testimonial-orange reveal">
       <div class="wrap">
-        <div class="quote-block">
-          <p class="quote-text">{quote_html}</p>
-          <div class="quote-attr">
-            <div class="avatar">{attr_initials}</div>
-            <div class="who">
-              <strong>{attr_role}</strong>
-              <span>{attr_meta}</span>
+        <div class="testimonial-layout">
+          <div class="testimonial-photo">
+            <div class="testimonial-blob"></div>
+            <img src="{portrait_src}" alt="{portrait_alt}" loading="lazy" />
+          </div>
+          <div class="testimonial-quote">
+            <p class="quote-text">{quote_html}</p>
+            <div class="quote-attr">
+              <div class="avatar">{attr_initials}</div>
+              <div class="who">
+                <strong>{attr_role}</strong>
+                <span>{attr_meta}</span>
+              </div>
             </div>
           </div>
         </div>
@@ -1085,14 +1894,15 @@ def stat_ticker_section(items: list):
 
 
 def stats_section(eyebrow: str, heading: str, items: list):
-    """items is a list of (num, lbl) tuples for the outcomes block."""
+    """items is a list of (num, lbl) tuples for the outcomes block.
+    Sits on plain cream so the white shadowed cards (from .outcomes .o) pop."""
     outcomes = "\n          ".join(
         f'<div class="o"><span class="num">{n}</span><span class="lbl">{l}</span></div>'
         for n, l in items
     )
-    return f"""    <section class="section warm-bg">
+    return f"""    <section class="section">
       <div class="wrap">
-        <div class="reveal">
+        <div class="section-head reveal">
           <span class="eyebrow">{eyebrow}</span>
           <h2>{heading}</h2>
         </div>
@@ -1147,11 +1957,12 @@ PAGES["about.html"] = dict(
     active="about",
     body=hero_with_visual(
         "About Buoy",
-        "Specialist Jobpac consultants &mdash; built by people who've actually run construction businesses.",
+        "Specialist Jobpac consultants &mdash; built by people who've <em>actually</em> run construction businesses.",
         "Buoy Consulting was founded in 2010 by senior finance and construction operators who'd spent decades inside the industry. Sixteen years on, we're still the only consultancy in Australia and New Zealand focused exclusively on Jobpac for construction and civil businesses.",
         image_src="office-team.jpg",
         image_alt="Buoy consultants at work in a construction finance office",
         badge="Independent &middot; Senior-led",
+        float_stat={"num": "16 yrs", "lbl": "specialising in Jobpac"},
     ) + """
     <section class="section">
       <div class="wrap">
@@ -1174,12 +1985,12 @@ PAGES["about.html"] = dict(
       </div>
     </section>
 
-    <section class="section warm-bg">
+    <section class="section dark-feature">
       <div class="wrap">
-        <div class="reveal">
+        <div class="section-head reveal">
           <span class="eyebrow">How we're different</span>
           <h2>What you actually get when you hire Buoy.</h2>
-          <p class="lead">A small consultancy is only worth hiring if "small" means something. Here's what it means in practice for our clients.</p>
+          <p class="lead">A small consultancy is only worth hiring if &ldquo;small&rdquo; means something. Here's what it means in practice for our clients.</p>
         </div>
         <div class="feature-grid">
           <div class="feature-card reveal">
@@ -1291,13 +2102,19 @@ PAGES["about.html"] = dict(
       </div>
     </section>
 
-    <section class="section">
-      <div class="wrap">""" + cta_block(
-        "Want to know if we're the right fit?",
-        "A 30-minute call, no slide deck, no pressure. We'll tell you whether we can help &mdash; and if we can't, who would.",
-    ) + """
-      </div>
-    </section>""",
+""" + cta_big(
+        eyebrow="Ready when you are",
+        headline_html="Want to know if we're the <em>right fit</em>?",
+        lead="A 30-minute call, no slide deck, no pressure. We'll tell you whether we can help &mdash; and if we can't, who would.",
+        features=[
+            "Senior consultant on the call &mdash; not a salesperson",
+            "Straight read on whether we're a fit for your situation",
+            "If we're not, we'll point you at someone who is",
+        ],
+        stat_num_html="16",
+        stat_label="years specialising in Jobpac for AU/NZ construction",
+        badge_text="Senior consultant on the call",
+    ),
 )
 
 # -------- Services (overview) --------
@@ -1307,7 +2124,7 @@ PAGES["services.html"] = dict(
     active="services",
     body=page_hero(
         "What we do",
-        "Specialist Jobpac services, end&#8209;to&#8209;end.",
+        "Specialist Jobpac services, <em>end&#8209;to&#8209;end</em>.",
         "From greenfield rollouts to ongoing finance support &mdash; whether you need a one-off project or a long-term partner, Buoy covers the full Jobpac lifecycle for construction and civil businesses across Australia and New Zealand.",
         center=True,
     ) + """
@@ -1348,13 +2165,19 @@ PAGES["services.html"] = dict(
       </div>
     </section>
 
-    <section class="section">
-      <div class="wrap">""" + cta_block(
-        "Not sure where to start?",
-        "Send us your situation in two sentences. We'll point you at the right service &mdash; or tell you straight if it isn't us.",
-    ) + """
-      </div>
-    </section>""",
+""" + cta_big(
+        eyebrow="Ready when you are",
+        headline_html="Not sure where to <em>start</em>?",
+        lead="Send us your situation in two sentences. We'll point you at the right service &mdash; or tell you straight if it isn't us.",
+        features=[
+            "30-minute scoping call, no obligation",
+            "Senior consultant on the call from day one",
+            "Fixed-scope proposal within the week",
+        ],
+        stat_num_html="5",
+        stat_label="specialist Jobpac services for construction &amp; civil",
+        badge_text="Senior consultant on the call",
+    ),
 )
 
 # -------- Implementation --------
@@ -1364,41 +2187,38 @@ PAGES["implementation.html"] = dict(
     active="services",
     body=hero_with_visual(
         "Implementation",
-        "Stand up Jobpac the right way the first time.",
+        "Stand up Jobpac the <em>right way</em> the first time.",
         "Most failed Jobpac rollouts aren't software problems. They're scope, configuration, and change problems &mdash; the bits the vendor can't fix because they don't know your business. We plan, configure, and stand up Jobpac the way it should run for construction and civil businesses.",
         image_src="consultant-on-site.jpg",
         image_alt="Construction supervisor reviewing project data on an iPad on site",
         badge="On site &middot; Sydney",
+        float_stat={"num": "11 wks", "lbl": "avg go-live"},
     ) + """
     <section class="section">
       <div class="wrap">
-        <div class="two-col reveal">
-          <div>
-            <h2>What an implementation looks like with us.</h2>
-            <p>Every implementation starts with the same question: what does success look like 90 days after go-live? We design backwards from that &mdash; not forwards from a vendor template.</p>
-            <p>The work is done by a senior consultant who's stood up Jobpac in construction businesses ten or twenty times before. No graduates. No generic ERP-isation. The result is a system configured for your project structure, your billing cycle, your subbie claim process &mdash; not someone else's.</p>
-          </div>
-          <div>
-            <ul class="deliverables">
-              <li><strong>Greenfield rollouts</strong>From an empty system to a fully-configured live environment in 8&ndash;14 weeks.</li>
-              <li><strong>ERP migrations</strong>Coming off MYOB, Xero, Reckon, or a legacy purpose-built system &mdash; we plan the transition without losing project data integrity.</li>
-              <li><strong>Module-by-module deployments</strong>Already running parts of Jobpac and adding more? We'll roll out additional modules in your live system without disrupting day-to-day.</li>
-              <li><strong>Data migration &amp; validation</strong>Project history, supplier records, contract values, retentions held &mdash; mapped, migrated, reconciled.</li>
-              <li><strong>Post go-live stabilisation</strong>The first month-end after go-live is where most projects die. We're there for that one. And the next one.</li>
-            </ul>
-          </div>
+        <div class="section-head reveal">
+          <span class="eyebrow">What we do</span>
+          <h2>What an implementation looks like <em>with us</em>.</h2>
+          <p class="lead">Every implementation starts with the same question: what does success look like 90 days after go-live? We design backwards from that &mdash; not forwards from a vendor template. The work is done by a senior consultant who's stood up Jobpac in construction businesses ten or twenty times before.</p>
         </div>
+        <ul class="deliverables-strip reveal">
+          <li><strong>Greenfield rollouts</strong>From an empty system to a fully-configured live environment in 8&ndash;14 weeks.</li>
+          <li><strong>ERP migrations</strong>Coming off MYOB, Xero, Reckon, or a legacy purpose-built system &mdash; we plan the transition without losing project data integrity.</li>
+          <li><strong>Module-by-module deployments</strong>Already running parts of Jobpac and adding more? We'll roll out additional modules in your live system without disrupting day-to-day.</li>
+          <li><strong>Data migration &amp; validation</strong>Project history, supplier records, contract values, retentions held &mdash; mapped, migrated, reconciled.</li>
+          <li><strong>Post go-live stabilisation</strong>The first month-end after go-live is where most projects die. We're there for that one. And the next one.</li>
+        </ul>
       </div>
     </section>
 
-    <section class="section warm-bg">
+    <section class="section dark-feature">
       <div class="wrap">
-        <div class="reveal">
+        <div class="section-head reveal">
           <span class="eyebrow">Implementation phases</span>
           <h2>Five-phase delivery, fixed scope.</h2>
           <p class="lead">Every implementation moves through the same five phases. We design backwards from go-live, not forwards from a vendor template.</p>
         </div>
-        <div class="feature-grid">
+        <div class="feature-grid five-up">
           <div class="feature-card reveal">
             <div class="num">Phase 01</div>
             <h3>Discovery</h3>
@@ -1417,32 +2237,52 @@ PAGES["implementation.html"] = dict(
           <div class="feature-card reveal">
             <div class="num">Phase 04</div>
             <h3>Train &amp; cutover</h3>
-            <p>Role-based training for the people who'll actually use it &mdash; PMs, AP/AR, payroll, finance leadership. Then a planned cutover with a documented rollback path. Not a "fingers crossed" weekend.</p>
+            <p>Role-based training for the people who'll actually use it &mdash; PMs, AP/AR, payroll, finance leadership. Then a planned cutover with a documented rollback path. Not a &ldquo;fingers crossed&rdquo; weekend.</p>
           </div>
           <div class="feature-card reveal">
             <div class="num">Phase 05</div>
             <h3>Stabilise</h3>
             <p>We're embedded for the first month-end and the first project claim cycle. By the time we step back, your team owns it &mdash; with the documentation and the muscle memory to keep it running.</p>
           </div>
+          <div class="phase-outcome reveal" aria-hidden="true">
+            <div class="po-head">
+              <span class="po-live"><span class="pulse"></span>Live</span>
+              <div class="po-dots"><span></span><span></span><span></span></div>
+            </div>
+            <div class="po-title">Day 1 after go-live</div>
+            <div class="po-stat">
+              <span class="po-num">11<span class="po-unit">wks</span></span>
+              <span class="po-sublabel">kick-off &rarr; go-live</span>
+            </div>
+            <svg class="po-spark" viewBox="0 0 200 60" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="spark-grad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="currentColor" stop-opacity="0.35"/>
+                  <stop offset="100%" stop-color="currentColor" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <polyline points="0,55 30,50 60,42 90,38 120,28 150,20 180,14 200,8 200,60 0,60" fill="url(#spark-grad)"/>
+              <polyline points="0,55 30,50 60,42 90,38 120,28 150,20 180,14 200,8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+              <circle cx="200" cy="8" r="4" fill="currentColor"/>
+              <circle cx="200" cy="8" r="8" fill="currentColor" fill-opacity="0.3"/>
+            </svg>
+            <div class="po-checks">
+              <span>Finance + payroll + projects live</span>
+              <span>Team trained, owns it</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
+""" + process_section() + """
+
 """ + testimonial_section(
         "Buoy stood up Jobpac for us in <em>11 weeks</em> and stuck around for the first three month-ends. By the time they left, our finance team owned the system in a way they never owned the old one.",
         "OD", "Operations Director", "Tier-2 commercial builder &middot; Sydney",
+        portrait_src="client-portrait.jpg",
+        portrait_alt="Operations Director portrait",
     ) + """
-
-""" + stat_ticker_section([
-        ("40+", "Jobpac implementations delivered"),
-        ("8&ndash;14 wks", "typical go-live timeline"),
-        ("100%", "senior consultants on the keys"),
-        ("0", "graduates on engagements"),
-        ("Fixed", "scope &amp; price, signed before build"),
-        ("AU &amp; NZ", "on-site coverage"),
-    ]) + """
-
-""" + process_section() + """
 
 """ + stats_section(
         "By the numbers",
@@ -1470,13 +2310,18 @@ PAGES["implementation.html"] = dict(
          "A senior consultant. Always. The person you meet in discovery is the person doing the build, configuration, and training. We don't have graduates on the bench &mdash; partly because we're not big enough, but mostly because we don't want to."),
     ]) + """
 
-    <section class="section">
-      <div class="wrap">""" + cta_block(
-        "Planning a Jobpac rollout or migration?",
-        "Get a fixed-scope proposal within a week. Senior consultant on the call, no junior intermediary.",
-    ) + """
-      </div>
-    </section>""",
+""" + cta_big(
+        eyebrow="Ready when you are",
+        headline_html="Planning a Jobpac <em>rollout</em> or migration?",
+        lead="Get a fixed-scope proposal within a week. Senior consultant on the call, no junior intermediary. We'll tell you what's likely fixable, what isn't, and what we'd do first.",
+        features=[
+            "Fixed-scope, fixed-price proposal in writing",
+            "Named senior consultant from day one",
+            "30-minute call. No slide deck. No obligation.",
+        ],
+        stat_num_html='11<span class="cta-big-stat-unit">wks</span>',
+        stat_label="average Jobpac go-live with Buoy",
+    ),
 )
 
 # -------- Process Improvement --------
@@ -1486,11 +2331,12 @@ PAGES["process-improvement.html"] = dict(
     active="services",
     body=hero_with_visual(
         "Process Improvement",
-        "You bought the software. We make sure you actually get value from it.",
+        "You bought the software. We make sure you <em>actually</em> get value from it.",
         "Most Jobpac users we meet have the system &mdash; they just aren't getting what they were sold. Modules sit unused. Reports take a week to produce. Workarounds in spreadsheets do work the system was meant to do. We audit how Jobpac is actually being used, find the gaps, and rebuild the workflows around how your team really works.",
         image_src="process-audit.jpg",
         image_alt="Senior consultant reviewing project finance data with a client",
         badge="Audit in progress",
+        float_stat={"num": "17", "lbl": "avg findings per audit"},
     ) + """
     <section class="section warm-bg">
       <div class="wrap">
@@ -1521,21 +2367,14 @@ PAGES["process-improvement.html"] = dict(
       </div>
     </section>
 
+""" + process_section() + """
+
 """ + testimonial_section(
         "We thought we knew where the inefficiencies were. After two days, Buoy gave us a list of <em>seventeen ranked findings</em> &mdash; the first three paid back in the first quarter.",
         "FD", "Finance Director", "Civil contractor &middot; Brisbane",
+        portrait_src="portrait-cfo.jpg",
+        portrait_alt="Finance Director portrait",
     ) + """
-
-""" + stat_ticker_section([
-        ("2&ndash;3 days", "typical on-site audit"),
-        ("12&ndash;20", "ranked findings per audit"),
-        ("Q1", "typical payback period"),
-        ("16 yrs", "specialising in construction"),
-        ("Fixed", "audit fee, no T&amp;E surprises"),
-        ("Senior", "consultant on every audit"),
-    ]) + """
-
-""" + process_section() + """
 
 """ + stats_section(
         "By the numbers",
@@ -1563,13 +2402,19 @@ PAGES["process-improvement.html"] = dict(
          "Yes. Process improvement assumes you have the system installed and being used. If you're considering Jobpac but not yet on it, you want the implementation conversation instead."),
     ]) + """
 
-    <section class="section">
-      <div class="wrap">""" + cta_block(
-        "Suspect Jobpac isn't pulling its weight?",
-        "Most of the value an audit unlocks is paid back in the first quarter. Tell us where it hurts.",
-    ) + """
-      </div>
-    </section>""",
+""" + cta_big(
+        eyebrow="Most audits pay back in a quarter",
+        headline_html="Suspect Jobpac isn't <em>pulling</em> its weight?",
+        lead="Most of the value an audit unlocks is paid back in the first quarter. Tell us where it hurts — we'll come back with a fixed-price proposal within a week.",
+        features=[
+            "Two to three days on-site, fixed-price audit",
+            "Twelve to twenty findings, ranked by payback",
+            "Remediation on your terms &mdash; in-house or with us",
+        ],
+        stat_num_html='Q1',
+        stat_label="typical payback period on the audit",
+        badge_text="Senior consultant on the audit",
+    ) + """""",
 )
 
 # -------- Support (parent) --------
@@ -1579,12 +2424,13 @@ PAGES["support.html"] = dict(
     active="services",
     body=hero_with_visual(
         "Support",
-        "Your finance team's safety net &mdash; answered the same day, every day.",
+        "Your finance team's safety net &mdash; answered the <em>same day</em>, every day.",
         "Buoy's support service is what construction finance teams reach for when the wheels need to keep turning. Day-to-day Jobpac help, real human bookkeeping and accounting cover, and temp relief when someone's sick or away. On-call or fully embedded &mdash; the cost of an in-house resource without the cost of a permanent hire.",
         image_src="office-team.jpg",
         image_alt="Buoy support consultants working at desk with project dashboards",
         banner="Same-day support &mdash; usually answered within hours.",
         badge="Live &middot; Mon&ndash;Fri AU/NZ",
+        float_stat={"num": "&lt;4hrs", "lbl": "avg resolution time"},
     ) + """
     <section class="section">
       <div class="wrap">
@@ -1661,21 +2507,14 @@ PAGES["support.html"] = dict(
       </div>
     </section>
 
+""" + process_section() + """
+
 """ + testimonial_section(
         "The same-day support claim is real. We've had questions answered <em>within 90 minutes</em> from a senior who actually understands how Jobpac handles retentions. Magnitude better than a 48-hour ticket SLA.",
         "FM", "Finance Manager", "Multi-entity construction group &middot; Melbourne",
+        portrait_src="portrait-finance-manager.jpg",
+        portrait_alt="Finance Manager portrait",
     ) + """
-
-""" + stat_ticker_section([
-        ("Same day", "every business day"),
-        ("&lt; 4hrs", "average resolution time"),
-        ("No queue", "a senior picks up directly"),
-        ("AU &amp; NZ", "business hours coverage"),
-        ("16 yrs", "specialising in construction"),
-        ("0", "offshore ticket queues"),
-    ]) + """
-
-""" + process_section() + """
 
 """ + faq_section([
         ("How fast is 'same-day support' really?",
@@ -1692,13 +2531,19 @@ PAGES["support.html"] = dict(
          "For most clients, same week. Discovery call Tuesday, scope agreed Thursday, working in your system Monday. If you're in genuine &ldquo;wheels about to fall off&rdquo; territory, tell us &mdash; we'll work out what's possible faster."),
     ]) + """
 
-    <section class="section">
-      <div class="wrap">""" + cta_block(
-        "Need a finance hand &mdash; today?",
-        "Tell us what's going sideways. If we can help, we'll start same week. If we can't, we'll say.",
-    ) + """
-      </div>
-    </section>""",
+""" + cta_big(
+        eyebrow="We can start this week",
+        headline_html="Need a finance hand &mdash; <em>today</em>?",
+        lead="Tell us what's going sideways. If we can help, we'll start same week. If we can't, we'll say. The first conversation is free.",
+        features=[
+            "Same-day response, every business day",
+            "No triage queue &mdash; a senior picks up directly",
+            "Ad-hoc, project, or ongoing retainer &mdash; your call",
+        ],
+        stat_num_html="Same day",
+        stat_label="every business day, no triage queue",
+        badge_text="Senior consultant ready",
+    ),
 )
 
 # -------- Training --------
@@ -1708,11 +2553,12 @@ PAGES["training.html"] = dict(
     active="services",
     body=hero_with_visual(
         "Training",
-        "Hands&#8209;on Jobpac training tailored to your team.",
+        "Hands&#8209;on Jobpac training tailored to <em>your team</em>.",
         "Generic Jobpac training videos are easy to find. Training tailored to your modules, your project structure, and your team's actual experience level isn't. We deliver training that's grounded in your real Jobpac environment &mdash; not a clean demo system that looks nothing like yours.",
         image_src="training-session.jpg",
         image_alt="Buoy trainer delivering a Jobpac workshop to a construction finance team",
         badge="Workshop &middot; In session",
+        float_stat={"num": "Real", "lbl": "training on your live Jobpac"},
     ) + """
     <section class="section">
       <div class="wrap">
@@ -1754,21 +2600,14 @@ PAGES["training.html"] = dict(
       </div>
     </section>
 
+""" + process_section() + """
+
 """ + testimonial_section(
         "Our team had been on Jobpac for three years and was still using it like an expensive spreadsheet. <em>Three days of training</em> with our real data and project structure, and monthly reporting changed overnight.",
         "FL", "Finance Lead", "Fit-out specialist &middot; Auckland",
+        portrait_src="portrait-finance-lead.jpg",
+        portrait_alt="Finance Lead portrait",
     ) + """
-
-""" + stat_ticker_section([
-        ("Role-based", "tracks for PMs, AP/AR, payroll, leadership"),
-        ("Sandbox", "of your live system, not a demo"),
-        ("On-site or", "remote &mdash; or hybrid"),
-        ("Recorded", "library handed over"),
-        ("New-starter", "onboarding programs"),
-        ("AU &amp; NZ", "delivery from 4 cities"),
-    ]) + """
-
-""" + process_section() + """
 
 """ + stats_section(
         "By the numbers",
@@ -1796,13 +2635,19 @@ PAGES["training.html"] = dict(
          "We default to a sandbox copy of your live system. People are more willing to experiment when they can't break production. For some advanced sessions where the sandbox can't realistically replicate the workflow (heavy reporting, integration testing), we'll work in production with read-only or test-account access."),
     ]) + """
 
-    <section class="section">
-      <div class="wrap">""" + cta_block(
-        "Got a team that needs to level up on Jobpac?",
-        "Send us the headcount and the modules &mdash; we'll come back with a tailored syllabus and price.",
-    ) + """
-      </div>
-    </section>""",
+""" + cta_big(
+        eyebrow="Built for your real team",
+        headline_html="Got a team that needs to <em>level up</em> on Jobpac?",
+        lead="Send us the headcount and the modules. We come back with a tailored syllabus and a fixed price, ready to deliver on-site or remote.",
+        features=[
+            "Tailored to your modules and project structure",
+            "On-site, remote, or hybrid &mdash; your call",
+            "Recorded library handed over after every session",
+        ],
+        stat_num_html="Real",
+        stat_label="training on your live Jobpac, not a demo",
+        badge_text="Senior trainer delivering",
+    ),
 )
 
 # -------- Civil & Construction --------
@@ -1812,11 +2657,12 @@ PAGES["civil-construction.html"] = dict(
     active="services",
     body=hero_with_visual(
         "Civil &amp; Construction",
-        "Specialist focus on the unique mechanics of civil and commercial construction.",
+        "Specialist focus on the <em>unique mechanics</em> of civil and commercial construction.",
         "Jobpac was built for construction and we built our consultancy for the same audience. We know subbie claims, retentions, plant costing, stage billing, and JV multi-entity reporting from inside the businesses that run them &mdash; not from a vendor's marketing deck.",
         image_src="civil-works.jpg",
         image_alt="Civil construction site managers reviewing plans on a tablet during infrastructure works",
         badge="On site &middot; Civil",
+        float_stat={"num": "16", "lbl": "years specialising"},
     ) + """
     <section class="section">
       <div class="wrap">
@@ -1858,21 +2704,14 @@ PAGES["civil-construction.html"] = dict(
       </div>
     </section>
 
+""" + process_section() + """
+
 """ + testimonial_section(
         "They speak the language. When we discussed retention treatment, they didn't need the construction-finance crash course &mdash; they came with the answer. <em>Sixteen years</em> in this industry shows up in every conversation.",
         "MD", "Managing Director", "Family-owned civil contractor &middot; Regional NSW",
+        portrait_src="portrait-md.jpg",
+        portrait_alt="Managing Director portrait",
     ) + """
-
-""" + stat_ticker_section([
-        ("16 yrs", "specialising in construction &amp; civil"),
-        ("$20m&ndash;$500m", "typical client size"),
-        ("AU &amp; NZ", "on-site from 4 cities"),
-        ("100+", "combined years of experience"),
-        ("Tier-2", "to family-owned"),
-        ("Civil &middot;", "Commercial &middot; Fit-out"),
-    ]) + """
-
-""" + process_section() + """
 
 """ + stats_section(
         "By the numbers",
@@ -1900,13 +2739,19 @@ PAGES["civil-construction.html"] = dict(
          "Yes. Plant ledger setup, internal hire rate cards, recovery to projects, idle-time tracking, replacement-cost analysis. It's one of the most under-used parts of Jobpac at most civil contractors we audit &mdash; the configuration is usually the bottleneck, not the software."),
     ]) + """
 
-    <section class="section">
-      <div class="wrap">""" + cta_block(
-        "Want a Jobpac partner who actually knows civil and commercial?",
-        "Most consultancies will service any ERP and any sector. We do one ERP, in one industry, and we've done it for sixteen years.",
-    ) + """
-      </div>
-    </section>""",
+""" + cta_big(
+        eyebrow="Construction-native since 2010",
+        headline_html="Want a Jobpac partner who <em>actually</em> knows civil?",
+        lead="Most consultancies will service any ERP and any sector. We do one ERP, in one industry, and we've done it for sixteen years. Tell us about your business.",
+        features=[
+            "Construction &amp; civil &mdash; only",
+            "Subbie claims, retentions, plant costing, JV reporting",
+            "On-site from Sydney, Melbourne, Brisbane, Auckland",
+        ],
+        stat_num_html='16<span class="cta-big-stat-unit">yrs</span>',
+        stat_label="specialising in construction &amp; civil",
+        badge_text="Industry specialist on the call",
+    ),
 )
 
 # -------- Contact --------
@@ -1916,7 +2761,7 @@ PAGES["contact.html"] = dict(
     active="contact",
     body=page_hero(
         "Get in touch",
-        "Tell us what's stuck. We'll come back the same day.",
+        "Tell us what's stuck. We'll come back the <em>same day</em>.",
         "Use the form, send an email, or pick up the phone &mdash; whichever you prefer. A senior consultant reads everything that comes in. We respond on the same business day, usually within a couple of hours.",
         banner="Same-day responses on AU/NZ business days.",
     ) + """
@@ -2017,13 +2862,19 @@ def support_subpage(slug, title, code, h1, lead, blurb, deliverables, focus_h, f
       </div>
     </section>
 
-    <section class="section">
-      <div class="wrap">""" + cta_block(
-        f"Need {title.lower()} cover &mdash; this week?",
-        "On-call, ad-hoc, or fully embedded. Tell us the shape and we'll come back same day.",
-    ) + """
-      </div>
-    </section>"""
+""" + cta_big(
+        eyebrow="We can start this week",
+        headline_html=f"Need <em>{title.lower()}</em> cover &mdash; this week?",
+        lead="On-call, ad-hoc, or fully embedded. Tell us the shape and we'll come back same day with a fixed-scope proposal.",
+        features=[
+            "Same-day response on every business day",
+            "Senior consultant on the work &mdash; no juniors",
+            "Ad-hoc, project, or ongoing retainer &mdash; your call",
+        ],
+        stat_num_html="Same day",
+        stat_label="every business day, no triage queue",
+        badge_text="Senior consultant ready",
+    )
     return dict(title=f"{title} Support", description=f"Specialist Jobpac {title.lower()} support for construction and civil businesses. Same-day response. Senior consultants only.", active="services", body=body)
 
 PAGES["support-bookkeeping.html"] = support_subpage(

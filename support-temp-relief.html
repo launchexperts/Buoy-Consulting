@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet" />
   <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,700,500,400&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="styles.css?v=6" />
+  <link rel="stylesheet" href="styles.css?v=20" />
 </head>
 <body>
 
@@ -129,14 +129,25 @@
     </section>
 
     <section class="section">
-      <div class="wrap">        <div class="inline-cta reveal">
-          <div class="cta-text">
-            <h2>Need temp relief cover &mdash; this week?</h2>
-            <p>On-call, ad-hoc, or fully embedded. Tell us the shape and we'll come back same day.</p>
+      <div class="wrap">
+        <div class="cta-big reveal">
+          <div class="cta-big-copy">
+            <span class="cta-big-eyebrow">We can start this week</span>
+            <h2>Need <em>temp relief</em> cover &mdash; this week?</h2>
+            <p>On-call, ad-hoc, or fully embedded. Tell us the shape and we'll come back same day with a fixed-scope proposal.</p>
+            <ul class="cta-big-features">
+            <li>Same-day response on every business day</li>
+            <li>Senior consultant on the work &mdash; no juniors</li>
+            <li>Ad-hoc, project, or ongoing retainer &mdash; your call</li>
+            </ul>
+            <a href="contact.html" class="btn btn-primary btn-big">Book a consultation <span class="arr">→</span></a>
           </div>
-          <div class="cta-actions">
-            <a href="contact.html" class="btn btn-primary">Book a consultation <span class="arr">→</span></a>
-            <a href="services.html" class="btn btn-ghost">All services</a>
+          <div class="cta-big-aside" aria-hidden="true">
+            <div class="cta-big-stat">
+              <span class="cta-big-stat-num">Same day</span>
+              <span class="cta-big-stat-lbl">every business day, no triage queue</span>
+            </div>
+            <div class="cta-big-badge"><span class="pulse"></span>Senior consultant ready</div>
           </div>
         </div>
       </div>
@@ -218,6 +229,18 @@
     } else {
       document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
     }
+
+    // Accordion: opening one FAQ closes any others in the same group
+    document.querySelectorAll('.faq').forEach(group => {
+      group.querySelectorAll(':scope > details').forEach(d => {
+        d.addEventListener('toggle', () => {
+          if (!d.open) return;
+          group.querySelectorAll(':scope > details[open]').forEach(other => {
+            if (other !== d) other.open = false;
+          });
+        });
+      });
+    });
   </script>
 </body>
 </html>

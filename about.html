@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet" />
   <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,700,500,400&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="styles.css?v=6" />
+  <link rel="stylesheet" href="styles.css?v=20" />
 </head>
 <body>
 
@@ -100,13 +100,19 @@
           <div class="hero-text reveal">
             
             <span class="eyebrow">About Buoy</span>
-            <h1>Specialist Jobpac consultants &mdash; built by people who've actually run construction businesses.</h1>
+            <h1>Specialist Jobpac consultants &mdash; built by people who've <em>actually</em> run construction businesses.</h1>
             <p class="lead">Buoy Consulting was founded in 2010 by senior finance and construction operators who'd spent decades inside the industry. Sixteen years on, we're still the only consultancy in Australia and New Zealand focused exclusively on Jobpac for construction and civil businesses.</p>
           </div>
-          <div class="hero-visual-card reveal" aria-hidden="true">
-            <div class="blob-accent"></div>
-            <img src="office-team.jpg" alt="Buoy consultants at work in a construction finance office" loading="lazy" />
-            <span class="badge"><span class="pulse"></span>Independent &middot; Senior-led</span>
+          <div class="hero-visual-card-wrap">
+            <div class="hero-visual-card reveal" aria-hidden="true">
+              <div class="blob-accent"></div>
+              <img src="office-team.jpg" alt="Buoy consultants at work in a construction finance office" loading="lazy" />
+              <span class="badge"><span class="pulse"></span>Independent &middot; Senior-led</span>
+            </div>
+            <div class="hero-float-card reveal">
+              <div class="hf-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="7 17 17 7"/><polyline points="7 7 17 7 17 17"/></svg></div>
+              <div class="hf-meta"><b>16 yrs</b><span>specialising in Jobpac</span></div>
+            </div>
           </div>
         </div>
       </div>
@@ -132,12 +138,12 @@
       </div>
     </section>
 
-    <section class="section warm-bg">
+    <section class="section dark-feature">
       <div class="wrap">
-        <div class="reveal">
+        <div class="section-head reveal">
           <span class="eyebrow">How we're different</span>
           <h2>What you actually get when you hire Buoy.</h2>
-          <p class="lead">A small consultancy is only worth hiring if "small" means something. Here's what it means in practice for our clients.</p>
+          <p class="lead">A small consultancy is only worth hiring if &ldquo;small&rdquo; means something. Here's what it means in practice for our clients.</p>
         </div>
         <div class="feature-grid">
           <div class="feature-card reveal">
@@ -250,14 +256,25 @@
     </section>
 
     <section class="section">
-      <div class="wrap">        <div class="inline-cta reveal">
-          <div class="cta-text">
-            <h2>Want to know if we're the right fit?</h2>
+      <div class="wrap">
+        <div class="cta-big reveal">
+          <div class="cta-big-copy">
+            <span class="cta-big-eyebrow">Ready when you are</span>
+            <h2>Want to know if we're the <em>right fit</em>?</h2>
             <p>A 30-minute call, no slide deck, no pressure. We'll tell you whether we can help &mdash; and if we can't, who would.</p>
+            <ul class="cta-big-features">
+            <li>Senior consultant on the call &mdash; not a salesperson</li>
+            <li>Straight read on whether we're a fit for your situation</li>
+            <li>If we're not, we'll point you at someone who is</li>
+            </ul>
+            <a href="contact.html" class="btn btn-primary btn-big">Book a consultation <span class="arr">→</span></a>
           </div>
-          <div class="cta-actions">
-            <a href="contact.html" class="btn btn-primary">Book a consultation <span class="arr">→</span></a>
-            <a href="services.html" class="btn btn-ghost">All services</a>
+          <div class="cta-big-aside" aria-hidden="true">
+            <div class="cta-big-stat">
+              <span class="cta-big-stat-num">16</span>
+              <span class="cta-big-stat-lbl">years specialising in Jobpac for AU/NZ construction</span>
+            </div>
+            <div class="cta-big-badge"><span class="pulse"></span>Senior consultant on the call</div>
           </div>
         </div>
       </div>
@@ -339,6 +356,18 @@
     } else {
       document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
     }
+
+    // Accordion: opening one FAQ closes any others in the same group
+    document.querySelectorAll('.faq').forEach(group => {
+      group.querySelectorAll(':scope > details').forEach(d => {
+        d.addEventListener('toggle', () => {
+          if (!d.open) return;
+          group.querySelectorAll(':scope > details[open]').forEach(other => {
+            if (other !== d) other.open = false;
+          });
+        });
+      });
+    });
   </script>
 </body>
 </html>
