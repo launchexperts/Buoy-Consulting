@@ -2010,6 +2010,52 @@
   gap: 1.25rem;
   margin-top: 2.5rem;
 }
+
+/* Compact 2x2 grid variant — opt-in via .compact modifier.
+   Use when vertical stack feels too tall for the page. */
+.process-timeline.compact {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+@media (max-width: 900px) {
+  .process-timeline.compact { grid-template-columns: 1fr; }
+}
+
+/* Richer warm-bg variant — full-width edge-to-edge, gradient + decorative blob,
+   matches the homepage's sec-warm character. Opt-in via .warm-bg-rich. */
+.section.warm-bg-rich {
+  background: linear-gradient(180deg, var(--orange-50) 0%, var(--cream) 100%);
+  margin-inline: 0;
+  border-radius: 0;
+  position: relative;
+  overflow: hidden;
+}
+.section.warm-bg-rich::before {
+  content: "";
+  position: absolute;
+  width: 420px; height: 420px;
+  border-radius: 50%;
+  background: var(--orange-300);
+  opacity: 0.18;
+  top: 25%;
+  right: -200px;
+  pointer-events: none;
+  z-index: 0;
+}
+.section.warm-bg-rich::after {
+  content: "";
+  position: absolute;
+  width: 280px; height: 280px;
+  border-radius: 50%;
+  background: var(--orange-500);
+  opacity: 0.06;
+  bottom: -100px;
+  left: -100px;
+  pointer-events: none;
+  z-index: 0;
+}
+.section.warm-bg-rich > .wrap { position: relative; z-index: 1; }
 .process-timeline .phase {
   background: var(--white);
   border: 1px solid var(--orange-100);
