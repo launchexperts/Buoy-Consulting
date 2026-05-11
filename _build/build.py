@@ -12,7 +12,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 
 # Bump this whenever styles.css changes — appended as ?v=N to <link> hrefs
 # so browsers don't serve a stale stylesheet.
-CSS_VERSION = "22"
+CSS_VERSION = "23"
 
 # ============================================================
 # CSS additions for inner pages — appended to styles.css if missing
@@ -2479,31 +2479,35 @@ PAGES["process-improvement.html"] = dict(
         badge="Audit in progress",
         float_stat={"num": "17", "lbl": "avg findings per audit"},
     ) + """
-    <section class="section warm-bg">
+    <section class="section dark-feature">
       <div class="wrap">
-        <div class="two-col reveal">
-          <div>
-            <h2>Where we usually find the leaks.</h2>
-            <p>After sixteen years inside Jobpac across hundreds of construction businesses, the gaps cluster in predictable places. The audit tells us which ones are yours.</p>
-            <ul class="checklist">
-              <li><strong>Underused modules</strong>You're paying for plant, subbie, and forecasting modules that aren't switched on.</li>
-              <li><strong>Manual workarounds</strong>Critical workflows in Excel because the Jobpac process wasn't configured properly the first time.</li>
-              <li><strong>Reporting gaps</strong>Project P&amp;L takes days to compile. Forecast vs actual is a hand-built spreadsheet.</li>
-              <li><strong>Approval chaos</strong>Claims and POs going around the system instead of through it. Audit trail is patchy.</li>
-              <li><strong>Stale configuration</strong>Cost code library or chart of accounts hasn't been touched in five years and no longer matches how you bid work.</li>
-              <li><strong>Training debt</strong>People hired post-implementation never got proper training and have invented their own way of doing things.</li>
-            </ul>
-          </div>
-          <div>
-            <h2>How an audit runs.</h2>
-            <p>A senior consultant spends two to three days inside your business. We sit with the people doing the work, not just the executives. We watch a real claim cycle, a real month-end, a real project setup.</p>
-            <p>You get a written audit at the end &mdash; ranked findings, remediation effort, expected payback. Then you decide what to fix. We can do the fixing or hand it to your team with the playbook.</p>
-            <div class="outcomes">
-              <div class="o"><span class="num">2&ndash;3</span><span class="lbl">days on-site for the audit</span></div>
-              <div class="o"><span class="num">12&ndash;20</span><span class="lbl">findings ranked by payback</span></div>
-              <div class="o"><span class="num">Fixed</span><span class="lbl">scope, fixed price, no surprises</span></div>
-            </div>
-          </div>
+        <div class="section-head reveal">
+          <span class="eyebrow">Where we look</span>
+          <h2>Where we usually find the leaks.</h2>
+          <p class="lead">After sixteen years inside Jobpac across hundreds of construction businesses, the gaps cluster in predictable places. The audit tells us which ones are yours.</p>
+        </div>
+        <div class="feature-grid">
+          <div class="feature-card reveal"><div class="num">Underused modules</div><h3>Modules switched off.</h3><p>You're paying for plant, subbie, and forecasting modules that aren't switched on or aren't being used as intended.</p></div>
+          <div class="feature-card reveal"><div class="num">Manual workarounds</div><h3>Excel doing system work.</h3><p>Critical workflows in spreadsheets because the Jobpac process wasn't configured properly the first time.</p></div>
+          <div class="feature-card reveal"><div class="num">Reporting gaps</div><h3>Days to compile a P&amp;L.</h3><p>Project P&amp;L takes days to compile. Forecast-vs-actual is a hand-built spreadsheet that's gone stale.</p></div>
+          <div class="feature-card reveal"><div class="num">Approval chaos</div><h3>Around the system, not through.</h3><p>Claims and POs going around the system instead of through it. Audit trail is patchy and impossible to defend.</p></div>
+          <div class="feature-card reveal"><div class="num">Stale configuration</div><h3>Five-year-old chart of accounts.</h3><p>Cost code library or chart of accounts hasn't been touched in years and no longer matches how you bid work.</p></div>
+          <div class="feature-card reveal"><div class="num">Training debt</div><h3>People inventing workflows.</h3><p>People hired post-implementation never got proper training and have invented their own way of doing things.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="eyebrow">How it runs</span>
+          <h2>How an audit actually runs.</h2>
+          <p class="lead">A senior consultant spends two to three days inside your business. We sit with the people doing the work, not just the executives. We watch a real claim cycle, a real month-end, a real project setup. You get a written audit at the end &mdash; ranked findings, remediation effort, expected payback.</p>
+        </div>
+        <div class="outcomes reveal" style="margin-top: 2rem;">
+          <div class="o"><span class="num">2&ndash;3 days</span><span class="lbl">on-site for the audit, with the people doing the work</span></div>
+          <div class="o"><span class="num">12&ndash;20</span><span class="lbl">findings ranked by effort to fix and expected payback</span></div>
+          <div class="o"><span class="num">Fixed</span><span class="lbl">scope and price &mdash; no T&amp;E surprises</span></div>
         </div>
       </div>
     </section>
@@ -2627,23 +2631,18 @@ PAGES["support.html"] = dict(
       </div>
     </section>
 
-    <section class="section warm-bg">
+    <section class="section dark-feature">
       <div class="wrap">
-        <div class="two-col aside reveal">
-          <div>
-            <h2>How same-day support actually works.</h2>
-            <p>You email or call. A senior consultant who knows your setup picks it up &mdash; not a triage queue, not an offshore ticket centre. Most queries are resolved the same day, often within a couple of hours.</p>
-            <p>If we need to log into Jobpac to fix something, we already have the credentials and the project map &mdash; we're not re-discovering your environment every time. That's why we're fast.</p>
-            <p>And because the same senior consultant works your account month after month, the context compounds. By month three, we know which of your projects always run hot, which subbies are reliably late with claims, and what your CFO actually looks at in the monthly pack.</p>
-          </div>
-          <div>
-            <div class="outcomes">
-              <div class="o"><span class="num">Same day</span><span class="lbl">response, every business day</span></div>
-              <div class="o"><span class="num">&lt; 4hrs</span><span class="lbl">average resolution time</span></div>
-              <div class="o"><span class="num">No queue</span><span class="lbl">a senior picks up directly</span></div>
-              <div class="o"><span class="num">AU &amp; NZ</span><span class="lbl">business hours coverage</span></div>
-            </div>
-          </div>
+        <div class="section-head reveal">
+          <span class="eyebrow">How it actually works</span>
+          <h2>Same day. <em>Senior.</em> No triage queue.</h2>
+          <p class="lead">You email or call. A senior consultant who knows your setup picks it up directly &mdash; not a triage queue, not an offshore ticket centre. The context compounds month after month, so we're faster every time.</p>
+        </div>
+        <div class="feature-grid">
+          <div class="feature-card reveal"><div class="num">Same day</div><h3>Response on every business day</h3><p>No 48-hour SLA, no &ldquo;next business day.&rdquo; A senior with full context picks up directly.</p></div>
+          <div class="feature-card reveal"><div class="num">&lt; 4 hrs</div><h3>Average resolution</h3><p>Most queries are resolved within a couple of hours. Same business day at the latest.</p></div>
+          <div class="feature-card reveal"><div class="num">No queue</div><h3>A senior on the keys</h3><p>The same person works your account month after month. We're not re-discovering your environment every time.</p></div>
+          <div class="feature-card reveal"><div class="num">AU &amp; NZ</div><h3>Business hours coverage</h3><p>Mon-Fri across both timezones. Out-of-hours and EOFY cover by arrangement.</p></div>
         </div>
       </div>
     </section>
@@ -2723,9 +2722,9 @@ PAGES["training.html"] = dict(
       </div>
     </section>
 
-    <section class="section warm-bg">
+    <section class="section dark-feature">
       <div class="wrap">
-        <div class="reveal">
+        <div class="section-head reveal">
           <span class="eyebrow">Module coverage</span>
           <h2>What we train on.</h2>
           <p class="lead">Every Jobpac module, calibrated to the modules you've actually licensed and the roles in your team that use them.</p>
@@ -2827,9 +2826,9 @@ PAGES["civil-construction.html"] = dict(
       </div>
     </section>
 
-    <section class="section warm-bg">
+    <section class="section dark-feature">
       <div class="wrap">
-        <div class="reveal">
+        <div class="section-head reveal">
           <span class="eyebrow">Who we work with</span>
           <h2>The businesses we know best.</h2>
           <p class="lead">Most of our clients fit one of these profiles. If yours doesn't, the conversation might still be worth having.</p>
@@ -3047,6 +3046,21 @@ def support_subpage(slug, title, code, h1, lead, blurb, deliverables, focus_h, f
       </div>
     </section>
 
+    <section class="section dark-feature">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="eyebrow">Why teams choose us</span>
+          <h2>Same day. <em>Senior.</em> No queue.</h2>
+          <p class="lead">When you hire Buoy for {title.lower()} cover, this is what you actually get &mdash; not a 48-hour SLA and an offshore ticket queue.</p>
+        </div>
+        <div class="feature-grid">
+          <div class="feature-card reveal"><div class="num">Same day</div><h3>Response on every business day</h3><p>No triage queue, no &ldquo;next business day.&rdquo; A senior who knows your setup picks up directly.</p></div>
+          <div class="feature-card reveal"><div class="num">&lt; 4 hrs</div><h3>Average resolution time</h3><p>Most queries are closed within hours of you sending them, often faster &mdash; same business day at the latest.</p></div>
+          <div class="feature-card reveal"><div class="num">Senior</div><h3>Consultant on every job</h3><p>No graduates, no juniors. The person on the keys has spent years inside Jobpac in construction businesses.</p></div>
+        </div>
+      </div>
+    </section>
+
     <section class="section warm-bg-rich">
       <div class="wrap">
         <div class="section-head reveal">
@@ -3056,11 +3070,6 @@ def support_subpage(slug, title, code, h1, lead, blurb, deliverables, focus_h, f
         <ul class="checklist reveal" style="max-width: 760px; margin: 0 auto;">
           {''.join(f'<li>{f}</li>' for f in focus_items)}
         </ul>
-        <div class="outcomes reveal" style="margin-top: 2.5rem;">
-          <div class="o"><span class="num">Senior</span><span class="lbl">consultant on every job &mdash; no juniors</span></div>
-          <div class="o"><span class="num">Same day</span><span class="lbl">turnaround on most requests</span></div>
-          <div class="o"><span class="num">No queue</span><span class="lbl">a senior picks up directly</span></div>
-        </div>
       </div>
     </section>
 
