@@ -1384,11 +1384,14 @@
   z-index: -1;
 }
 
-/* Atmospheric blob behind the hero — makes the hero feel richer than the
-   plain cream section that follows it */
+/* Atmospheric hero — subtle vertical gradient (faint peach top, cream bottom)
+   plus a soft peach blob top-right. No bottom-left blob; it was clipping
+   awkwardly. The gradient itself differentiates the hero from a flat-cream
+   section that follows it. */
 .page-hero.with-visual {
   position: relative;
   overflow: hidden;
+  background: linear-gradient(180deg, #FCF1E2 0%, var(--cream) 75%);
 }
 .page-hero.with-visual::before {
   content: "";
@@ -1397,18 +1400,7 @@
   border-radius: 50%;
   background: var(--orange-300);
   opacity: 0.18;
-  top: -240px; right: -220px;
-  pointer-events: none;
-  z-index: 0;
-}
-.page-hero.with-visual::after {
-  content: "";
-  position: absolute;
-  width: 280px; height: 280px;
-  border-radius: 50%;
-  background: var(--orange-500);
-  opacity: 0.07;
-  bottom: -120px; left: -100px;
+  top: -260px; right: -200px;
   pointer-events: none;
   z-index: 0;
 }
@@ -2253,6 +2245,157 @@
 }
 @media (max-width: 800px) {
   .two-col-photo { grid-template-columns: 1fr; }
+}
+
+/* === Orange testimonial section (replaces the navy testimonial on
+   inner pages — breaks the dark-on-dark adjacency with the
+   implementation-phases section above) === */
+.section.testimonial-orange {
+  background:
+    radial-gradient(circle at 92% 12%, rgba(255, 255, 255, 0.18) 0%, transparent 55%),
+    radial-gradient(circle at 6% 92%, rgba(14, 23, 41, 0.10) 0%, transparent 55%),
+    linear-gradient(135deg, var(--orange-400) 0%, var(--orange-500) 60%, var(--orange-600) 100%);
+  color: var(--white);
+  border-radius: 32px;
+  margin-inline: var(--gutter);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.section.testimonial-orange::before {
+  content: "";
+  position: absolute;
+  width: 380px; height: 380px;
+  border-radius: 50%;
+  background: var(--orange-300);
+  opacity: 0.35;
+  top: -160px; right: -120px;
+  pointer-events: none;
+  z-index: 0;
+}
+.section.testimonial-orange::after {
+  content: "";
+  position: absolute;
+  width: 260px; height: 260px;
+  border-radius: 50%;
+  background: var(--ink-900);
+  opacity: 0.10;
+  bottom: -120px; left: -80px;
+  pointer-events: none;
+  z-index: 0;
+}
+.section.testimonial-orange > .wrap { position: relative; z-index: 1; }
+
+.testimonial-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: clamp(2rem, 4vw, 4rem);
+  align-items: center;
+}
+.testimonial-layout .testimonial-photo {
+  aspect-ratio: 4 / 5;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 24px 56px -20px rgba(14, 23, 41, 0.35);
+  position: relative;
+}
+.testimonial-layout .testimonial-photo img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.testimonial-layout .testimonial-photo .photo-badge {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  background: var(--ink-900);
+  color: var(--white);
+  padding: 0.5rem 0.9rem;
+  border-radius: var(--r-pill);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.testimonial-layout .testimonial-photo .photo-badge::before {
+  content: "\201C"; /* opening curly quote */
+  font-family: var(--font-display);
+  font-size: 1.4em;
+  line-height: 0.6;
+  color: var(--orange-400);
+  font-weight: 800;
+}
+
+.testimonial-layout .testimonial-quote .quote-text {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
+  line-height: 1.35;
+  letter-spacing: -0.012em;
+  color: var(--white);
+  margin-bottom: 2rem;
+  position: relative;
+}
+.testimonial-layout .testimonial-quote .quote-text::before {
+  content: "\201C";
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 4rem;
+  color: rgba(255, 255, 255, 0.35);
+  position: absolute;
+  top: -2.2rem;
+  left: -0.8rem;
+  line-height: 1;
+  pointer-events: none;
+}
+.testimonial-layout .testimonial-quote .quote-text em {
+  font-style: italic;
+  font-weight: 700;
+  color: var(--ink-900);
+}
+.testimonial-layout .testimonial-quote .quote-attr {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  padding: 0.55rem 1.1rem 0.55rem 0.55rem;
+  border-radius: var(--r-pill);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.testimonial-layout .testimonial-quote .quote-attr .avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--ink-900);
+  color: var(--white);
+  display: grid; place-items: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+}
+.testimonial-layout .testimonial-quote .quote-attr .who {
+  display: flex; flex-direction: column;
+  line-height: 1.25;
+  text-align: left;
+}
+.testimonial-layout .testimonial-quote .quote-attr .who strong {
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--white);
+}
+.testimonial-layout .testimonial-quote .quote-attr .who span {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+@media (max-width: 800px) {
+  .testimonial-layout { grid-template-columns: 1fr; }
+  .testimonial-layout .testimonial-photo { max-width: 360px; }
 }
 
 /* === Big page-closing CTA (replacement for inline-cta on inner pages) === */
