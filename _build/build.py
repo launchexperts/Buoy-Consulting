@@ -12,7 +12,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 
 # Bump this whenever styles.css changes — appended as ?v=N to <link> hrefs
 # so browsers don't serve a stale stylesheet.
-CSS_VERSION = "5"
+CSS_VERSION = "6"
 
 # ============================================================
 # CSS additions for inner pages — appended to styles.css if missing
@@ -369,6 +369,189 @@ INNER_CSS = """
 /* Active nav state */
 .nav-links > li > a.active { color: var(--orange-700); }
 .nav-links > li.has-dropdown.active > a { color: var(--orange-700); }
+/* Keep Services parent highlighted while the dropdown is hovered/focused */
+.nav-links > li.has-dropdown:hover > a,
+.nav-links > li.has-dropdown:focus-within > a { color: var(--orange-700); }
+
+/* === Dark sections (testimonial, stat ticker, etc.) === */
+.section.dark {
+  background: linear-gradient(135deg, var(--ink-900) 0%, var(--ink-800) 60%, var(--ink-700) 100%);
+  color: var(--white);
+  border-radius: 32px;
+  margin-inline: var(--gutter);
+  position: relative;
+  overflow: hidden;
+}
+.section.dark::before {
+  content: "";
+  position: absolute;
+  width: 480px; height: 480px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--orange-500) 0%, transparent 65%);
+  opacity: 0.28;
+  top: -200px; right: -120px;
+  pointer-events: none;
+  z-index: 0;
+}
+.section.dark::after {
+  content: "";
+  position: absolute;
+  width: 320px; height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--orange-300) 0%, transparent 60%);
+  opacity: 0.18;
+  bottom: -140px; left: -80px;
+  pointer-events: none;
+  z-index: 0;
+}
+.section.dark > .wrap { position: relative; z-index: 1; }
+.section.dark h2, .section.dark h3, .section.dark h4 { color: var(--white); }
+.section.dark p { color: rgba(255, 255, 255, 0.78); }
+.section.dark .lead { color: rgba(255, 255, 255, 0.75); }
+.section.dark .eyebrow { color: var(--orange-300); }
+.section.dark .eyebrow::before { background: var(--orange-400); }
+
+/* === Testimonial quote === */
+.quote-block {
+  max-width: 880px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  padding: 1rem 0;
+}
+.quote-block::before {
+  content: "\"";
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(7rem, 14vw, 11rem);
+  color: var(--orange-500);
+  opacity: 0.35;
+  position: absolute;
+  top: -2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  line-height: 1;
+  pointer-events: none;
+}
+.quote-text {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.35rem, 2.4vw, 1.85rem);
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: var(--white) !important;
+  margin-bottom: 2rem;
+  position: relative;
+  z-index: 2;
+}
+.quote-text em {
+  color: var(--orange-300);
+  font-style: normal;
+  font-weight: 700;
+}
+.quote-attr {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 0.6rem 1.1rem 0.6rem 0.6rem;
+  border-radius: var(--r-pill);
+}
+.quote-attr .avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--orange-300), var(--orange-500));
+  display: grid; place-items: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: var(--white);
+  letter-spacing: 0.04em;
+}
+.quote-attr .who {
+  text-align: left;
+  display: flex; flex-direction: column;
+  line-height: 1.25;
+}
+.quote-attr .who strong {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--white) !important;
+}
+.quote-attr .who span {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* === Stat ticker (homepage trust-strip cousin) === */
+.stat-ticker {
+  background: var(--ink-900);
+  color: var(--white);
+  padding: 1.5rem 0;
+  overflow: hidden;
+  border-radius: 0;
+  margin-inline: calc(-1 * var(--gutter));
+  position: relative;
+}
+.stat-ticker::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--ink-900) 0%, transparent 8%, transparent 92%, var(--ink-900) 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+.stat-ticker-track {
+  display: flex;
+  gap: 3.5rem;
+  white-space: nowrap;
+  animation: ticker 45s linear infinite;
+  align-items: center;
+}
+.stat-ticker .item {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  font-family: var(--font-display);
+}
+.stat-ticker .item .num {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--orange-300);
+  letter-spacing: -0.02em;
+}
+.stat-ticker .item .lbl {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+.stat-ticker .item::after {
+  content: "✦";
+  margin-left: 3rem;
+  color: var(--orange-500);
+  font-size: 0.8rem;
+}
+
+/* === Decorative section blob === */
+.section.has-blob {
+  position: relative;
+  overflow: hidden;
+}
+.section.has-blob::before {
+  content: "";
+  position: absolute;
+  width: 280px; height: 280px;
+  border-radius: 50%;
+  background: var(--orange-100);
+  opacity: 0.55;
+  pointer-events: none;
+  z-index: 0;
+}
+.section.has-blob.blob-tr::before { top: -100px; right: -80px; }
+.section.has-blob.blob-bl::before { bottom: -100px; left: -80px; background: var(--orange-300); opacity: 0.25; }
+.section.has-blob > .wrap { position: relative; z-index: 1; }
 
 /* === Team detail grid (team.html) === */
 .team-detail {
@@ -801,7 +984,7 @@ def hero_with_visual(eyebrow: str, h1: str, lead: str, image_src: str, image_alt
 
 def process_section():
     """Buoy engagement process — identical content across all service pages."""
-    return """    <section class="section warm-bg">
+    return """    <section class="section has-blob blob-tr">
       <div class="wrap">
         <div class="reveal">
           <span class="eyebrow">How we engage</span>
@@ -868,13 +1051,46 @@ def faq_section(questions: list, eyebrow: str = "Common questions", heading: str
     </section>"""
 
 
+def testimonial_section(quote_html: str, attr_initials: str, attr_role: str, attr_meta: str):
+    """Dark testimonial section with quote + small attribution chip."""
+    return f"""    <section class="section dark reveal">
+      <div class="wrap">
+        <div class="quote-block">
+          <p class="quote-text">{quote_html}</p>
+          <div class="quote-attr">
+            <div class="avatar">{attr_initials}</div>
+            <div class="who">
+              <strong>{attr_role}</strong>
+              <span>{attr_meta}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>"""
+
+
+def stat_ticker_section(items: list):
+    """Edge-to-edge animated stat strip on dark background.
+    items: list of (num, lbl) tuples — duplicated to make the loop seamless."""
+    pairs = items + items  # duplicate for seamless loop
+    spans = "\n          ".join(
+        f'<div class="item"><span class="num">{n}</span><span class="lbl">{l}</span></div>'
+        for n, l in pairs
+    )
+    return f"""    <section class="stat-ticker reveal" aria-hidden="true">
+      <div class="stat-ticker-track">
+          {spans}
+      </div>
+    </section>"""
+
+
 def stats_section(eyebrow: str, heading: str, items: list):
     """items is a list of (num, lbl) tuples for the outcomes block."""
     outcomes = "\n          ".join(
         f'<div class="o"><span class="num">{n}</span><span class="lbl">{l}</span></div>'
         for n, l in items
     )
-    return f"""    <section class="section">
+    return f"""    <section class="section warm-bg">
       <div class="wrap">
         <div class="reveal">
           <span class="eyebrow">{eyebrow}</span>
@@ -1175,7 +1391,7 @@ PAGES["implementation.html"] = dict(
       </div>
     </section>
 
-    <section class="section">
+    <section class="section warm-bg">
       <div class="wrap">
         <div class="reveal">
           <span class="eyebrow">Implementation phases</span>
@@ -1211,6 +1427,20 @@ PAGES["implementation.html"] = dict(
         </div>
       </div>
     </section>
+
+""" + testimonial_section(
+        "Buoy stood up Jobpac for us in <em>11 weeks</em> and stuck around for the first three month-ends. By the time they left, our finance team owned the system in a way they never owned the old one.",
+        "OD", "Operations Director", "Tier-2 commercial builder &middot; Sydney",
+    ) + """
+
+""" + stat_ticker_section([
+        ("40+", "Jobpac implementations delivered"),
+        ("8&ndash;14 wks", "typical go-live timeline"),
+        ("100%", "senior consultants on the keys"),
+        ("0", "graduates on engagements"),
+        ("Fixed", "scope &amp; price, signed before build"),
+        ("AU &amp; NZ", "on-site coverage"),
+    ]) + """
 
 """ + process_section() + """
 
@@ -1262,7 +1492,7 @@ PAGES["process-improvement.html"] = dict(
         image_alt="Senior consultant reviewing project finance data with a client",
         badge="Audit in progress",
     ) + """
-    <section class="section">
+    <section class="section warm-bg">
       <div class="wrap">
         <div class="two-col reveal">
           <div>
@@ -1290,6 +1520,20 @@ PAGES["process-improvement.html"] = dict(
         </div>
       </div>
     </section>
+
+""" + testimonial_section(
+        "We thought we knew where the inefficiencies were. After two days, Buoy gave us a list of <em>seventeen ranked findings</em> &mdash; the first three paid back in the first quarter.",
+        "FD", "Finance Director", "Civil contractor &middot; Brisbane",
+    ) + """
+
+""" + stat_ticker_section([
+        ("2&ndash;3 days", "typical on-site audit"),
+        ("12&ndash;20", "ranked findings per audit"),
+        ("Q1", "typical payback period"),
+        ("16 yrs", "specialising in construction"),
+        ("Fixed", "audit fee, no T&amp;E surprises"),
+        ("Senior", "consultant on every audit"),
+    ]) + """
 
 """ + process_section() + """
 
@@ -1396,7 +1640,7 @@ PAGES["support.html"] = dict(
       </div>
     </section>
 
-    <section class="section">
+    <section class="section warm-bg">
       <div class="wrap">
         <div class="two-col aside reveal">
           <div>
@@ -1416,6 +1660,20 @@ PAGES["support.html"] = dict(
         </div>
       </div>
     </section>
+
+""" + testimonial_section(
+        "The same-day support claim is real. We've had questions answered <em>within 90 minutes</em> from a senior who actually understands how Jobpac handles retentions. Magnitude better than a 48-hour ticket SLA.",
+        "FM", "Finance Manager", "Multi-entity construction group &middot; Melbourne",
+    ) + """
+
+""" + stat_ticker_section([
+        ("Same day", "every business day"),
+        ("&lt; 4hrs", "average resolution time"),
+        ("No queue", "a senior picks up directly"),
+        ("AU &amp; NZ", "business hours coverage"),
+        ("16 yrs", "specialising in construction"),
+        ("0", "offshore ticket queues"),
+    ]) + """
 
 """ + process_section() + """
 
@@ -1478,7 +1736,7 @@ PAGES["training.html"] = dict(
       </div>
     </section>
 
-    <section class="section">
+    <section class="section warm-bg">
       <div class="wrap">
         <div class="reveal">
           <span class="eyebrow">Module coverage</span>
@@ -1495,6 +1753,20 @@ PAGES["training.html"] = dict(
         </div>
       </div>
     </section>
+
+""" + testimonial_section(
+        "Our team had been on Jobpac for three years and was still using it like an expensive spreadsheet. <em>Three days of training</em> with our real data and project structure, and monthly reporting changed overnight.",
+        "FL", "Finance Lead", "Fit-out specialist &middot; Auckland",
+    ) + """
+
+""" + stat_ticker_section([
+        ("Role-based", "tracks for PMs, AP/AR, payroll, leadership"),
+        ("Sandbox", "of your live system, not a demo"),
+        ("On-site or", "remote &mdash; or hybrid"),
+        ("Recorded", "library handed over"),
+        ("New-starter", "onboarding programs"),
+        ("AU &amp; NZ", "delivery from 4 cities"),
+    ]) + """
 
 """ + process_section() + """
 
@@ -1568,7 +1840,7 @@ PAGES["civil-construction.html"] = dict(
       </div>
     </section>
 
-    <section class="section">
+    <section class="section warm-bg">
       <div class="wrap">
         <div class="reveal">
           <span class="eyebrow">Who we work with</span>
@@ -1585,6 +1857,20 @@ PAGES["civil-construction.html"] = dict(
         </div>
       </div>
     </section>
+
+""" + testimonial_section(
+        "They speak the language. When we discussed retention treatment, they didn't need the construction-finance crash course &mdash; they came with the answer. <em>Sixteen years</em> in this industry shows up in every conversation.",
+        "MD", "Managing Director", "Family-owned civil contractor &middot; Regional NSW",
+    ) + """
+
+""" + stat_ticker_section([
+        ("16 yrs", "specialising in construction &amp; civil"),
+        ("$20m&ndash;$500m", "typical client size"),
+        ("AU &amp; NZ", "on-site from 4 cities"),
+        ("100+", "combined years of experience"),
+        ("Tier-2", "to family-owned"),
+        ("Civil &middot;", "Commercial &middot; Fit-out"),
+    ]) + """
 
 """ + process_section() + """
 
