@@ -12,7 +12,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 
 # Bump this whenever styles.css changes — appended as ?v=N to <link> hrefs
 # so browsers don't serve a stale stylesheet.
-CSS_VERSION = "20"
+CSS_VERSION = "21"
 
 # ============================================================
 # CSS additions for inner pages — appended to styles.css if missing
@@ -2832,32 +2832,42 @@ PAGES["contact.html"] = dict(
 
 # -------- Support sub-pages --------
 def support_subpage(slug, title, code, h1, lead, blurb, deliverables, focus_h, focus_items):
-    body = page_hero(
+    body = hero_with_visual(
         f"Support &mdash; {title}",
         h1,
         lead,
+        image_src="office-team.jpg",
+        image_alt="Buoy support consultants at work with construction finance teams",
         banner="Same-day support, every day",
+        badge="Live &middot; Mon&ndash;Fri AU/NZ",
+        float_stat={"num": "&lt;4hrs", "lbl": "avg resolution time"},
     ) + f"""
     <section class="section">
       <div class="wrap">
-        <div class="two-col reveal">
-          <div>
-            <h2>What we cover.</h2>
-            <p>{blurb}</p>
-            <ul class="deliverables">
-              {''.join(f'<li><strong>{d[0]}</strong>{d[1]}</li>' for d in deliverables)}
-            </ul>
-          </div>
-          <div>
-            <h2>{focus_h}</h2>
-            <ul class="checklist" style="margin-top: 1.25rem;">
-              {''.join(f'<li>{f}</li>' for f in focus_items)}
-            </ul>
-            <div class="outcomes" style="margin-top: 2rem;">
-              <div class="o"><span class="num">Senior</span><span class="lbl">consultant on every job, no juniors</span></div>
-              <div class="o"><span class="num">Same day</span><span class="lbl">turnaround on most requests</span></div>
-            </div>
-          </div>
+        <div class="section-head reveal">
+          <span class="eyebrow">What we cover</span>
+          <h2>{title} support, <em>end&#8209;to&#8209;end</em>.</h2>
+          <p class="lead">{blurb}</p>
+        </div>
+        <ul class="deliverables-strip reveal">
+          {''.join(f'<li><strong>{d[0]}</strong>{d[1]}</li>' for d in deliverables)}
+        </ul>
+      </div>
+    </section>
+
+    <section class="section warm-bg-rich">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="eyebrow">How we work</span>
+          <h2>{focus_h}</h2>
+        </div>
+        <ul class="checklist reveal" style="max-width: 760px; margin: 0 auto;">
+          {''.join(f'<li>{f}</li>' for f in focus_items)}
+        </ul>
+        <div class="outcomes reveal" style="margin-top: 2.5rem;">
+          <div class="o"><span class="num">Senior</span><span class="lbl">consultant on every job &mdash; no juniors</span></div>
+          <div class="o"><span class="num">Same day</span><span class="lbl">turnaround on most requests</span></div>
+          <div class="o"><span class="num">No queue</span><span class="lbl">a senior picks up directly</span></div>
         </div>
       </div>
     </section>
@@ -2879,7 +2889,7 @@ def support_subpage(slug, title, code, h1, lead, blurb, deliverables, focus_h, f
 
 PAGES["support-bookkeeping.html"] = support_subpage(
     "support-bookkeeping", "Bookkeeping", "BK",
-    "Day&#8209;to&#8209;day Jobpac bookkeeping that doesn't fall behind.",
+    "Day&#8209;to&#8209;day Jobpac bookkeeping that <em>doesn't fall behind</em>.",
     "Bookkeeping inside Jobpac for construction and civil businesses &mdash; daily transaction processing, monthly close, BAS-ready books, and a clean GL handed to your accountant.",
     "We run your day-to-day Jobpac bookkeeping the way an in-house bookkeeper would &mdash; just without the cost or the resourcing risk. The work is done by senior bookkeepers who've spent years inside Jobpac, so your books reconcile, your GL is clean, and your accountant has nothing to chase at year-end.",
     [
@@ -2899,7 +2909,7 @@ PAGES["support-bookkeeping.html"] = support_subpage(
 
 PAGES["support-accounts-payable.html"] = support_subpage(
     "support-accounts-payable", "Accounts Payable", "AP",
-    "Subbie claims, vendor invoices, and clean payment runs.",
+    "Subbie claims, vendor invoices, and <em>clean</em> payment runs.",
     "Specialist Jobpac AP support: subbie claim processing, RCTI generation, vendor management, statutory compliance, and disciplined weekly payment runs &mdash; all inside the system you already pay for.",
     "Construction AP isn't normal AP. Retentions, RCTIs, statutory declarations, payment claim timeframes &mdash; the rules are different and the audit trail matters. Our AP team has spent careers processing claims for civil and commercial businesses, so the work goes through Jobpac the way it should &mdash; not around it.",
     [
@@ -2920,7 +2930,7 @@ PAGES["support-accounts-payable.html"] = support_subpage(
 
 PAGES["support-accounts-receivable.html"] = support_subpage(
     "support-accounts-receivable", "Accounts Receivable", "AR",
-    "Progress claims out, retentions tracked, money in.",
+    "Progress claims out, retentions tracked, <em>money in</em>.",
     "Jobpac AR support for construction businesses: progress billing, customer invoicing, retention tracking, and disciplined collections of overdue accounts.",
     "Cashflow lives or dies on AR. Progress claims need to go out on the dot, retentions need to be tracked on both sides of the head contract, and overdue invoices need someone actually working them. Our team does the work in Jobpac so you have a single source of truth, not a spreadsheet running in parallel.",
     [
@@ -2941,7 +2951,7 @@ PAGES["support-accounts-receivable.html"] = support_subpage(
 
 PAGES["support-payroll.html"] = support_subpage(
     "support-payroll", "Payroll", "PR",
-    "Construction payroll done right &mdash; awards, EBAs, and STP.",
+    "Construction payroll <em>done right</em> &mdash; awards, EBAs, and STP.",
     "Specialist Jobpac payroll support for construction and civil businesses: award- and EBA-compliant pays, super, STP, leave, and timesheet integration.",
     "Construction payroll is unforgiving. Get the EBA wrong and you're underpaying. Get the timesheet allocation wrong and your project costs are wrong too. We run construction payroll inside Jobpac with the rates, allowances, and on-costs configured the way your award or EBA actually requires &mdash; with the audit trail to back it up.",
     [
@@ -2963,7 +2973,7 @@ PAGES["support-payroll.html"] = support_subpage(
 
 PAGES["support-profit-loss.html"] = support_subpage(
     "support-profit-loss", "Profit & Loss", "P&L",
-    "Project P&amp;L you can trust, on the same day every month.",
+    "Project P&amp;L you can <em>trust</em>, on the same day every month.",
     "Project- and entity-level Profit &amp; Loss reporting in Jobpac, monthly management packs, and forecast-vs-actual analysis built so leadership can act on the numbers.",
     "If your P&amp;L takes a week to compile after month-end, by the time you have it the variance is two weeks old. We build P&amp;L reporting inside Jobpac so it's available the morning after close, structured by project and entity, with forecast-vs-actual variance ranked by exception.",
     [
@@ -2984,7 +2994,7 @@ PAGES["support-profit-loss.html"] = support_subpage(
 
 PAGES["support-temp-relief.html"] = support_subpage(
     "support-temp-relief", "Temp Relief", "TR",
-    "Short&#8209;term cover when you need it &mdash; without the agency markup.",
+    "Short&#8209;term cover when you need it &mdash; <em>without the agency markup</em>.",
     "Specialist Jobpac temp relief: cover for sick leave, parental leave, holidays, or peak-period workload &mdash; senior bookkeepers and accountants who can land in your seat without three weeks of onboarding.",
     "When your finance person is suddenly out for two weeks &mdash; or six months &mdash; you don't have time to recruit, train, and ramp a temp. We slot a senior consultant who already knows Jobpac into the seat, with day-one productivity instead of week-three. The cost is roughly what an agency temp costs, and the output is a magnitude better.",
     [
@@ -3005,7 +3015,7 @@ PAGES["support-temp-relief.html"] = support_subpage(
 
 PAGES["support-business-forecasting.html"] = support_subpage(
     "support-business-forecasting", "Business Forecasting", "FC",
-    "Live business forecasts &mdash; built inside Jobpac, not next to it.",
+    "Live business forecasts &mdash; built <em>inside</em> Jobpac, not next to it.",
     "Integrated revenue, project, and cashflow forecasting for construction and civil businesses &mdash; built and maintained in Jobpac so the forecast actually reflects the live business.",
     "Most construction businesses we meet have a forecast in Excel that someone built two years ago and patches each month. It's drifted from reality and nobody fully trusts it. We build the forecast inside Jobpac so it lives in the system that holds the truth &mdash; project costs, contract values, timesheets, and cashflow all feeding the same model.",
     [

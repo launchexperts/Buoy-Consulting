@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet" />
   <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,700,500,400&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="styles.css?v=20" />
+  <link rel="stylesheet" href="styles.css?v=21" />
 </head>
 <body>
 
@@ -94,36 +94,55 @@
   </header>
 
   <main>
-    <section class="page-hero">
+    <section class="page-hero with-visual">
       <div class="wrap">
-        <div class="reveal">
-          <div class="same-day-banner reveal"><span class="pulse"></span>Same-day support, every day</div>
-          <span class="eyebrow">Support &mdash; Business Forecasting</span>
-          <h1>Live business forecasts &mdash; built inside Jobpac, not next to it.</h1>
-          <p class="lead">Integrated revenue, project, and cashflow forecasting for construction and civil businesses &mdash; built and maintained in Jobpac so the forecast actually reflects the live business.</p>
+        <div class="hero-grid">
+          <div class="hero-text reveal">
+            <div class="same-day-banner reveal"><span class="pulse"></span>Same-day support, every day</div>
+            <span class="eyebrow">Support &mdash; Business Forecasting</span>
+            <h1>Live business forecasts &mdash; built <em>inside</em> Jobpac, not next to it.</h1>
+            <p class="lead">Integrated revenue, project, and cashflow forecasting for construction and civil businesses &mdash; built and maintained in Jobpac so the forecast actually reflects the live business.</p>
+          </div>
+          <div class="hero-visual-card-wrap">
+            <div class="hero-visual-card reveal" aria-hidden="true">
+              <div class="blob-accent"></div>
+              <img src="office-team.jpg" alt="Buoy support consultants at work with construction finance teams" loading="lazy" />
+              <span class="badge"><span class="pulse"></span>Live &middot; Mon&ndash;Fri AU/NZ</span>
+            </div>
+            <div class="hero-float-card reveal">
+              <div class="hf-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="7 17 17 7"/><polyline points="7 7 17 7 17 17"/></svg></div>
+              <div class="hf-meta"><b>&lt;4hrs</b><span>avg resolution time</span></div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
     <section class="section">
       <div class="wrap">
-        <div class="two-col reveal">
-          <div>
-            <h2>What we cover.</h2>
-            <p>Most construction businesses we meet have a forecast in Excel that someone built two years ago and patches each month. It's drifted from reality and nobody fully trusts it. We build the forecast inside Jobpac so it lives in the system that holds the truth &mdash; project costs, contract values, timesheets, and cashflow all feeding the same model.</p>
-            <ul class="deliverables">
-              <li><strong>Project pipeline forecast</strong>Approved, probable, and possible jobs &mdash; with weighting and cashflow impact mapped to dates.</li><li><strong>Project P&amp;L forecast</strong>Forecast cost-to-complete and forecast margin per project, updated as actuals close.</li><li><strong>Entity-level revenue &amp; margin forecast</strong>Rolling 12 / 24 / 36-month view by entity and consolidated.</li><li><strong>Cashflow forecast</strong>Linked to the project pipeline and AR/AP timing &mdash; not a static spreadsheet.</li><li><strong>Forecast-vs-actual loop</strong>Each month-end, actuals close back into the forecast model so accuracy improves over time.</li>
-            </ul>
-          </div>
-          <div>
-            <h2>Where most construction forecasts go wrong.</h2>
-            <ul class="checklist" style="margin-top: 1.25rem;">
-              <li>Built once in Excel, then never trued back to actuals &mdash; so accuracy drifts.</li><li>Project pipeline lives in a CRM that doesn't talk to the cost system.</li><li>Cashflow is a separate model that's been &quot;temporarily&quot; running for three years.</li><li>Forecast vs actual variance is computed by hand, late, and not ranked.</li>
-            </ul>
-            <div class="outcomes" style="margin-top: 2rem;">
-              <div class="o"><span class="num">Senior</span><span class="lbl">consultant on every job, no juniors</span></div>
-              <div class="o"><span class="num">Same day</span><span class="lbl">turnaround on most requests</span></div>
-            </div>
-          </div>
+        <div class="section-head reveal">
+          <span class="eyebrow">What we cover</span>
+          <h2>Business Forecasting support, <em>end&#8209;to&#8209;end</em>.</h2>
+          <p class="lead">Most construction businesses we meet have a forecast in Excel that someone built two years ago and patches each month. It's drifted from reality and nobody fully trusts it. We build the forecast inside Jobpac so it lives in the system that holds the truth &mdash; project costs, contract values, timesheets, and cashflow all feeding the same model.</p>
+        </div>
+        <ul class="deliverables-strip reveal">
+          <li><strong>Project pipeline forecast</strong>Approved, probable, and possible jobs &mdash; with weighting and cashflow impact mapped to dates.</li><li><strong>Project P&amp;L forecast</strong>Forecast cost-to-complete and forecast margin per project, updated as actuals close.</li><li><strong>Entity-level revenue &amp; margin forecast</strong>Rolling 12 / 24 / 36-month view by entity and consolidated.</li><li><strong>Cashflow forecast</strong>Linked to the project pipeline and AR/AP timing &mdash; not a static spreadsheet.</li><li><strong>Forecast-vs-actual loop</strong>Each month-end, actuals close back into the forecast model so accuracy improves over time.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section warm-bg-rich">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="eyebrow">How we work</span>
+          <h2>Where most construction forecasts go wrong.</h2>
+        </div>
+        <ul class="checklist reveal" style="max-width: 760px; margin: 0 auto;">
+          <li>Built once in Excel, then never trued back to actuals &mdash; so accuracy drifts.</li><li>Project pipeline lives in a CRM that doesn't talk to the cost system.</li><li>Cashflow is a separate model that's been &quot;temporarily&quot; running for three years.</li><li>Forecast vs actual variance is computed by hand, late, and not ranked.</li>
+        </ul>
+        <div class="outcomes reveal" style="margin-top: 2.5rem;">
+          <div class="o"><span class="num">Senior</span><span class="lbl">consultant on every job &mdash; no juniors</span></div>
+          <div class="o"><span class="num">Same day</span><span class="lbl">turnaround on most requests</span></div>
+          <div class="o"><span class="num">No queue</span><span class="lbl">a senior picks up directly</span></div>
         </div>
       </div>
     </section>
