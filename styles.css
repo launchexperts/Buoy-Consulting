@@ -1455,8 +1455,8 @@
 /* Italic emphasis on page-hero H1 (matches homepage's italic Jobpac treatment) */
 .page-hero h1 em {
   font-style: italic;
-  font-weight: 500;
-  color: var(--orange-700);
+  font-weight: 700;
+  color: var(--orange-500);
 }
 
 @media (max-width: 900px) {
@@ -2163,23 +2163,146 @@
 /* Stat ticker spacing — give it room from the testimonial above and section below */
 .stat-ticker { margin-block: clamp(2rem, 4vw, 3.5rem); }
 
-/* 5-card grid in a dark-feature section: 3 on row 1, 2 centered on row 2 */
+/* 5-phase grid + 6th "live status" mockup card to fill out a balanced 3x2 */
 .section.dark-feature .feature-grid.five-up {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.25rem;
 }
-.section.dark-feature .feature-grid.five-up .feature-card { grid-column: span 2; }
-.section.dark-feature .feature-grid.five-up .feature-card:nth-child(4) { grid-column: 2 / span 2; }
-.section.dark-feature .feature-grid.five-up .feature-card:nth-child(5) { grid-column: 4 / span 2; }
 @media (max-width: 900px) {
   .section.dark-feature .feature-grid.five-up { grid-template-columns: repeat(2, 1fr); }
-  .section.dark-feature .feature-grid.five-up .feature-card,
-  .section.dark-feature .feature-grid.five-up .feature-card:nth-child(4),
-  .section.dark-feature .feature-grid.five-up .feature-card:nth-child(5) { grid-column: auto; }
 }
 @media (max-width: 560px) {
   .section.dark-feature .feature-grid.five-up { grid-template-columns: 1fr; }
+}
+
+/* Live-status outcome card that sits as the 6th tile, breaking the
+   text-card rhythm with a visual moment */
+.section.dark-feature .phase-outcome {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--r-card);
+  padding: 1.5rem;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 350ms cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 200ms ease,
+              box-shadow 350ms ease;
+}
+.section.dark-feature .phase-outcome::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 100% 0%, rgba(232, 93, 31, 0.22) 0%, transparent 65%);
+  pointer-events: none;
+}
+.section.dark-feature .phase-outcome:hover {
+  transform: translateY(-4px);
+  border-color: var(--orange-400);
+  box-shadow: 0 18px 36px -16px rgba(0, 0, 0, 0.5);
+}
+.section.dark-feature .phase-outcome > * { position: relative; z-index: 1; }
+.section.dark-feature .phase-outcome .po-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.section.dark-feature .phase-outcome .po-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--orange-300);
+}
+.section.dark-feature .phase-outcome .po-live .pulse {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--orange-400);
+  animation: pulse 2s ease-in-out infinite;
+  box-shadow: 0 0 0 4px rgba(232, 93, 31, 0.16);
+}
+.section.dark-feature .phase-outcome .po-dots {
+  display: flex;
+  gap: 4px;
+}
+.section.dark-feature .phase-outcome .po-dots span {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+}
+.section.dark-feature .phase-outcome .po-title {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.65);
+  letter-spacing: 0.02em;
+}
+.section.dark-feature .phase-outcome .po-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.section.dark-feature .phase-outcome .po-num {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.5rem, 4vw, 3.25rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--white);
+}
+.section.dark-feature .phase-outcome .po-num .po-unit {
+  font-size: 0.42em;
+  color: rgba(255, 255, 255, 0.55);
+  margin-left: 0.25em;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+.section.dark-feature .phase-outcome .po-sublabel {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+.section.dark-feature .phase-outcome .po-spark {
+  width: 100%;
+  height: 50px;
+  color: var(--orange-400);
+  margin-top: auto;
+}
+.section.dark-feature .phase-outcome .po-spark .spark-fill {
+  fill: url(#spark-grad);
+}
+.section.dark-feature .phase-outcome .po-checks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+}
+.section.dark-feature .phase-outcome .po-checks span {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.78);
+}
+.section.dark-feature .phase-outcome .po-checks span::before {
+  content: "";
+  display: inline-block;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: rgba(232, 93, 31, 0.25);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FBA982' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 9px;
+  flex-shrink: 0;
 }
 
 /* Stronger outcomes cards: white + shadow + thicker orange rule, so they stand
@@ -2290,45 +2413,38 @@
 
 .testimonial-layout {
   display: grid;
-  grid-template-columns: 1fr 1.6fr;
-  gap: clamp(1.5rem, 3vw, 3rem);
+  grid-template-columns: minmax(220px, 300px) 1fr;
+  gap: clamp(1.75rem, 4vw, 4rem);
   align-items: center;
 }
 .testimonial-layout .testimonial-photo {
-  aspect-ratio: 5 / 4;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 18px 36px -16px rgba(14, 23, 41, 0.30);
+  aspect-ratio: 4 / 5;
   position: relative;
+  z-index: 1;
 }
+/* Organic blob shape on the photo — mirrors the homepage why-portrait */
 .testimonial-layout .testimonial-photo img {
-  width: 100%; height: 100%;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   display: block;
+  border-radius: 60% 40% 50% 60% / 55% 50% 50% 60%;
+  box-shadow: 0 22px 44px -18px rgba(14, 23, 41, 0.45);
+  position: relative;
+  z-index: 2;
 }
-.testimonial-layout .testimonial-photo .photo-badge {
+/* Soft contrasting blob sitting behind the photo, slightly offset
+   for depth — same vibe as the homepage's shape-bg */
+.testimonial-layout .testimonial-photo .testimonial-blob {
   position: absolute;
-  bottom: 1rem;
-  left: 1rem;
+  width: 80%;
+  height: 80%;
+  bottom: -6%;
+  right: -8%;
   background: var(--ink-900);
-  color: var(--white);
-  padding: 0.5rem 0.9rem;
-  border-radius: var(--r-pill);
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-.testimonial-layout .testimonial-photo .photo-badge::before {
-  content: "\201C"; /* opening curly quote */
-  font-family: var(--font-display);
-  font-size: 1.4em;
-  line-height: 0.6;
-  color: var(--orange-400);
-  font-weight: 800;
+  opacity: 0.18;
+  border-radius: 40% 60% 60% 40% / 50% 60% 40% 50%;
+  z-index: 1;
 }
 
 .testimonial-layout .testimonial-quote .quote-text {

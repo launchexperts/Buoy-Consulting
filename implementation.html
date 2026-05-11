@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet" />
   <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,700,500,400&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="styles.css?v=17" />
+  <link rel="stylesheet" href="styles.css?v=18" />
 </head>
 <body>
 
@@ -169,6 +169,33 @@
             <h3>Stabilise</h3>
             <p>We're embedded for the first month-end and the first project claim cycle. By the time we step back, your team owns it &mdash; with the documentation and the muscle memory to keep it running.</p>
           </div>
+          <div class="phase-outcome reveal" aria-hidden="true">
+            <div class="po-head">
+              <span class="po-live"><span class="pulse"></span>Live</span>
+              <div class="po-dots"><span></span><span></span><span></span></div>
+            </div>
+            <div class="po-title">Day 1 after go-live</div>
+            <div class="po-stat">
+              <span class="po-num">11<span class="po-unit">wks</span></span>
+              <span class="po-sublabel">kick-off &rarr; go-live</span>
+            </div>
+            <svg class="po-spark" viewBox="0 0 200 60" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="spark-grad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="currentColor" stop-opacity="0.35"/>
+                  <stop offset="100%" stop-color="currentColor" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <polyline points="0,55 30,50 60,42 90,38 120,28 150,20 180,14 200,8 200,60 0,60" fill="url(#spark-grad)"/>
+              <polyline points="0,55 30,50 60,42 90,38 120,28 150,20 180,14 200,8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+              <circle cx="200" cy="8" r="4" fill="currentColor"/>
+              <circle cx="200" cy="8" r="8" fill="currentColor" fill-opacity="0.3"/>
+            </svg>
+            <div class="po-checks">
+              <span>Finance + payroll + projects live</span>
+              <span>Team trained, owns it</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -242,8 +269,8 @@
       <div class="wrap">
         <div class="testimonial-layout">
           <div class="testimonial-photo">
-            <img src="office-team.jpg" alt="Construction finance team at work using Jobpac" loading="lazy" />
-            <span class="photo-badge">Client &middot; Sydney</span>
+            <div class="testimonial-blob"></div>
+            <img src="client-portrait.jpg" alt="Operations Director portrait" loading="lazy" />
           </div>
           <div class="testimonial-quote">
             <p class="quote-text">Buoy stood up Jobpac for us in <em>11 weeks</em> and stuck around for the first three month-ends. By the time they left, our finance team owned the system in a way they never owned the old one.</p>
