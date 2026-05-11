@@ -12,7 +12,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 
 # Bump this whenever styles.css changes — appended as ?v=N to <link> hrefs
 # so browsers don't serve a stale stylesheet.
-CSS_VERSION = "21"
+CSS_VERSION = "22"
 
 # ============================================================
 # CSS additions for inner pages — appended to styles.css if missing
@@ -765,13 +765,146 @@ INNER_CSS = """
   font-size: 0.85rem; color: var(--gray-500);
 }
 
-/* === Hero (page-hero with-visual) — atmospheric peach gradient === */
-.page-hero.with-visual {
+/* === Contact page (polished) — grid + cards on the warm-bg-rich section === */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: clamp(1.75rem, 3vw, 2.5rem);
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .contact-grid { grid-template-columns: 1fr; }
+}
+.contact-form-head {
+  margin-bottom: 0.5rem;
+}
+.contact-form-head .eyebrow { margin-bottom: 1rem; }
+.contact-form-head h2 {
+  font-size: clamp(1.6rem, 2.4vw, 2rem);
+  margin-bottom: 0.75rem;
+}
+.contact-form-head p {
+  color: var(--gray-700);
+  line-height: 1.6;
+  font-size: 0.97rem;
+  margin: 0;
+}
+
+/* Form gets a translucent shadowed panel on the warm bg */
+.contact-grid .contact-form {
+  background: var(--white);
+  border: 1px solid var(--orange-100);
+  border-radius: var(--r-card);
+  padding: clamp(1.75rem, 3vw, 2.5rem);
+  box-shadow: 0 18px 36px -16px rgba(14, 23, 41, 0.10);
+}
+
+/* Aside split into two cards — channels card + next-steps card */
+.contact-aside-card,
+.contact-next-card {
+  background: var(--white);
+  border: 1px solid var(--orange-100);
+  border-radius: var(--r-card);
+  padding: clamp(1.5rem, 2.5vw, 2rem);
+  box-shadow: 0 10px 24px -14px rgba(14, 23, 41, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.contact-aside-card { margin-bottom: 1.25rem; }
+.contact-aside-card .eyebrow,
+.contact-next-card .eyebrow { margin-bottom: 0.25rem; }
+.contact-aside-card h3 {
+  font-size: 1.15rem;
+  letter-spacing: -0.01em;
+}
+.contact-aside-card > p {
+  color: var(--gray-700);
+  line-height: 1.55;
+  font-size: 0.92rem;
+  margin: 0 0 0.5rem;
+}
+.contact-aside-card .channel {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--orange-100);
+  margin-top: 0;
+}
+.contact-aside-card .channel:first-of-type { padding-top: 0; border-top: 0; }
+.contact-aside-card .channel-icon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: var(--orange-100);
+  color: var(--orange-700);
+  display: grid; place-items: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.contact-aside-card .channel > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.contact-aside-card .channel a {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.contact-aside-card .channel a:hover { color: var(--orange-700); }
+.contact-aside-card .channel span {
+  font-size: 0.78rem;
+  color: var(--gray-500);
+  line-height: 1.4;
+}
+
+/* What happens next — numbered ordered list */
+.next-steps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.next-steps li {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 0.85rem;
+  align-items: start;
+}
+.next-steps .step-num {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.25rem;
+  color: var(--orange-500);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.next-steps li strong {
+  display: block;
+  font-weight: 700;
+  color: var(--ink);
+  font-size: 0.95rem;
+  margin-bottom: 0.15rem;
+}
+.next-steps li p {
+  color: var(--gray-700);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* === Page hero — atmospheric peach gradient (applies to every inner-page hero) === */
+.page-hero {
   position: relative;
   overflow: hidden;
   background: linear-gradient(180deg, var(--orange-100) 0%, var(--orange-50) 45%, var(--cream) 100%);
 }
-.page-hero.with-visual::before {
+.page-hero::before {
   content: "";
   position: absolute;
   width: 640px; height: 640px;
@@ -782,7 +915,15 @@ INNER_CSS = """
   pointer-events: none;
   z-index: 0;
 }
-.page-hero.with-visual > .wrap { position: relative; z-index: 1; }
+.page-hero.center::before {
+  /* For centered heroes, soft blob more central rather than top-right */
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+  top: -340px;
+  opacity: 0.14;
+}
+.page-hero > .wrap { position: relative; z-index: 1; }
 
 /* Italic emphasis on page-hero H1 (matches homepage's italic Jobpac treatment) */
 .page-hero h1 em {
@@ -2764,11 +2905,27 @@ PAGES["contact.html"] = dict(
         "Tell us what's stuck. We'll come back the <em>same day</em>.",
         "Use the form, send an email, or pick up the phone &mdash; whichever you prefer. A senior consultant reads everything that comes in. We respond on the same business day, usually within a couple of hours.",
         banner="Same-day responses on AU/NZ business days.",
+        center=True,
     ) + """
     <section class="section">
       <div class="wrap">
-        <div class="two-col aside">
+        <div class="outcomes reveal">
+          <div class="o"><span class="num">Same day</span><span class="lbl">response on every business day, no triage queue</span></div>
+          <div class="o"><span class="num">&lt;4hrs</span><span class="lbl">average response time &mdash; often less</span></div>
+          <div class="o"><span class="num">Senior</span><span class="lbl">consultant reads everything that comes in</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section warm-bg-rich">
+      <div class="wrap">
+        <div class="contact-grid">
           <form class="contact-form reveal" onsubmit="event.preventDefault(); alert('Form is illustrative — wire to your form handler before launch.');">
+            <div class="contact-form-head">
+              <span class="eyebrow">Send a note</span>
+              <h2>Tell us what you're working on.</h2>
+              <p>Two or three sentences is plenty. We'll match you to the right person on the team and come back the same day.</p>
+            </div>
             <div class="field">
               <label for="cf-name">Name</label>
               <input id="cf-name" name="name" type="text" required placeholder="Your name" />
@@ -2800,29 +2957,64 @@ PAGES["contact.html"] = dict(
           </form>
 
           <aside class="contact-aside reveal">
-            <div>
-              <h3>Or skip the form.</h3>
-              <p style="color:var(--gray-700); margin-top: 0.5rem;">Whichever channel you use, you'll talk to a senior consultant &mdash; not a routing desk.</p>
+            <div class="contact-aside-card">
+              <span class="eyebrow">Or skip the form</span>
+              <h3>Talk to a senior, not a routing desk.</h3>
+              <p>Whichever channel you use, you'll reach a senior consultant who can actually answer the question. We don't queue and we don't triage.</p>
+              <div class="channel">
+                <span class="channel-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </span>
+                <div>
+                  <a href="mailto:info@buoyconsultancy.com.au">info@buoyconsultancy.com.au</a>
+                  <span>Direct to the team. Same-day response on business days.</span>
+                </div>
+              </div>
+              <div class="channel">
+                <span class="channel-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                </span>
+                <div>
+                  <a href="tel:+61292345678">+61 2 9234 5678</a>
+                  <span>Sydney HQ. Mon&ndash;Fri, 8am to 6pm AEST.</span>
+                </div>
+              </div>
+              <div class="channel">
+                <span class="channel-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                </span>
+                <div>
+                  <a href="tel:+6498883333">+64 9 888 3333</a>
+                  <span>NZ direct line. Mon&ndash;Fri, 9am to 5:30pm NZST.</span>
+                </div>
+              </div>
             </div>
-            <div class="channel">
-              <a href="mailto:info@buoyconsultancy.com.au">info@buoyconsultancy.com.au</a>
-              <span>Direct to the team. Same-day response on business days.</span>
-            </div>
-            <div class="channel">
-              <a href="tel:+61292345678">+61 2 9234 5678</a>
-              <span>Sydney HQ. Mon&ndash;Fri, 8am to 6pm AEST.</span>
-            </div>
-            <div class="channel">
-              <a href="tel:+6498883333">+64 9 888 3333</a>
-              <span>NZ direct line. Mon&ndash;Fri, 9am to 5:30pm NZST.</span>
-            </div>
-            <div>
-              <h3 style="margin-top: 1rem;">What happens next.</h3>
-              <ul class="checklist" style="margin-top: 1rem;">
-                <li>You'll get a reply the same business day.</li>
-                <li>If we're a fit, we'll book a 30-minute call &mdash; no slide deck, no obligation.</li>
-                <li>If we aren't, we'll point you at someone who is.</li>
-              </ul>
+
+            <div class="contact-next-card">
+              <span class="eyebrow">What happens next</span>
+              <ol class="next-steps">
+                <li>
+                  <span class="step-num">01</span>
+                  <div>
+                    <strong>Same-day reply</strong>
+                    <p>From a senior consultant, on every business day.</p>
+                  </div>
+                </li>
+                <li>
+                  <span class="step-num">02</span>
+                  <div>
+                    <strong>Discovery call</strong>
+                    <p>30 minutes, no slide deck, no obligation &mdash; if we're a fit.</p>
+                  </div>
+                </li>
+                <li>
+                  <span class="step-num">03</span>
+                  <div>
+                    <strong>Or a referral</strong>
+                    <p>If we're not a fit, we'll point you at someone who is.</p>
+                  </div>
+                </li>
+              </ol>
             </div>
           </aside>
         </div>
