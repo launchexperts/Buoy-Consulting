@@ -49,6 +49,7 @@
       --shadow-card:  0 2px 12px -4px rgba(14, 23, 41, 0.06);
     }
 
+    html, body { overflow-x: hidden; max-width: 100%; }
     *, *::before, *::after { box-sizing: border-box; }
     * { margin: 0; padding: 0; }
     html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
@@ -1383,6 +1384,36 @@
   z-index: -1;
 }
 
+/* Atmospheric blob behind the hero — makes the hero feel richer than the
+   plain cream section that follows it */
+.page-hero.with-visual {
+  position: relative;
+  overflow: hidden;
+}
+.page-hero.with-visual::before {
+  content: "";
+  position: absolute;
+  width: 640px; height: 640px;
+  border-radius: 50%;
+  background: var(--orange-300);
+  opacity: 0.18;
+  top: -240px; right: -220px;
+  pointer-events: none;
+  z-index: 0;
+}
+.page-hero.with-visual::after {
+  content: "";
+  position: absolute;
+  width: 280px; height: 280px;
+  border-radius: 50%;
+  background: var(--orange-500);
+  opacity: 0.07;
+  bottom: -120px; left: -100px;
+  pointer-events: none;
+  z-index: 0;
+}
+.page-hero.with-visual > .wrap { position: relative; z-index: 1; }
+
 /* Hero floating card — overlays the photo, same pattern as homepage hero */
 .page-hero.with-visual .hero-visual-card-wrap { position: relative; }
 .page-hero.with-visual .hero-float-card {
@@ -2041,6 +2072,13 @@
 .section.dark .section-head .lead,
 .section.dark-feature .section-head .lead { color: rgba(255,255,255,0.78); }
 
+/* Extra breathing room between back-to-back dark sections (e.g. dark-feature
+   directly followed by a .section.dark testimonial). */
+.section.dark-feature + .section.dark,
+.section.dark + .section.dark-feature {
+  margin-top: clamp(2rem, 4vw, 3.5rem);
+}
+
 /* Dramatic dark-feature section — mirrors the homepage Support featured card:
    navy gradient + orange radial overlay + decorative orange blobs.
    Designed to hold feature-grid cards which become translucent on this bg. */
@@ -2132,6 +2170,121 @@
 
 /* Stat ticker spacing — give it room from the testimonial above and section below */
 .stat-ticker { margin-block: clamp(2rem, 4vw, 3.5rem); }
+
+/* 5-card grid in a dark-feature section: 3 on row 1, 2 centered on row 2 */
+.section.dark-feature .feature-grid.five-up {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1.25rem;
+}
+.section.dark-feature .feature-grid.five-up .feature-card { grid-column: span 2; }
+.section.dark-feature .feature-grid.five-up .feature-card:nth-child(4) { grid-column: 2 / span 2; }
+.section.dark-feature .feature-grid.five-up .feature-card:nth-child(5) { grid-column: 4 / span 2; }
+@media (max-width: 900px) {
+  .section.dark-feature .feature-grid.five-up { grid-template-columns: repeat(2, 1fr); }
+  .section.dark-feature .feature-grid.five-up .feature-card,
+  .section.dark-feature .feature-grid.five-up .feature-card:nth-child(4),
+  .section.dark-feature .feature-grid.five-up .feature-card:nth-child(5) { grid-column: auto; }
+}
+@media (max-width: 560px) {
+  .section.dark-feature .feature-grid.five-up { grid-template-columns: 1fr; }
+}
+
+/* Stronger outcomes cards: white + shadow + thicker orange rule, so they stand
+   out against cream OR warm backgrounds */
+.outcomes .o {
+  padding: 1.5rem 1.5rem 1.5rem 1.6rem;
+  background: var(--white);
+  border-radius: var(--r-card);
+  border-left: 4px solid var(--orange-500);
+  box-shadow: 0 6px 18px -10px rgba(14, 23, 41, 0.16);
+}
+
+/* Center the FAQ accordion column when it sits under a centered section head */
+.section .faq {
+  margin-inline: auto;
+  max-width: 760px;
+}
+
+/* "What we do" two-col with a photo on the right side */
+.two-col-photo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 4vw, 4rem);
+  align-items: center;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+.two-col-photo .copy h2 { margin-bottom: 1.25rem; }
+.two-col-photo .copy p { color: var(--gray-700); line-height: 1.7; margin-bottom: 1rem; }
+.two-col-photo .photo {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: clamp(20px, 2vw, 28px);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+}
+.two-col-photo .photo img { width: 100%; height: 100%; object-fit: cover; }
+.two-col-photo .photo .blob-accent {
+  position: absolute;
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  background: var(--orange-300);
+  opacity: 0.5;
+  bottom: -40px; right: -40px;
+  z-index: -1;
+}
+@media (max-width: 800px) {
+  .two-col-photo { grid-template-columns: 1fr; }
+}
+
+/* Horizontal deliverables strip (used when deliverables moved below the
+   two-col-photo block — visually different from the vertical list above) */
+.deliverables-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.deliverables-strip li {
+  background: var(--white);
+  border: 1px solid var(--gray-100);
+  border-radius: var(--r-card);
+  padding: 1.25rem;
+  position: relative;
+  transition: border-color 200ms, transform 200ms, box-shadow 200ms;
+}
+.deliverables-strip li:hover {
+  border-color: var(--orange-300);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px -10px rgba(14, 23, 41, 0.10);
+}
+.deliverables-strip li::before {
+  content: "";
+  display: block;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: var(--orange-100);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23E85D1F' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 14px;
+  margin-bottom: 0.85rem;
+}
+.deliverables-strip li strong {
+  display: block;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.35rem;
+  font-size: 0.98rem;
+}
+.deliverables-strip li span,
+.deliverables-strip li {
+  font-size: 0.92rem;
+  color: var(--gray-700);
+  line-height: 1.5;
+}
 
 /* Richer warm-bg variant — full-width edge-to-edge, gradient + decorative blob,
    matches the homepage's sec-warm character. Opt-in via .warm-bg-rich. */
