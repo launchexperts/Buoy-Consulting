@@ -950,15 +950,13 @@
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 1.5rem;
-      counter-reset: step;
     }
     .step {
-      counter-increment: step;
       position: relative;
       background: var(--white);
       border: 1px solid var(--orange-100);
       border-radius: var(--r-card);
-      padding: 4rem 1.6rem 1.75rem;
+      padding: 1.75rem 1.6rem;
       box-shadow: 0 1px 0 rgba(232, 93, 31, 0.04);
       transition: transform 350ms cubic-bezier(0.4, 0, 0.2, 1),
                   box-shadow 350ms ease,
@@ -970,26 +968,24 @@
       box-shadow: 0 20px 40px -16px rgba(14, 23, 41, 0.14);
       border-color: var(--orange-300);
     }
-    .step::before {
-      content: counter(step, decimal-leading-zero);
-      position: absolute;
-      top: 0.85rem; right: 1.25rem;
-      font-family: var(--font-display);
-      font-weight: 800;
-      font-size: 3.5rem;
-      letter-spacing: -0.04em;
-      color: transparent;
-      -webkit-text-stroke: 1.5px var(--orange-300);
-      line-height: 1;
-      pointer-events: none;
-      transition: color 350ms ease, -webkit-text-stroke-color 350ms ease, transform 350ms ease;
-    }
-    .step:hover::before {
-      color: var(--orange-500);
-      -webkit-text-stroke-color: var(--orange-500);
-      transform: scale(1.05);
-    }
     .step::after { display: none; }
+    .step .step-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 13px;
+      background: var(--orange-100);
+      color: var(--orange-700);
+      display: grid;
+      place-items: center;
+      margin-bottom: 1.15rem;
+      transition: background 250ms ease, color 250ms ease,
+                  transform 350ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .step:hover .step-icon {
+      background: var(--orange-500);
+      color: var(--white);
+      transform: scale(1.08) rotate(-6deg);
+    }
     .step .step-duration {
       display: inline-flex;
       align-items: center;
