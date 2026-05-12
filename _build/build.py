@@ -12,7 +12,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 
 # Bump this whenever styles.css changes — appended as ?v=N to <link> hrefs
 # so browsers don't serve a stale stylesheet.
-CSS_VERSION = "23"
+CSS_VERSION = "24"
 
 # ============================================================
 # CSS additions for inner pages — appended to styles.css if missing
@@ -765,136 +765,115 @@ INNER_CSS = """
   font-size: 0.85rem; color: var(--gray-500);
 }
 
-/* === Contact page (polished) — grid + cards on the warm-bg-rich section === */
-.contact-grid {
+/* === Contact page — 3-up channels grid (on warm-bg-rich) === */
+.contact-channels {
   display: grid;
-  grid-template-columns: 1.15fr 1fr;
-  gap: clamp(1.75rem, 3vw, 2.5rem);
-  align-items: start;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
 }
-@media (max-width: 900px) {
-  .contact-grid { grid-template-columns: 1fr; }
-}
-.contact-form-head {
-  margin-bottom: 0.5rem;
-}
-.contact-form-head .eyebrow { margin-bottom: 1rem; }
-.contact-form-head h2 {
-  font-size: clamp(1.6rem, 2.4vw, 2rem);
-  margin-bottom: 0.75rem;
-}
-.contact-form-head p {
-  color: var(--gray-700);
-  line-height: 1.6;
-  font-size: 0.97rem;
-  margin: 0;
-}
+@media (max-width: 900px) { .contact-channels { grid-template-columns: 1fr; max-width: 480px; margin-inline: auto; } }
 
-/* Form gets a translucent shadowed panel on the warm bg */
-.contact-grid .contact-form {
+.contact-channel-card {
   background: var(--white);
   border: 1px solid var(--orange-100);
   border-radius: var(--r-card);
-  padding: clamp(1.75rem, 3vw, 2.5rem);
-  box-shadow: 0 18px 36px -16px rgba(14, 23, 41, 0.10);
-}
-
-/* Aside split into two cards — channels card + next-steps card */
-.contact-aside-card,
-.contact-next-card {
-  background: var(--white);
-  border: 1px solid var(--orange-100);
-  border-radius: var(--r-card);
-  padding: clamp(1.5rem, 2.5vw, 2rem);
-  box-shadow: 0 10px 24px -14px rgba(14, 23, 41, 0.08);
+  padding: 1.85rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 10px 24px -14px rgba(14, 23, 41, 0.08);
+  transition: transform 250ms ease, border-color 200ms, box-shadow 300ms;
 }
-.contact-aside-card { margin-bottom: 1.25rem; }
-.contact-aside-card .eyebrow,
-.contact-next-card .eyebrow { margin-bottom: 0.25rem; }
-.contact-aside-card h3 {
-  font-size: 1.15rem;
-  letter-spacing: -0.01em;
+.contact-channel-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--orange-300);
+  box-shadow: 0 24px 48px -20px rgba(14, 23, 41, 0.18);
 }
-.contact-aside-card > p {
-  color: var(--gray-700);
-  line-height: 1.55;
-  font-size: 0.92rem;
-  margin: 0 0 0.5rem;
-}
-.contact-aside-card .channel {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.85rem;
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--orange-100);
-  margin-top: 0;
-}
-.contact-aside-card .channel:first-of-type { padding-top: 0; border-top: 0; }
-.contact-aside-card .channel-icon {
-  width: 36px; height: 36px;
-  border-radius: 10px;
+.contact-channel-card .cc-icon {
+  width: 52px; height: 52px;
+  border-radius: 14px;
   background: var(--orange-100);
   color: var(--orange-700);
   display: grid; place-items: center;
-  flex-shrink: 0;
-  margin-top: 2px;
+  margin-bottom: 0.75rem;
+  transition: background 250ms, color 250ms, transform 350ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-.contact-aside-card .channel > div {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
+.contact-channel-card:hover .cc-icon {
+  background: var(--orange-500);
+  color: var(--white);
+  transform: scale(1.08) rotate(-6deg);
 }
-.contact-aside-card .channel a {
+.contact-channel-card .cc-label {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--orange-700);
+}
+.contact-channel-card .cc-handle {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 1.2rem;
+  letter-spacing: -0.015em;
   color: var(--ink);
-  letter-spacing: -0.01em;
+  word-break: break-word;
+  line-height: 1.25;
 }
-.contact-aside-card .channel a:hover { color: var(--orange-700); }
-.contact-aside-card .channel span {
-  font-size: 0.78rem;
+.contact-channel-card .cc-meta {
+  font-size: 0.85rem;
   color: var(--gray-500);
-  line-height: 1.4;
+  line-height: 1.45;
+  margin-top: 0.2rem;
 }
 
-/* What happens next — numbered ordered list */
-.next-steps {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+/* === Contact page — 3-up "What happens next" cards === */
+.next-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+@media (max-width: 900px) { .next-steps-grid { grid-template-columns: 1fr; max-width: 480px; margin-inline: auto; } }
+
+.next-step-card {
+  background: var(--white);
+  border: 1px solid var(--orange-100);
+  border-radius: var(--r-card);
+  padding: 1.85rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 250ms ease, border-color 200ms, box-shadow 300ms;
+  box-shadow: 0 6px 18px -10px rgba(14, 23, 41, 0.10);
 }
-.next-steps li {
-  display: grid;
-  grid-template-columns: 40px 1fr;
-  gap: 0.85rem;
-  align-items: start;
+.next-step-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--orange-300);
+  box-shadow: 0 24px 48px -20px rgba(14, 23, 41, 0.16);
 }
-.next-steps .step-num {
+.next-step-card .step-num {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: 1.25rem;
+  font-size: 2.5rem;
   color: var(--orange-500);
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-}
-.next-steps li strong {
+  letter-spacing: -0.04em;
+  line-height: 1;
   display: block;
-  font-weight: 700;
-  color: var(--ink);
-  font-size: 0.95rem;
-  margin-bottom: 0.15rem;
+  margin-bottom: 0.5rem;
 }
-.next-steps li p {
+.next-step-card h3 {
+  font-size: 1.15rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.01em;
+}
+.next-step-card p {
   color: var(--gray-700);
-  font-size: 0.85rem;
-  line-height: 1.5;
+  font-size: 0.92rem;
+  line-height: 1.55;
   margin: 0;
 }
 
@@ -2902,7 +2881,7 @@ PAGES["contact.html"] = dict(
     body=page_hero(
         "Get in touch",
         "Tell us what's stuck. We'll come back the <em>same day</em>.",
-        "Use the form, send an email, or pick up the phone &mdash; whichever you prefer. A senior consultant reads everything that comes in. We respond on the same business day, usually within a couple of hours.",
+        "Send an email or pick up the phone &mdash; whichever you prefer. A senior consultant reads everything that comes in. We respond on the same business day, usually within a couple of hours.",
         banner="Same-day responses on AU/NZ business days.",
         center=True,
     ) + """
@@ -2918,104 +2897,63 @@ PAGES["contact.html"] = dict(
 
     <section class="section warm-bg-rich">
       <div class="wrap">
-        <div class="contact-grid">
-          <form class="contact-form reveal" onsubmit="event.preventDefault(); alert('Form is illustrative — wire to your form handler before launch.');">
-            <div class="contact-form-head">
-              <span class="eyebrow">Send a note</span>
-              <h2>Tell us what you're working on.</h2>
-              <p>Two or three sentences is plenty. We'll match you to the right person on the team and come back the same day.</p>
-            </div>
-            <div class="field">
-              <label for="cf-name">Name</label>
-              <input id="cf-name" name="name" type="text" required placeholder="Your name" />
-            </div>
-            <div class="field">
-              <label for="cf-email">Email</label>
-              <input id="cf-email" name="email" type="email" required placeholder="you@business.com.au" />
-            </div>
-            <div class="field">
-              <label for="cf-company">Business</label>
-              <input id="cf-company" name="company" type="text" placeholder="Your company" />
-            </div>
-            <div class="field">
-              <label for="cf-topic">What can we help with?</label>
-              <select id="cf-topic" name="topic">
-                <option>Implementation or migration</option>
-                <option>Process improvement audit</option>
-                <option>Same-day support / ongoing cover</option>
-                <option>Training</option>
-                <option>Civil &amp; construction specialist help</option>
-                <option>Something else</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="cf-msg">Tell us a bit more</label>
-              <textarea id="cf-msg" name="message" placeholder="Two or three sentences is plenty. We'll come back with the right person to speak to."></textarea>
-            </div>
-            <button type="submit">Send enquiry <span class="arr">→</span></button>
-          </form>
+        <div class="section-head reveal">
+          <span class="eyebrow">Get in touch</span>
+          <h2>Talk to a <em>senior</em>, not a routing desk.</h2>
+          <p class="lead">Whichever channel you use, you'll reach a senior consultant who can actually answer the question. We don't queue and we don't triage.</p>
+        </div>
+        <div class="contact-channels reveal">
+          <a href="mailto:info@buoyconsultancy.com.au" class="contact-channel-card">
+            <span class="cc-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </span>
+            <span class="cc-label">Email us</span>
+            <span class="cc-handle">info@buoyconsultancy.com.au</span>
+            <span class="cc-meta">Direct to the team. Same-day reply on business days.</span>
+          </a>
+          <a href="tel:+61292345678" class="contact-channel-card">
+            <span class="cc-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </span>
+            <span class="cc-label">Sydney HQ</span>
+            <span class="cc-handle">+61 2 9234 5678</span>
+            <span class="cc-meta">Mon&ndash;Fri, 8am to 6pm AEST. Senior consultant on the line.</span>
+          </a>
+          <a href="tel:+6498883333" class="contact-channel-card">
+            <span class="cc-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </span>
+            <span class="cc-label">NZ direct line</span>
+            <span class="cc-handle">+64 9 888 3333</span>
+            <span class="cc-meta">Mon&ndash;Fri, 9am to 5:30pm NZST. Direct to the Auckland team.</span>
+          </a>
+        </div>
+      </div>
+    </section>
 
-          <aside class="contact-aside reveal">
-            <div class="contact-aside-card">
-              <span class="eyebrow">Or skip the form</span>
-              <h3>Talk to a senior, not a routing desk.</h3>
-              <p>Whichever channel you use, you'll reach a senior consultant who can actually answer the question. We don't queue and we don't triage.</p>
-              <div class="channel">
-                <span class="channel-icon" aria-hidden="true">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                </span>
-                <div>
-                  <a href="mailto:info@buoyconsultancy.com.au">info@buoyconsultancy.com.au</a>
-                  <span>Direct to the team. Same-day response on business days.</span>
-                </div>
-              </div>
-              <div class="channel">
-                <span class="channel-icon" aria-hidden="true">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                </span>
-                <div>
-                  <a href="tel:+61292345678">+61 2 9234 5678</a>
-                  <span>Sydney HQ. Mon&ndash;Fri, 8am to 6pm AEST.</span>
-                </div>
-              </div>
-              <div class="channel">
-                <span class="channel-icon" aria-hidden="true">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-                </span>
-                <div>
-                  <a href="tel:+6498883333">+64 9 888 3333</a>
-                  <span>NZ direct line. Mon&ndash;Fri, 9am to 5:30pm NZST.</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="contact-next-card">
-              <span class="eyebrow">What happens next</span>
-              <ol class="next-steps">
-                <li>
-                  <span class="step-num">01</span>
-                  <div>
-                    <strong>Same-day reply</strong>
-                    <p>From a senior consultant, on every business day.</p>
-                  </div>
-                </li>
-                <li>
-                  <span class="step-num">02</span>
-                  <div>
-                    <strong>Discovery call</strong>
-                    <p>30 minutes, no slide deck, no obligation &mdash; if we're a fit.</p>
-                  </div>
-                </li>
-                <li>
-                  <span class="step-num">03</span>
-                  <div>
-                    <strong>Or a referral</strong>
-                    <p>If we're not a fit, we'll point you at someone who is.</p>
-                  </div>
-                </li>
-              </ol>
-            </div>
-          </aside>
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="eyebrow">What happens next</span>
+          <h2>The path from here to a call.</h2>
+          <p class="lead">Three short steps. No slide deck, no forms in the way, no obligation at any stage.</p>
+        </div>
+        <div class="next-steps-grid reveal">
+          <div class="next-step-card">
+            <span class="step-num">01</span>
+            <h3>Same-day reply</h3>
+            <p>From a senior consultant, on every business day. Often within a couple of hours. No triage queue, no offshore ticket centre.</p>
+          </div>
+          <div class="next-step-card">
+            <span class="step-num">02</span>
+            <h3>Discovery call</h3>
+            <p>30 minutes, no slide deck, no obligation &mdash; if we're a fit. You'll be talking to the senior who'd do the work, not a sales person.</p>
+          </div>
+          <div class="next-step-card">
+            <span class="step-num">03</span>
+            <h3>Or a referral</h3>
+            <p>If we're not the right partner for what you need, we'll tell you straight &mdash; and point you at someone who is. Either way you get value from the call.</p>
+          </div>
         </div>
       </div>
     </section>""",
