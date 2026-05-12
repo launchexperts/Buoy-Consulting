@@ -427,9 +427,9 @@
     }
     .mockup-chart .bar { flex: 1; background: var(--orange-500); border-radius: 3px 3px 0 0; opacity: 0.85; }
     .mockup-chart .bar:nth-child(1) { height: 35%; }
-    .mockup-chart .bar:nth-child(2) { height: 55%; }
+    .mockup-chart .bar:nth-child(2) { height: 55%; background: var(--ink-700); opacity: 0.9; }
     .mockup-chart .bar:nth-child(3) { height: 42%; }
-    .mockup-chart .bar:nth-child(4) { height: 70%; }
+    .mockup-chart .bar:nth-child(4) { height: 70%; background: var(--ink-800); opacity: 0.95; }
     .mockup-chart .bar:nth-child(5) { height: 60%; }
     .mockup-chart .bar:nth-child(6) { height: 85%; opacity: 1; background: var(--orange-700); }
     .mockup-chart .bar:nth-child(7) { height: 75%; }
@@ -441,6 +441,11 @@
     .mockup-row .icon {
       width: 28px; height: 28px; border-radius: 7px; background: var(--orange-100); flex-shrink: 0;
       display: grid; place-items: center; color: var(--orange-700); font-weight: 700;
+    }
+    /* AR row icon gets a navy tint so the chart panel isn't all orange */
+    .mockup-row:nth-of-type(2) .icon {
+      background: var(--ink-700);
+      color: var(--white);
     }
     .mockup-row .label { flex: 1; color: var(--gray-700); }
     .mockup-row .amt { font-family: var(--font-display); font-weight: 700; color: var(--ink); }
