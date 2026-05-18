@@ -1704,7 +1704,6 @@ def header(active: str = ""):
                     <ul>
                       <li><a href="support-bookkeeping.html"><span>Bookkeeping</span><span class="item-arr">→</span></a></li>
                       <li><a href="support-accounts-payable.html"><span>Accounts Payable</span><span class="item-arr">→</span></a></li>
-                      <li><a href="support-invoice-registration.html"><span>Invoice Registration</span><span class="item-arr">→</span></a></li>
                       <li><a href="support-accounts-receivable.html"><span>Accounts Receivable</span><span class="item-arr">→</span></a></li>
                       <li><a href="support-payroll.html"><span>Payroll</span><span class="item-arr">→</span></a></li>
                       <li><a href="support-profit-loss.html"><span>Profit &amp; Loss</span><span class="item-arr">→</span></a></li>
@@ -1759,7 +1758,6 @@ FOOTER = """  <footer class="site-footer">
           <ul>
             <li><a href="support-bookkeeping.html">Bookkeeping</a></li>
             <li><a href="support-accounts-payable.html">Accounts Payable</a></li>
-            <li><a href="support-invoice-registration.html">Invoice Registration</a></li>
             <li><a href="support-accounts-receivable.html">Accounts Receivable</a></li>
             <li><a href="support-payroll.html">Payroll</a></li>
             <li><a href="support-profit-loss.html">Profit &amp; Loss</a></li>
@@ -2560,7 +2558,7 @@ PAGES["support.html"] = dict(
       <div class="wrap">
         <div class="reveal">
           <span class="eyebrow">Inside Support</span>
-          <h2>Eight specialist disciplines, one team.</h2>
+          <h2>Seven specialist disciplines, one team.</h2>
           <p class="lead">Pick the bits you need. Most clients start with one or two and expand as they see the value.</p>
         </div>
         <div class="sub-grid">
@@ -2574,12 +2572,6 @@ PAGES["support.html"] = dict(
             <div class="icon">AP</div>
             <h3>Accounts Payable</h3>
             <p>Subbie claims, RCTI generation, vendor management, and clean payment runs in Jobpac.</p>
-            <span class="more">Learn more <span class="arr">→</span></span>
-          </a>
-          <a href="support-invoice-registration.html" class="sub-card reveal" style="text-decoration:none;color:inherit;">
-            <div class="icon">IR</div>
-            <h3>Invoice Registration</h3>
-            <p>Outsourced supplier invoice capture, three-way matching, coding, and same-day registration into Jobpac.</p>
             <span class="more">Learn more <span class="arr">→</span></span>
           </a>
           <a href="support-accounts-receivable.html" class="sub-card reveal" style="text-decoration:none;color:inherit;">
@@ -3159,28 +3151,6 @@ PAGES["support-temp-relief.html"] = support_subpage(
     ],
 )
 
-PAGES["support-invoice-registration.html"] = support_subpage(
-    "support-invoice-registration", "Invoice Registration", "IR",
-    "Every supplier invoice into Jobpac &mdash; <em>accurately</em>, fast.",
-    "Outsourced AP invoice registration for construction and civil businesses. Receive, validate, code, and register every supplier invoice into Jobpac &mdash; routed for approval, ready to pay.",
-    "We take supplier invoice registration off your team's plate. Invoices arrive into a shared mailbox, we validate and three-way match them against POs and goods receipts, code them to the right project and cost code, and register them into Jobpac on the same business day. Your team only sees the approval &mdash; not the data entry.",
-    [
-        ("Receive &amp; capture invoices", "By email, EDI, or a shared inbox &mdash; whatever your suppliers send, we ingest and triage it."),
-        ("Three-way match validation", "PO, goods received, invoice. Discrepancies flagged and queried before anything is registered."),
-        ("Project &amp; cost-code coding", "Coded to the right job, cost code, and GL account &mdash; per your structure, not a generic chart."),
-        ("Same-day registration", "Posted into Jobpac AP with full audit trail. Same-day for routine, next-day for anything that needs a query."),
-        ("Approval routing", "Routed per your delegation matrix &mdash; PM, finance, director &mdash; with chase-ups if it stalls."),
-        ("Statement reconciliation", "Monthly supplier statement reconciliation. Disputes logged and worked through before they age."),
-    ],
-    "How we plug into your AP process.",
-    [
-        "Full outsource: every invoice flows through us; your team only sees the approval queue.",
-        "Overflow only: your team handles routine, we take peak load and the tricky exceptions.",
-        "Catch-up project: clear a backlog of unregistered invoices, then hand the running back to your team.",
-        "Same senior bookkeeper works your account month after month &mdash; the context compounds.",
-    ],
-)
-
 PAGES["support-business-forecasting.html"] = support_subpage(
     "support-business-forecasting", "Business Forecasting", "FC",
     "Live business forecasts &mdash; built <em>inside</em> Jobpac, not next to it.",
@@ -3226,7 +3196,7 @@ def write_pages():
 
 def cleanup_orphans():
     """Remove pages that used to exist but no longer do (post-consolidation)."""
-    orphans = ["team.html", "process.html"]
+    orphans = ["team.html", "process.html", "support-invoice-registration.html"]
     for o in orphans:
         path = ROOT / o
         if path.exists():
