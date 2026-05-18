@@ -2194,7 +2194,7 @@ PAGES["about.html"] = dict(
             <div class="photo photo-placeholder" aria-hidden="true"><span>MD</span></div>
             <h3>Matthew Duly</h3>
             <p class="role">Senior Trainer</p>
-            <p class="bio">Matthew has over 35 years' experience as a Project Commercial Manager on large and small infrastructure and building projects &mdash; highway, tunnel, bridge, water, services, office, and hotel. He spent 25 years at Baulderstone and was one of the first users trained in Jobpac when Baulderstone adopted it in 1990, leading many of their client requests for Jobpac development. He's an expert in the on-site operation of Jobpac for Lump Sum and Schedule of Rates projects, as well as Earned Value. As senior trainer at Buoy, Matthew works with clients implementing Jobpac on sites and training the site team to use it.</p>
+            <p class="bio">35 years as a Project Commercial Manager on infrastructure and building projects, 25 of them at Baulderstone. One of Jobpac's first trained users in 1990 and a long-time contributor to its development. Senior trainer at Buoy.</p>
             <div class="tags"><span>Training</span><span>On-site</span><span>Lump Sum / SoR</span><span>Earned Value</span></div>
           </div>
         </div>
