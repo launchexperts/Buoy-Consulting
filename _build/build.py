@@ -12,7 +12,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 
 # Bump this whenever styles.css changes — appended as ?v=N to <link> hrefs
 # so browsers don't serve a stale stylesheet.
-CSS_VERSION = "24"
+CSS_VERSION = "26"
 
 # ============================================================
 # CSS additions for inner pages — appended to styles.css if missing
@@ -582,6 +582,18 @@ INNER_CSS = """
 }
 .team-detail .person .photo img {
   width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.team-detail .person .photo.photo-placeholder {
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, var(--orange-400), var(--orange-700));
+}
+.team-detail .person .photo.photo-placeholder span {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.65rem;
+  letter-spacing: 0.04em;
+  color: var(--white);
 }
 .team-detail .person h3 {
   font-size: 1.15rem; margin: 0;
@@ -2153,7 +2165,7 @@ PAGES["about.html"] = dict(
       <div class="wrap">
         <div class="reveal" style="text-align: center; max-width: 720px; margin: 0 auto 1rem;">
           <span class="eyebrow">Our team</span>
-          <h2>Six senior consultants. One hundred years of construction.</h2>
+          <h2>Senior consultants. Decades of Jobpac.</h2>
           <p class="lead" style="margin: 1rem auto 0;">Every engagement is led by someone with at least fifteen years of construction or civil finance experience &mdash; not someone reading the manual back to you. Meet the people you'll actually work with.</p>
         </div>
         <div class="team-detail">
@@ -2165,39 +2177,25 @@ PAGES["about.html"] = dict(
             <div class="tags"><span>Strategy</span><span>Implementation</span><span>P&amp;L</span></div>
           </div>
           <div class="person reveal">
-            <div class="photo"><img src="https://randomuser.me/api/portraits/men/68.jpg" alt="Michael R." loading="lazy" /></div>
-            <h3>Michael R.</h3>
+            <div class="photo"><img src="kylie-jane.jpg" alt="Kylie Jane" loading="lazy" /></div>
+            <h3>Kylie Jane</h3>
             <p class="role">Senior Consultant</p>
-            <p class="bio">Twenty years across Jobpac implementations and audits, with deep experience in civil contractors and joint-venture structures. Michael owns most of our process improvement work and runs the most complex multi-entity rollouts.</p>
-            <div class="tags"><span>Civil</span><span>JV / multi-entity</span><span>Process</span></div>
+            <p class="bio">Bio coming soon.</p>
+            <div class="tags"><span>Senior consultant</span></div>
           </div>
           <div class="person reveal">
-            <div class="photo"><img src="https://randomuser.me/api/portraits/women/26.jpg" alt="Sarah P." loading="lazy" /></div>
-            <h3>Sarah P.</h3>
-            <p class="role">Implementation Lead</p>
-            <p class="bio">Fifteen years inside Tier-2 commercial builders running AP, AR, and project finance. Sarah leads our implementation practice and has stood up Jobpac end-to-end at over forty businesses. Based in Melbourne.</p>
-            <div class="tags"><span>Implementation</span><span>Migrations</span><span>Tier-2</span></div>
+            <div class="photo photo-placeholder" aria-hidden="true"><span>JW</span></div>
+            <h3>Janitta Weis</h3>
+            <p class="role">Senior Consultant</p>
+            <p class="bio">Bio coming soon.</p>
+            <div class="tags"><span>Senior consultant</span></div>
           </div>
           <div class="person reveal">
-            <div class="photo"><img src="https://randomuser.me/api/portraits/men/52.jpg" alt="James T." loading="lazy" /></div>
-            <h3>James T.</h3>
-            <p class="role">Process &amp; Workflow</p>
-            <p class="bio">Eighteen years in construction finance with a particular focus on plant cost recovery, retentions, and reporting workflows. James runs our process improvement audits and rebuilds. Based in Brisbane.</p>
-            <div class="tags"><span>Plant</span><span>Reporting</span><span>Audits</span></div>
-          </div>
-          <div class="person reveal">
-            <div class="photo"><img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Amelia K." loading="lazy" /></div>
-            <h3>Amelia K.</h3>
-            <p class="role">Bookkeeping &amp; AP Lead</p>
-            <p class="bio">Senior bookkeeper with seventeen years inside Jobpac. Amelia leads our embedded support team &mdash; bookkeeping, AP, AR, P&amp;L &mdash; and is most clients' day-to-day point of contact when they're on a support arrangement.</p>
-            <div class="tags"><span>Bookkeeping</span><span>AP / AR</span><span>Support</span></div>
-          </div>
-          <div class="person reveal">
-            <div class="photo"><img src="https://randomuser.me/api/portraits/men/15.jpg" alt="Robert M." loading="lazy" /></div>
-            <h3>Robert M.</h3>
-            <p class="role">Training Lead</p>
-            <p class="bio">Sixteen years across construction finance, ten of those building training programmes. Robert designs our role-based Jobpac training and delivers it on-site across AU and NZ. Cert IV in Training &amp; Assessment.</p>
-            <div class="tags"><span>Training</span><span>On-site delivery</span><span>NZ</span></div>
+            <div class="photo photo-placeholder" aria-hidden="true"><span>MD</span></div>
+            <h3>Matthew Duly</h3>
+            <p class="role">Senior Trainer</p>
+            <p class="bio">Matthew has over 35 years' experience as a Project Commercial Manager on large and small infrastructure and building projects &mdash; highway, tunnel, bridge, water, services, office, and hotel. He spent 25 years at Baulderstone and was one of the first users trained in Jobpac when Baulderstone adopted it in 1990, leading many of their client requests for Jobpac development. He's an expert in the on-site operation of Jobpac for Lump Sum and Schedule of Rates projects, as well as Earned Value. As senior trainer at Buoy, Matthew works with clients implementing Jobpac on sites and training the site team to use it.</p>
+            <div class="tags"><span>Training</span><span>On-site</span><span>Lump Sum / SoR</span><span>Earned Value</span></div>
           </div>
         </div>
       </div>
@@ -2472,7 +2470,7 @@ PAGES["process-improvement.html"] = dict(
           <div class="feature-card reveal"><div class="num">Manual workarounds</div><h3>Excel doing system work.</h3><p>Critical workflows in spreadsheets because the Jobpac process wasn't configured properly the first time.</p></div>
           <div class="feature-card reveal"><div class="num">Reporting gaps</div><h3>Days to compile a P&amp;L.</h3><p>Project P&amp;L takes days to compile. Forecast-vs-actual is a hand-built spreadsheet that's gone stale.</p></div>
           <div class="feature-card reveal"><div class="num">Approval chaos</div><h3>Around the system, not through.</h3><p>Claims and POs going around the system instead of through it. Audit trail is patchy and impossible to defend.</p></div>
-          <div class="feature-card reveal"><div class="num">Stale configuration</div><h3>Five-year-old chart of accounts.</h3><p>Cost code library or chart of accounts hasn't been touched in years and no longer matches how you bid work.</p></div>
+          <div class="feature-card reveal"><div class="num">Stale configuration</div><h3>Five-year-old chart of accounts.</h3><p>Cost code library or chart of accounts hasn't been touched in years and is no longer a good fit for your project job costing.</p></div>
           <div class="feature-card reveal"><div class="num">Training debt</div><h3>People inventing workflows.</h3><p>People hired post-implementation never got proper training and have invented their own way of doing things.</p></div>
         </div>
       </div>
