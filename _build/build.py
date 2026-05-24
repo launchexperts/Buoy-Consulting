@@ -12,7 +12,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 
 # Bump this whenever styles.css changes — appended as ?v=N to <link> hrefs
 # so browsers don't serve a stale stylesheet.
-CSS_VERSION = "28"
+CSS_VERSION = "29"
 
 # ============================================================
 # CSS additions for inner pages — appended to styles.css if missing
@@ -2540,25 +2540,6 @@ PAGES["process-improvement.html"] = dict(
       </div>
     </section>
 
-    <section class="section bfm-callout reveal">
-      <div class="wrap">
-        <div class="section-head reveal">
-          <span class="eyebrow">What we cover</span>
-          <h2>Business Forecasting Module &mdash; <em>inside Jobpac</em>, not next to it.</h2>
-        </div>
-        <ul class="bfm-tags reveal">
-          <li>Accruals</li>
-          <li>Forecasting</li>
-          <li>Risk &amp; Opportunities</li>
-          <li>Revenue to Project Turnover</li>
-          <li>WIP v CWIP</li>
-          <li>WIH</li>
-          <li>Cashflow</li>
-          <li>Variations</li>
-        </ul>
-      </div>
-    </section>
-
 """ + process_section() + """
 
 """ + testimonial_section(
@@ -3028,7 +3009,7 @@ PAGES["contact.html"] = dict(
 )
 
 # -------- Support sub-pages --------
-def support_subpage(slug, title, code, h1, lead, blurb, deliverables, focus_h, focus_items):
+def support_subpage(slug, title, code, h1, lead, blurb, deliverables, focus_h, focus_items, extra_section_html=""):
     body = hero_with_visual(
         f"Support &mdash; {title}",
         h1,
@@ -3078,6 +3059,8 @@ def support_subpage(slug, title, code, h1, lead, blurb, deliverables, focus_h, f
         </ul>
       </div>
     </section>
+
+""" + extra_section_html + """
 
 """ + cta_big(
         eyebrow="We can start this week",
@@ -3195,6 +3178,26 @@ PAGES["support-profit-loss.html"] = support_subpage(
         "Forecast accuracy degrades because actuals never close back into the forecast cycle.",
         "Boards make decisions on stale numbers &mdash; or worse, on gut.",
     ],
+    extra_section_html="""
+    <section class="section bfm-callout reveal">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="eyebrow">What we cover</span>
+          <h2>Business Forecasting Module &mdash; <em>inside Jobpac</em>, not next to it.</h2>
+        </div>
+        <ul class="bfm-tags reveal">
+          <li>Accruals</li>
+          <li>Forecasting</li>
+          <li>Risk &amp; Opportunities</li>
+          <li>Revenue to Project Turnover</li>
+          <li>WIP v CWIP</li>
+          <li>WIH</li>
+          <li>Cashflow</li>
+          <li>Variations</li>
+        </ul>
+      </div>
+    </section>
+    """,
 )
 
 PAGES["support-temp-relief.html"] = support_subpage(
