@@ -3102,10 +3102,9 @@ PAGES["support-payroll.html"] = support_subpage(
     "support-payroll", "Payroll", "PR",
     "Construction payroll <em>done right</em> &ndash; Project Default Charges or based of Roles STP.",
     "Specialist Jobpac payroll support for construction and civil businesses: Project Job Costing, super, STP, leave, and timesheet integration.",
-    "Construction payroll is unforgiving. Get the EBA wrong and you're underpaying. Get the timesheet allocation wrong and your project costs are wrong too. We run construction payroll inside Jobpac with the rates, allowances, and on-costs configured the way your award or EBA actually requires &mdash; with the audit trail to back it up.",
+    "Construction payroll is a main area of Project Cost Control. Get the timesheet allocation wrong and your project costs are wrong too. We run construction payroll inside Jobpac with the rates, allowances, and on-costs configured the way you need it to be.",
     [
         ("Weekly &amp; fortnightly cycles", "Run end-to-end on schedule, with sign-off and bank file ready for upload."),
-        ("Award &amp; EBA compliance", "Pay rates, penalty rates, allowances, RDOs &mdash; configured correctly and reviewed when the award/EBA is updated."),
         ("Superannuation", "Contributions calculated, batched, and remitted on time."),
         ("Single Touch Payroll (STP)", "Each pay reported to the ATO under STP Phase 2 with the correct categorisations."),
         ("Leave administration", "Annual, personal, long-service, RDO accruals and balances reconciled monthly."),
@@ -3122,11 +3121,10 @@ PAGES["support-payroll.html"] = support_subpage(
 
 PAGES["support-profit-loss.html"] = support_subpage(
     "support-profit-loss", "Profit & Loss", "P&L",
-    "Project P&amp;L you can <em>trust</em>, on the same day every month.",
-    "Project- and entity-level Profit &amp; Loss reporting in Jobpac, monthly management packs, and forecast-vs-actual analysis built so leadership can act on the numbers.",
-    "If your P&amp;L takes a week to compile after month-end, by the time you have it the variance is two weeks old. We build P&amp;L reporting inside Jobpac so it's available the morning after close, structured by project and entity, with forecast-vs-actual variance ranked by exception.",
+    "A P&amp;L you can <em>trust</em>, on the same day every month.",
+    "Monthly management packs, and forecast-vs-actual analysis built so leadership can act on the numbers.",
+    "We will perform a Trial Balance reconciliation to ensure your financials are accurate.",
     [
-        ("Project P&amp;L", "Per-project view: contract value, certified-to-date, costs to date, forecast cost-to-complete, and projected margin."),
         ("Entity P&amp;L", "Standalone and consolidated views for groups with multiple entities or joint ventures."),
         ("Monthly management pack", "Headlines, project schedule, exceptions, and commentary &mdash; ready for the leadership meeting."),
         ("Forecast-vs-actual", "Live variance reporting against the forecast, ranked so attention goes where it pays back."),
