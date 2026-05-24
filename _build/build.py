@@ -12,7 +12,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 
 # Bump this whenever styles.css changes — appended as ?v=N to <link> hrefs
 # so browsers don't serve a stale stylesheet.
-CSS_VERSION = "27"
+CSS_VERSION = "28"
 
 # ============================================================
 # CSS additions for inner pages — appended to styles.css if missing
@@ -1323,7 +1323,8 @@ INNER_CSS = """
 }
 
 /* === Orange testimonial section === */
-.section.testimonial-orange {
+.section.testimonial-orange,
+.section.bfm-callout {
   background:
     radial-gradient(circle at 92% 12%, rgba(255, 255, 255, 0.18) 0%, transparent 55%),
     radial-gradient(circle at 6% 92%, rgba(14, 23, 41, 0.10) 0%, transparent 55%),
@@ -1337,6 +1338,45 @@ INNER_CSS = """
   overflow: hidden;
   isolation: isolate;
 }
+.section.bfm-callout h2,
+.section.bfm-callout h3 { color: var(--white); }
+.section.bfm-callout .eyebrow { color: var(--white); }
+.section.bfm-callout .eyebrow::before { background: var(--ink-900); }
+.section.bfm-callout h2 em {
+  color: var(--ink-900);
+  font-weight: 700;
+  font-style: italic;
+}
+.bfm-tags {
+  list-style: none;
+  padding: 0;
+  margin: clamp(1.25rem, 2vw, 1.75rem) auto 0;
+  max-width: 920px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem 0.7rem;
+}
+.bfm-tags li {
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: var(--white);
+  padding: 0.55rem 1.05rem;
+  border-radius: var(--r-pill);
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 0.95rem;
+  letter-spacing: -0.005em;
+  transition: background 200ms, border-color 200ms, transform 200ms;
+}
+.bfm-tags li:hover {
+  background: var(--ink-900);
+  border-color: var(--ink-900);
+  transform: translateY(-2px);
+}
+
 .section.testimonial-orange::before {
   content: "";
   position: absolute;
@@ -2493,10 +2533,29 @@ PAGES["process-improvement.html"] = dict(
           <p class="lead">A senior consultant spends two to three days inside your business. We sit with the people doing the work, not just the executives. We watch a real claim cycle, a real month-end, a real project setup. You get a written audit at the end &mdash; ranked findings, remediation effort, expected payback.</p>
         </div>
         <div class="outcomes reveal" style="margin-top: 2rem;">
-          <div class="o"><span class="num">2 hours</span><span class="lbl">on-site for the audit, with the people doing the work</span></div>
+          <div class="o"><span class="num">2 hours</span><span class="lbl">system parameter &amp; menu audits</span></div>
           <div class="o"><span class="num">12&ndash;20</span><span class="lbl">findings ranked by effort to fix and expected payback</span></div>
           <div class="o"><span class="num">Fixed</span><span class="lbl">scope and price &mdash; no T&amp;E surprises</span></div>
         </div>
+      </div>
+    </section>
+
+    <section class="section bfm-callout reveal">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="eyebrow">What we cover</span>
+          <h2>Business Forecasting Module &mdash; <em>inside Jobpac</em>, not next to it.</h2>
+        </div>
+        <ul class="bfm-tags reveal">
+          <li>Accruals</li>
+          <li>Forecasting</li>
+          <li>Risk &amp; Opportunities</li>
+          <li>Revenue to Project Turnover</li>
+          <li>WIP v CWIP</li>
+          <li>WIH</li>
+          <li>Cashflow</li>
+          <li>Variations</li>
+        </ul>
       </div>
     </section>
 
