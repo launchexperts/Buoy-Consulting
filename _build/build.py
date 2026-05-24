@@ -12,7 +12,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 
 # Bump this whenever styles.css changes — appended as ?v=N to <link> hrefs
 # so browsers don't serve a stale stylesheet.
-CSS_VERSION = "26"
+CSS_VERSION = "27"
 
 # ============================================================
 # CSS additions for inner pages — appended to styles.css if missing
@@ -612,19 +612,28 @@ INNER_CSS = """
   margin: 0;
   flex: 1;
 }
-.team-detail .person .tags {
-  display: flex; gap: 0.4rem; flex-wrap: wrap;
-  padding-top: 0.85rem;
-  border-top: 1px solid var(--gray-100);
-}
-.team-detail .person .tags span {
-  font-size: 0.72rem;
-  color: var(--gray-500);
+/* LinkedIn / social pill on team-detail person cards */
+.team-detail .person .person-social {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  align-self: flex-start;
+  margin-top: 0.5rem;
+  padding: 0.5rem 0.95rem 0.5rem 0.75rem;
   background: var(--orange-50);
   border: 1px solid var(--orange-100);
-  padding: 0.25rem 0.6rem;
   border-radius: var(--r-pill);
-  letter-spacing: 0.02em;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--orange-700);
+  letter-spacing: 0.01em;
+  transition: background 200ms, border-color 200ms, color 200ms, transform 200ms;
+}
+.team-detail .person .person-social:hover {
+  background: var(--orange-500);
+  border-color: var(--orange-500);
+  color: var(--white);
+  transform: translateY(-2px);
 }
 
 /* === FAQ accordion (process.html) === */
@@ -2172,28 +2181,28 @@ PAGES["about.html"] = dict(
             <h3>Donna Duff</h3>
             <p class="role">Founding Director</p>
             <p class="bio">Founded Buoy in 2010 after fifteen years in construction finance leadership at Tier-2 builders across Sydney. Donna leads strategy and is the senior consultant on most flagship engagements. CPA, BCom (UNSW).</p>
-            <div class="tags"><span>Strategy</span><span>Implementation</span><span>P&amp;L</span></div>
           </div>
           <div class="person reveal">
             <div class="photo"><img src="kylie-jane.jpg" alt="Kylie Jane" loading="lazy" /></div>
             <h3>Kylie Jane</h3>
             <p class="role">Senior Consultant</p>
             <p class="bio">Bio coming soon.</p>
-            <div class="tags"><span>Senior consultant</span></div>
           </div>
           <div class="person reveal">
             <div class="photo"><img src="janitta-weis.jpg" alt="Janitta Weis" loading="lazy" /></div>
             <h3>Janitta Weis</h3>
             <p class="role">Senior Consultant</p>
             <p class="bio">Bio coming soon.</p>
-            <div class="tags"><span>Senior consultant</span></div>
           </div>
           <div class="person reveal">
             <div class="photo photo-placeholder" aria-hidden="true"><span>MD</span></div>
             <h3>Matthew Duly</h3>
             <p class="role">Senior Trainer</p>
             <p class="bio">Matthew Duly has over 35 years&rsquo; experience as a Project Commercial Manager on large and small infrastructure and building projects including highway, tunnel, bridge, water, services, office and hotel projects. Matthew worked with Baulderstone for 25 years and was one of the first users trained in Jobpac when Baulderstone commenced using Jobpac in 1990. He has experienced vast development in Jobpac over that period and lead a number of client requests for Jobpac development. He is an expert in the site operation of Jobpac for Lump Sum and Schedule of Rates projects, as well as Earned Value. As senior trainer at Buoy he has worked with many clients implementing Jobpac on sites and training the site team to use Jobpac.</p>
-            <div class="tags"><span>Training</span><span>On-site</span><span>Lump Sum / SoR</span><span>Earned Value</span></div>
+            <a class="person-social" href="http://www.linkedin.com/in/matthew-duly" target="_blank" rel="noopener" aria-label="Matthew Duly on LinkedIn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45z"/></svg>
+              <span>LinkedIn</span>
+            </a>
           </div>
         </div>
       </div>
