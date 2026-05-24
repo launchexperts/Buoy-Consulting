@@ -2493,7 +2493,7 @@ PAGES["process-improvement.html"] = dict(
           <p class="lead">A senior consultant spends two to three days inside your business. We sit with the people doing the work, not just the executives. We watch a real claim cycle, a real month-end, a real project setup. You get a written audit at the end &mdash; ranked findings, remediation effort, expected payback.</p>
         </div>
         <div class="outcomes reveal" style="margin-top: 2rem;">
-          <div class="o"><span class="num">2&ndash;3 days</span><span class="lbl">on-site for the audit, with the people doing the work</span></div>
+          <div class="o"><span class="num">2 hours</span><span class="lbl">on-site for the audit, with the people doing the work</span></div>
           <div class="o"><span class="num">12&ndash;20</span><span class="lbl">findings ranked by effort to fix and expected payback</span></div>
           <div class="o"><span class="num">Fixed</span><span class="lbl">scope and price &mdash; no T&amp;E surprises</span></div>
         </div>
@@ -2513,7 +2513,7 @@ PAGES["process-improvement.html"] = dict(
         "By the numbers",
         "What an audit actually delivers.",
         [
-            ("2&ndash;3 days", "typical on-site audit duration"),
+            ("2 hours", "typical on-site audit duration"),
             ("12&ndash;20", "ranked findings per audit, with effort and payback estimates"),
             ("Q1", "typical payback period on the first wave of fixes"),
             ("Fixed", "audit fee &mdash; no T&amp;E surprises"),
