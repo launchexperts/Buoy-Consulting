@@ -2317,7 +2317,7 @@ PAGES["implementation.html"] = dict(
     body=hero_with_visual(
         "Implementation",
         "Stand up Jobpac the <em>right way</em> the first time.",
-        "Most failed Jobpac rollouts aren't software problems. They're scope, configuration, and change problems &mdash; the bits the vendor can't fix because they don't know your business. We plan, configure, and stand up Jobpac the way it should run for construction and civil businesses.",
+        "For a successful rollout of software you need the 3 P&rsquo;s &mdash; <strong>People / Product / Processes.</strong> We project manage representing you while the vendor implements the core system, so you get the best out of your investment. We will demonstrate various ways you can use it, so we get the right way for your business.",
         image_src="consultant-on-site.jpg",
         image_alt="Construction supervisor reviewing project data on an iPad on site",
         badge="On site &middot; Sydney",
