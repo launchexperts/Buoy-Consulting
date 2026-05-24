@@ -2098,8 +2098,8 @@ PAGES["about.html"] = dict(
     active="about",
     body=hero_with_visual(
         "About Buoy",
-        "Specialist Jobpac consultants &mdash; built by people who've <em>actually</em> run construction businesses.",
-        "Buoy Consulting was founded in 2010 by senior finance and construction operators who'd spent decades inside the industry. Sixteen years on, we're still the only consultancy in Australia and New Zealand focused exclusively on Jobpac for construction and civil businesses.",
+        "Specialist Jobpac consultants &mdash; people who've <em>actually</em> worked in construction businesses.",
+        "Buoy Consulting was founded in 2010 by senior finance and construction operators who'd spent decades inside the industry. Sixteen years on, focused exclusively on Jobpac for construction and civil businesses throughout Australia and New Zealand.",
         image_src="office-team.jpg",
         image_alt="Buoy consultants at work in a construction finance office",
         badge="Independent &middot; Senior-led",
@@ -2110,9 +2110,9 @@ PAGES["about.html"] = dict(
         <div class="two-col aside reveal">
           <div>
             <h2>Why we exist.</h2>
-            <p>Most Jobpac consultancies are reseller-aligned generalists who'll touch any ERP. We're the opposite. Every consultant on our team has spent at least fifteen years inside a construction or civil business doing the work &mdash; running month-end, signing off subbie claims, dealing with a CFO who needs the forecast in the morning.</p>
-            <p>That's not a bio line. It's the reason our advice lands instead of bouncing off. When you tell us your retentions are out by $80k against your subbies' books, we don't ask you to explain what a retention is. We've reconciled the same balance in our own ledgers, and we know exactly where to look first.</p>
-            <p>Sixteen years in, we've watched the industry move through three software cycles, two recessions, a once-in-a-century supply chain shock, and the slow shift from spreadsheet-driven finance to integrated project ERPs. Every one of those shifts has played out in our clients' books. That's the perspective you're hiring.</p>
+            <p>We are unique. Every consultant on our team has spent at least fifteen years inside a construction or civil business doing the work &mdash; running projects, variations, subcontracting, retentions, claims to the client, month-end, financials, every task that needs to be performed. We know what it feels like to have the CM wanting your cost reports in the morning and dealing with a CFO who needs the cash forecast in the morning.</p>
+            <p>That's not a bio line. It's the reason our advice lands instead of bouncing off. When you tell us your retentions are out by $80k, we know exactly where to look first.</p>
+            <p>Sixteen years in, we've watched the industry move through three software cycles, two recessions, a once-in-a-century supply chain shock, and the slow shift from spreadsheet-driven cost control to integrated project ERPs. Every one of those shifts has played out in our clients' businesses. That's the perspective you're hiring.</p>
           </div>
           <div>
             <div class="outcomes">
@@ -2328,7 +2328,7 @@ PAGES["implementation.html"] = dict(
         <div class="section-head reveal">
           <span class="eyebrow">What we do</span>
           <h2>What an implementation looks like <em>with us</em>.</h2>
-          <p class="lead">Every implementation starts with the same question: what does success look like 90 days after go-live? We design backwards from that &mdash; not forwards from a vendor template. The work is done by a senior consultant who's stood up Jobpac in construction businesses ten or twenty times before.</p>
+          <p class="lead">We perform an <strong>AS IS</strong> and <strong>TO BE</strong> scope so you can see what it&rsquo;s going to look like when implemented.<br/>We ask you to select a small group of your &ldquo;power users&rdquo; to be part of the Jobpac rollout &mdash; CFO, CM, PMs, CAs.<br/>Getting the processes locked away and signed off by your key team members is the key to a successful rollout.<br/>Our focus is representing <em>you</em> the whole way through the Jobpac implementation.</p>
         </div>
         <ul class="deliverables-strip reveal">
           <li><strong>Greenfield rollouts</strong>From an empty system to a fully-configured live environment in 8&ndash;14 weeks.</li>
