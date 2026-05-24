@@ -3062,7 +3062,7 @@ PAGES["support-accounts-payable.html"] = support_subpage(
     "Construction AP isn't normal AP. Retentions, RCTIs, statutory declarations, payment claim timeframes &mdash; the rules are different and the audit trail matters. Our AP team has spent careers processing claims for civil and commercial businesses, so the work goes through Jobpac the way it should &mdash; not around it.",
     [
         ("Subbie claim processing", "Claims received, validated against contract and prior progress, retention applied, posted to projects."),
-        ("Outsourced invoice registration", "Supplier invoices captured, three-way matched against PO and receipt, coded to project, registered into Jobpac same day."),
+        ("Outsourced invoice registration", "Supplier/SC Claims invoices captured and placed against the projects ready for coding, registered into Jobpac same day."),
         ("RCTI generation &amp; distribution", "Recipient-created tax invoices generated, distributed, and tracked &mdash; not stored in someone's email."),
         ("Statutory declarations", "Stat decs collected, attached to claim records, and held to the audit standard."),
         ("Vendor master maintenance", "ABN checks, banking, insurance currency, contractor licences &mdash; up-to-date and on file."),
