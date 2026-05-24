@@ -2513,7 +2513,7 @@ PAGES["process-improvement.html"] = dict(
         "By the numbers",
         "What an audit actually delivers.",
         [
-            ("2 hours", "typical on-site audit duration"),
+            ("2 hours", "system parameter &amp; menu audits"),
             ("12&ndash;20", "ranked findings per audit, with effort and payback estimates"),
             ("Q1", "typical payback period on the first wave of fixes"),
             ("Fixed", "audit fee &mdash; no T&amp;E surprises"),
@@ -3061,7 +3061,6 @@ PAGES["support-accounts-payable.html"] = support_subpage(
     "Specialist Jobpac AP support: subbie claim processing, RCTI generation, vendor management, statutory compliance, and disciplined weekly payment runs &mdash; all inside the system you already pay for.",
     "Construction AP isn't normal AP. Retentions, RCTIs, statutory declarations, payment claim timeframes &mdash; the rules are different and the audit trail matters. Our AP team has spent careers processing claims for civil and commercial businesses, so the work goes through Jobpac the way it should &mdash; not around it.",
     [
-        ("Subbie claim processing", "Claims received, validated against contract and prior progress, retention applied, posted to projects."),
         ("Outsourced invoice registration", "Supplier/SC Claims invoices captured and placed against the projects ready for coding, registered into Jobpac same day."),
         ("RCTI generation &amp; distribution", "Recipient-created tax invoices generated, distributed, and tracked &mdash; not stored in someone's email."),
         ("Statutory declarations", "Stat decs collected, attached to claim records, and held to the audit standard."),
