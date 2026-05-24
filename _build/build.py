@@ -12,7 +12,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 
 # Bump this whenever styles.css changes — appended as ?v=N to <link> hrefs
 # so browsers don't serve a stale stylesheet.
-CSS_VERSION = "29"
+CSS_VERSION = "30"
 
 # ============================================================
 # CSS additions for inner pages — appended to styles.css if missing
@@ -3033,6 +3033,8 @@ def support_subpage(slug, title, code, h1, lead, blurb, deliverables, focus_h, f
       </div>
     </section>
 
+    {extra_section_html}
+
     <section class="section dark-feature">
       <div class="wrap">
         <div class="section-head reveal">
@@ -3059,8 +3061,6 @@ def support_subpage(slug, title, code, h1, lead, blurb, deliverables, focus_h, f
         </ul>
       </div>
     </section>
-
-""" + extra_section_html + """
 
 """ + cta_big(
         eyebrow="We can start this week",
