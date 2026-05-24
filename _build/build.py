@@ -2182,7 +2182,7 @@ PAGES["about.html"] = dict(
             <div class="tags"><span>Senior consultant</span></div>
           </div>
           <div class="person reveal">
-            <div class="photo photo-placeholder" aria-hidden="true"><span>JW</span></div>
+            <div class="photo"><img src="janitta-weis.jpg" alt="Janitta Weis" loading="lazy" /></div>
             <h3>Janitta Weis</h3>
             <p class="role">Senior Consultant</p>
             <p class="bio">Bio coming soon.</p>
