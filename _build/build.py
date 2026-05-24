@@ -2461,7 +2461,7 @@ PAGES["process-improvement.html"] = dict(
     body=hero_with_visual(
         "Process Improvement",
         "You bought the software. We make sure you <em>actually</em> get value from it.",
-        "Most Jobpac users we meet have the system &mdash; they just aren't getting what they were sold. Modules sit unused. Reports take a week to produce. Workarounds in spreadsheets do work the system was meant to do. We audit how Jobpac is actually being used, find the gaps, and rebuild the workflows around how your team really works.",
+        "Most Jobpac users we meet have the system &mdash; they just aren't getting the most out of it. The system hasn&rsquo;t been looked at since it was implemented and workarounds in spreadsheets do the work the system was meant to do. We audit how Jobpac is actually being used, find the gaps, and rebuild the workflows around how your team really works.",
         image_src="process-audit.jpg",
         image_alt="Senior consultant reviewing project finance data with a client",
         badge="Audit in progress",
