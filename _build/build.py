@@ -3100,8 +3100,8 @@ PAGES["support-accounts-receivable.html"] = support_subpage(
 
 PAGES["support-payroll.html"] = support_subpage(
     "support-payroll", "Payroll", "PR",
-    "Construction payroll <em>done right</em> &mdash; awards, EBAs, and STP.",
-    "Specialist Jobpac payroll support for construction and civil businesses: award- and EBA-compliant pays, super, STP, leave, and timesheet integration.",
+    "Construction payroll <em>done right</em> &ndash; Project Default Charges or based of Roles STP.",
+    "Specialist Jobpac payroll support for construction and civil businesses: Project Job Costing, super, STP, leave, and timesheet integration.",
     "Construction payroll is unforgiving. Get the EBA wrong and you're underpaying. Get the timesheet allocation wrong and your project costs are wrong too. We run construction payroll inside Jobpac with the rates, allowances, and on-costs configured the way your award or EBA actually requires &mdash; with the audit trail to back it up.",
     [
         ("Weekly &amp; fortnightly cycles", "Run end-to-end on schedule, with sign-off and bank file ready for upload."),
