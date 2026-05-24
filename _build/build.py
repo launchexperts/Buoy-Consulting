@@ -2526,7 +2526,7 @@ PAGES["process-improvement.html"] = dict(
         ("Do you fix the issues yourselves, or just identify them?",
          "Either. The audit is the same price whether you take the findings and execute them in-house, or hand the remediation back to us. We're equally happy doing the remediation work or coaching your team through it. Most clients fix the highest-payback items with us and tackle the rest themselves."),
         ("What does an audit typically cost?",
-         "Audits are fixed-price, based on the size and complexity of your Jobpac setup. For a single-entity business, expect a five-figure fee for the audit itself. Larger groups or multi-entity setups scale from there. We give you the number in writing before we start."),
+         "Audits are based on the size of the business. We provide you a quote so no surprises."),
         ("We think we already know what's broken &mdash; is the audit still worth it?",
          "Usually yes. After sixteen years of doing this, the patterns are predictable &mdash; but the specific findings inside your business almost always include things the people running the system every day no longer see. We've never finished an audit without surfacing material issues the client didn't know about."),
         ("Will this disrupt our finance team's day-to-day?",
