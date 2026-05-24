@@ -2192,7 +2192,9 @@ PAGES["about.html"] = dict(
             <div class="photo"><img src="janitta-weis.jpg" alt="Janitta Weis" loading="lazy" /></div>
             <h3>Janitta Weis</h3>
             <p class="role">Senior Consultant</p>
-            <p class="bio">Bio coming soon.</p>
+            <p class="bio">Janitta Weis provides specialist construction finance, bookkeeping, systems, payroll, and project administration support to businesses operating in the construction and development sectors. With practical experience using Jobpac and a range of payroll systems, Janitta supports clients across the full finance administration cycle, including accounts payable, accounts receivable, progress claims, payroll support, month-end reconciliations, journals, BAS and GST reconciliation support, project financial setup, cost code structures, budget allocation, and reporting integrity.</p>
+            <p class="bio">Her experience includes assisting businesses with Jobpac implementation and clean-up, project budget alignment, cost codes and GL setup support, BFM processes, project reporting, financial completion, and reconciliation of system-generated accounts. Janitta also provides end-to-end bookkeeping support and assists accountants with month-end processes and financial reporting requirements.</p>
+            <p class="bio">As being a pass subcontractor, Janitta can provide hands-on operational support, system review, process improvement, training assistance, and practical guidance to help clients stabilise their finance, bookkeeping, payroll, and project reporting processes. Her approach is detail-focused, commercially aware, and grounded in ensuring that financial information is reliable, well-structured, and useful for decision-making.</p>
           </div>
           <div class="person reveal">
             <div class="photo photo-placeholder" aria-hidden="true"><span>MD</span></div>
