@@ -12,7 +12,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 
 # Bump this whenever styles.css changes — appended as ?v=N to <link> hrefs
 # so browsers don't serve a stale stylesheet.
-CSS_VERSION = "30"
+CSS_VERSION = "31"
 
 # ============================================================
 # CSS additions for inner pages — appended to styles.css if missing
@@ -556,9 +556,15 @@ INNER_CSS = """
 /* === Team detail grid (team.html) === */
 .team-detail {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.75rem;
   margin-top: 2.5rem;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+@media (max-width: 720px) {
+  .team-detail { grid-template-columns: 1fr; }
 }
 .team-detail .person {
   background: var(--white);
@@ -2733,7 +2739,7 @@ PAGES["training.html"] = dict(
         <div class="two-col reveal">
           <div>
             <h2>Built for your team, not the textbook.</h2>
-            <p>Every training engagement starts with a 30-minute call to understand who's in the room. New starters who've never seen Jobpac? Long-timers picking up new modules? PMs who only need to read reports?</p>
+            <p>Every training engagement starts with a 30-minute call to understand who's going to be in the room and what your needs are.</p>
             <p>We design the syllabus from there. Sessions run on a sandbox of your real Jobpac environment, with your project structure and cost codes &mdash; so what people learn is what they'll actually do on Monday.</p>
           </div>
           <div>
@@ -2848,6 +2854,7 @@ PAGES["civil-construction.html"] = dict(
               <li><strong>Plant &amp; equipment costing</strong>Internal hire rates, plant ledger maintenance, cost recovery to projects, idle-time tracking.</li>
               <li><strong>Multi-entity / JV structures</strong>Inter-entity charges, JV reporting back to parent entities, consolidated and standalone P&amp;L.</li>
               <li><strong>Variations &amp; contract value tracking</strong>Approved variations vs pending vs disputed &mdash; visible at the project line, not buried in spreadsheets.</li>
+              <li><strong>Civil Earned Value Projects</strong>We understand that Civil Projects are completely different from Construction Projects and are handled with Items and Sub Items.</li>
             </ul>
           </div>
         </div>
