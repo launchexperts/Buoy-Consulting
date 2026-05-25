@@ -2722,7 +2722,7 @@ PAGES["training.html"] = dict(
     body=hero_with_visual(
         "Training",
         "Hands&#8209;on Jobpac training tailored to <em>your team</em>.",
-        "Generic Jobpac training videos are easy to find. Training tailored to your modules, your project structure, and your team's actual experience level isn't. We deliver training that's grounded in your real Jobpac environment &mdash; not a clean demo system that looks nothing like yours.",
+        "We offer Training tailored to your all of your modules, your project structure, your finance structure. We deliver training that's grounded. We copy you live to a training environment &mdash; not a clean demo system that looks nothing like yours.",
         image_src="training-session.jpg",
         image_alt="Buoy trainer delivering a Jobpac workshop to a construction finance team",
         badge="Workshop &middot; In session",
